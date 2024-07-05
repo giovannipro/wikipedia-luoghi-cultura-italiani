@@ -1,0 +1,22 @@
+{
+    "it": {
+        "how_to_read": {
+            "label": "Come leggere la mappa",
+            "text": "testo in italiano"
+        },
+        "popup": {
+            "header": "Ciao mondo!",
+            "text": "Io sono un popup."
+        }
+    },
+    "en": {
+        "how_to_read": {
+            "label": "How to read the map",
+            "text": "text in English"
+        },
+        "popup": {
+            "header": "Hello world!",
+            "text": "I am a popup."
+        }
+    }
+}

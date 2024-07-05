@@ -9,6 +9,14 @@
   ],
   "creatorBuild" : "34576",
   "files" : {
+    "\/.gitignore" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/.gitignore",
+      "oF" : 0
+    },
     "\/assets\/content\/footer.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -16,6 +24,14 @@
       "oA" : 0,
       "oAP" : "\/assets\/content\/footer.html",
       "oF" : 0
+    },
+    "\/assets\/content\/translations.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/assets\/content\/translations-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
     },
     "\/assets\/data\/authors.tsv" : {
       "cB" : 0,
@@ -434,6 +450,18 @@
       "oS" : 0,
       "pg" : 1,
       "sct" : 0
+    },
+    "\/assets\/style\/updates-min.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/style\/updates-min-min.css",
+      "oF" : 0,
+      "pg" : 0
     },
     "\/assets\/style\/updates.css" : {
       "aP" : 1,

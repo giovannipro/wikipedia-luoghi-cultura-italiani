@@ -17,24 +17,41 @@ function dv1(){
 		tileSize: 256
 	}).addTo(map);
 
-	L.control.locate().addTo(map);
+	let marker = L.marker([42.1, 12.8]).addTo(map)
+	marker.bindPopup("<b id='popup_header'>Hello world!</b><br><span id='popup_text'>I am a popup.</span>")
 
+	L.control.locate().addTo(map);
 }
 
 function update_dv1_lang(lang){
-	// let text = document.querySelectorAll('.axis_name');
 
-	// text.forEach(function(content) {
-	// 	let it = content.dataset.it
-	// 	let en = content.dataset.en
+	let translations = {};
 
-	// 	if (lang == 'it'){
-	// 		content.textContent = it
-	// 	}
-	// 	else if (lang == 'en') {
-	// 		content.textContent = en
-	// 	}
-	// });
+	// Load translations
+	fetch('assets/content/translations.json')
+		.then(response => response.json())
+		.then(data => {
+	    	translations = data;
+	    	changeLanguage(lang);
+	  })
+	  // .catch(error => console.error('Error loading translations:', error));
+
+	function changeLanguage(language) {
+		if (!translations[language]) return;
+
+		apply_language('how_to_read_label',translations[language].how_to_read.label)
+		apply_language('how_to_read_text',translations[language].how_to_read.text)
+
+		apply_language('popup_header',translations[language].popup.header)
+		apply_language('popup_text',translations[language].popup.text)
+
+	}
+
+	function apply_language(box,content){
+		container = document.getElementById(box)
+
+		container.innerText = content
+	}
 }
 
 window.addEventListener("load", function(){
