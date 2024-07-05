@@ -14,6 +14,11 @@ h1 {
   font-size: 1.1em;
   margin: 0 0 10px;
 }
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 1em;
+  }
+}
 
 h2 {
   font-size: 1em;
@@ -321,7 +326,6 @@ header a {
   cursor: pointer;
   right: 0;
   top: 0;
-  z-index: 1;
   position: absolute;
 }
 

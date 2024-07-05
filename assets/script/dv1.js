@@ -21,6 +21,22 @@ function dv1(){
 
 }
 
+function update_dv1_lang(lang){
+	// let text = document.querySelectorAll('.axis_name');
+
+	// text.forEach(function(content) {
+	// 	let it = content.dataset.it
+	// 	let en = content.dataset.en
+
+	// 	if (lang == 'it'){
+	// 		content.textContent = it
+	// 	}
+	// 	else if (lang == 'en') {
+	// 		content.textContent = en
+	// 	}
+	// });
+}
+
 window.addEventListener("load", function(){
     dv1()
 });

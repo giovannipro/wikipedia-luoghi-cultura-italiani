@@ -161,7 +161,7 @@ function mobile_menu() {
 			else {
 				$("#mobile_menu_icon").css("background","url('assets/img/close-menu.svg') center center no-repeat").css("background-size","55%");
 			}
-			console.log(path,the_path)
+			// console.log(path,the_path)
 
 			$("#mobile_menu_box").show()
 			open = true;
@@ -335,6 +335,10 @@ function get_statistics(){
 			}
 		}
 	})
+}
+
+function switch_the_language(){
+	
 }
 
 function language() {

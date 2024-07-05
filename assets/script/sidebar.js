@@ -1,9 +1,9 @@
 function update_sidebar_text(){
-	const sort_option = document.getElementById('sort_article');
-	const text_box = document.getElementById('sidebar_text');
+	// const sort_option = document.getElementById('sort_article');
+	// const text_box = document.getElementById('sidebar_text');
 
-	sort = sort_option.options[sort_option.selectedIndex].text
-	text_box.innerHTML = sort
+	// sort = sort_option.options[sort_option.selectedIndex].text
+	// text_box.innerHTML = sort
 	// console.log(sort, sort_option)
 }
 
