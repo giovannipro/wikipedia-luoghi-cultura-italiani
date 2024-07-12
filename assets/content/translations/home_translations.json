@@ -1,5 +1,6 @@
 {
     "it": {
+        "title": "Wikipedia e luoghi della cultura italiani",
         "how_to_read": {
             "label": "Come leggere la mappa",
             "text": "testo in italiano"
@@ -10,6 +11,7 @@
         }
     },
     "en": {
+        "title": "Wikipedia and italian cultural sites",
         "how_to_read": {
             "label": "How to read the map",
             "text": "text in English"

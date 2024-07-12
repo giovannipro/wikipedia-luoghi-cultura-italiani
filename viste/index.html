@@ -90,7 +90,7 @@
 						<div id="mobile_filter_icon"></div>
 					</div>
 					<div class="select_box" id="select_box">
-						<div id="select_year" class="selector">
+						<!-- <div id="select_year" class="selector">
 							<p class="key noselect lang_switch" data-it="Anno" data-en="Year">Anno</p>
 							<select name="subjects" id="year" class="select value noselect">
 								<option value="2022">2022</option>
@@ -186,7 +186,7 @@
 									numero di versioni linguistiche
 								</option>
 							</select>
-						</div>
+						</>div> -->
 					</div>
 				</div>
 
@@ -220,11 +220,11 @@
 			<section id="legend" class="container">
 				<div id="dv_infobox" class="row">
 					<div class="column_3">
-						<h2 class="lang_switch" data-it="Come leggere la visualizzazione" data-en="How to read the visualization">
+						<h2 id="how_to_read_label">
 							Come leggere la visualizzazione
 						</h2>
-						<p class="it">
-							...
+						<p id="how_to_read_text"></p>
+							<!-- ... -->
 							<!-- La visualizzazione mostra le voci con più visite medie giornaliere per materia scolastica (i dati sono raccolti ogni anno a giugno).<br/>
 							Le dimensioni della voce, della pagina di discussione e dell'incipit sono espresse in byte. Per ogni materia sono mostrati un massimo di 120 voci.<br/><br/>
 							Il cerchio di colore chiaro rappresenta la dimensione della voce, il cerchio scuro rappresenta la dimensione dell’incipit e il cerchio con il solo contorno rappresenta la dimensione della pagina di discussione.<br/>
@@ -232,17 +232,17 @@
 							I triangolini sopra i cerchi indicano che la voce è stata migliorata se si verificano una o più di queste condizioni: è stato ampliato l'incipit, è stato rimosso almeno un avviso, è stata aggiunta almeno un'immagine. 
 							<br/><br/>
 							Scegli dal menu in alto una materia e l'ordine di visualizzazione per ottenere maggiori informazioni. -->
-						</p>
-						<p class="en">
+						
+						<!-- <p class="en">
 							...
-							<!-- The visualisation shows the articles with the highest average daily visits per school subject (data are collected annually in June).<br/>
+							The visualisation shows the articles with the highest average daily visits per school subject (data are collected annually in June).<br/>
 							The size of the article, discussion page and incipit are expressed in bytes. A maximum of 120 articles are shown for each subject.<br/><br/>
 							The light-coloured circle represents the size of the article, the darker circle represents the size of the incipit and the circle with only the outline represents the size of the discussion page.<br/>
 							The circles and dotted lines display the size of the article and the daily visits in the previous year, respectively.<br/> 
 							The triangles above the circles indicate that the article has been improved if one or more of these conditions are met: the incipit has been expanded, at least one issue has been removed, at least one image has been added. 
 							<br/><br/>
 							Choose a subject from the top menu and the order in which it is displayed to get more information. -->
-						</p>
+						<!-- </p> -->
 					</div>
 					<div id="dv1_legend_a" class="column_3 legend">
 						...
@@ -260,7 +260,6 @@
 			</section>
 			<section class="container">
 				<div id="dv1_dataset" class="dataset">
-					...
 					<!-- <a href="../assets/data/voci/voci.zip" title="" style="font-size: 0.9em; margin-bottom: 30px; display: block;">
 						<div style="display: flex; justify-content: flex-start; align-items:baseline;">
 							<span class="lang_switch" data-it="Scarica i dati" data-en="Download the dataset">
@@ -282,6 +281,6 @@
 		<script src="../assets/lib/d3-tip.js"></script>
 		<script src="../assets/script/utilities.js"></script>
 		<script src="../assets/script/sidebar.js"></script>
-		<script src="../assets/script/dv1.js"></script>
+		<script src="../assets/script/dv2.js"></script>
 	</body>
 </html>

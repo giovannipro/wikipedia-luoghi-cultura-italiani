@@ -1235,12 +1235,42 @@ function dv2(year,the_subject,sort) {
 	}
 }
 
+function update_dv2_lang(lang){
+
+	let transl = {};
+
+	// Load translations
+	fetch('../assets/content/translations/views_translations.json')
+		.then(response => response.json())
+		.then(data => {
+	    	transl = data;
+	    	changeLanguage(lang);
+	  })
+	  // .catch(error => console.error('Error loading translations:', error));
+
+	function changeLanguage(lang) {
+		if (!transl[lang]) return;
+
+		apply_language('how_to_read_label',transl[lang].how_to_read.label)
+		apply_language('how_to_read_text',transl[lang].how_to_read.text)
+
+		// apply_language('popup_header',transl[lang].popup.header)
+		// apply_language('popup_text',transl[lang].popup.text)
+
+	}
+
+	function apply_language(box,content){
+		the_container = document.getElementById(box)
+		the_container.innerText = content
+	}
+}
+
 $(document).ready(function() {
 	const random_subject = getRandomIntInclusive(1,17);
-	document.getElementById("subjects").selectedIndex = random_subject;
+	// document.getElementById("subjects").selectedIndex = random_subject;
 	
 	const starting_year = 2022;
 
-	dv2(starting_year,subjects[random_subject],parseInt(1));
-	get_year();
+	// dv2(starting_year,subjects[random_subject],parseInt(1));
+	// get_year();
 })

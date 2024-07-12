@@ -716,26 +716,56 @@ function dv3(the_literature) {
 	}
 }
 
-function update_dv3_lang(lang) {
+// function update_dv3_lang(lang) {
 
-	let license = document.querySelectorAll('.license');
+// 	let license = document.querySelectorAll('.license');
 
-	license.forEach(function(content) {
-		let license_it = content.dataset.it
-		let license_en = content.dataset.en
+// 	license.forEach(function(content) {
+// 		let license_it = content.dataset.it
+// 		let license_en = content.dataset.en
 
-		if (lang == 'it'){
-			content.textContent = license_it
-		}
-		else if (lang == 'en') {
-			content.textContent = license_en
-		}
-	});
+// 		if (lang == 'it'){
+// 			content.textContent = license_it
+// 		}
+// 		else if (lang == 'en') {
+// 			content.textContent = license_en
+// 		}
+// 	});
+// }
+
+function update_dv3_lang(lang){
+
+	let transl = {};
+
+	// Load translations
+	fetch('../assets/content/translations/issues_translations.json')
+		.then(response => response.json())
+		.then(data => {
+	    	transl = data;
+	    	changeLanguage(lang);
+	  })
+	  // .catch(error => console.error('Error loading translations:', error));
+
+	function changeLanguage(lang) {
+		if (!transl[lang]) return;
+
+		apply_language('how_to_read_label',transl[lang].how_to_read.label)
+		apply_language('how_to_read_text',transl[lang].how_to_read.text)
+
+		// apply_language('popup_header',transl[lang].popup.header)
+		// apply_language('popup_text',transl[lang].popup.text)
+
+	}
+
+	function apply_language(box,content){
+		the_container = document.getElementById(box)
+		the_container.innerText = content
+	}
 }
 
 $(document).ready(function() {
 	// let random_literature = (Math.floor(Math.random() * 1) + 0) + 1
 	// document.getElementById("literature").selectedIndex = random_literature;
 
-	dv3(literature_); // literature_[random_literature]
+	// dv3(literature_); // literature_[random_literature]
 });

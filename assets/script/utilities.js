@@ -447,13 +447,16 @@ function language() {
 		if (path == '/'){ // homepage
 			update_dv1_lang(lang)
 		}
-		else if (path.indexOf('autori') != -1){
+		else if (path.indexOf('viste') != -1){
+			update_dv2_lang(lang)
+		}
+		else if (path.indexOf('avvisi') != -1){
 			update_dv3_lang(lang)
 		}
 
-		if (path.indexOf('autori') == -1){
-			update_sidebar_text()
-		}
+		// if (path.indexOf('autori') == -1){
+		// 	update_sidebar_text()
+		// }
 
 		// update stuff
 		update_footer(lang)
@@ -464,7 +467,7 @@ function language() {
 function load_path(){
 	const path = window.location.pathname
 
-	if (path.indexOf("avvisi") == -1 && path.indexOf("autori") == -1){ 
+	if (path.indexOf("viste") == -1 && path.indexOf("avvisi") == -1){ 
 		the_path = "";
 	}
 	else {
@@ -483,7 +486,7 @@ function load_footer(){
 	let the_path = load_path()
 	let footer_link = 'assets/content/footer.html'
 	let url = the_path + footer_link;
-	// console.log(url)
+	// console.log(the_path)
 	
 	fetch(url)
 	    .then(response => {
