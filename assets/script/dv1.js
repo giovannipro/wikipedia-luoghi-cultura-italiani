@@ -42,16 +42,16 @@ function update_dv1_lang(lang){
 		apply_language('how_to_read_label',transl[lang].how_to_read.label)
 		apply_language('how_to_read_text',transl[lang].how_to_read.text)
 
-		apply_language('popup_header',transl[lang].popup.header)
-		apply_language('popup_text',transl[lang].popup.text)
+		// apply_language('popup_header',transl[lang].popup.header)
+		// apply_language('popup_text',transl[lang].popup.text)
 
-		apply_language('title_',transl[lang].title)
+		// apply_language('title_',transl[lang].title)
 
 	}
 
 	function apply_language(box,content){
-		container = document.getElementById(box)
-		container.innerText = content
+		the_container = document.getElementById(box)
+		the_container.innerText = content
 	}
 }
 
