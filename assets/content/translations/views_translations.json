@@ -2,7 +2,7 @@
     "it": {
         "title": "Wikipedia e luoghi della cultura italiani",
         "how_to_read": {
-            "label": "Come leggere la mappa",
+            "label": "Come leggere la visualizzazione",
             "text": "testo in italiano"
         },
         "popup": {
@@ -13,7 +13,7 @@
     "en": {
         "title": "Wikipedia and italian cultural sites",
         "how_to_read": {
-            "label": "How to read the map",
+            "label": "How to read the visualization",
             "text": "text in English"
         },
         "popup": {

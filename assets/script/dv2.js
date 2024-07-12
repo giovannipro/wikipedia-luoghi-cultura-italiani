@@ -1249,6 +1249,8 @@ function update_dv2_lang(lang){
 	  // .catch(error => console.error('Error loading translations:', error));
 
 	function changeLanguage(lang) {
+		// console.log(transl)
+		
 		if (!transl[lang]) return;
 
 		apply_language('how_to_read_label',transl[lang].how_to_read.label)
