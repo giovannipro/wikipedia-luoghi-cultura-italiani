@@ -21,5 +21,6 @@ Icon
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-# codekit config file
+# Codekit
 config.codekit3
+*.codekit3

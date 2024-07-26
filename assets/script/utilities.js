@@ -477,6 +477,7 @@ function load_path(){
 }
 
 function load_footer(){
+	console.log(2)
 
 	let params = new URLSearchParams(window.location.search);
 	if (params.has('lang') == true) {
@@ -532,7 +533,7 @@ function update_footer(lang){
 }
 
 function changeTitle(lang) {
-	const base = 'Wikipedia e scuola italiana'
+	const base = 'Wikipedia e luoghi della cultura italiana'
 	let title = document.title
 	let page = title.split(' | ')[0];
 	let newTitle;
@@ -565,7 +566,7 @@ function changeTitle(lang) {
 	document.title = newTitle + ' | ' + base;
 }
 
-$(document).ready(function() {
+window.onload = function() {
 
 	mobile_menu();
 	mobile_filter();
@@ -575,4 +576,4 @@ $(document).ready(function() {
 
 	// get_statistics();
 	
-})
+}
