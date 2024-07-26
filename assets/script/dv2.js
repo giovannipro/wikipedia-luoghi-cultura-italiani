@@ -152,6 +152,7 @@ function dv2() {
 					lang = params.get('lang')
 				}
 
+				lang = 'it'
 				if (lang == 'it'){
 					creation_date = "Creato il: "
 					visits = "visite giornaliere"
