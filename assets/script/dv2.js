@@ -129,7 +129,20 @@ function dv2() {
 			.attr('class', 'tooltip')
 			.attr('id', 'tooltip_dv1')
 			.direction(function (d,i) {
-				return 'n'
+				length = filtered_data.length
+				let direction = ''
+
+				if (i < length / 3){
+					direction = 'ne'
+				}
+				else if (i > (length / 3 * 2) ) {
+					direction = 'nw'
+				}
+				else {
+					return 'n'
+				}
+
+				return direction
 			})
 			.offset([-10,0])
 			.html(function(d,i) {
@@ -173,21 +186,42 @@ function dv2() {
             	if (d.avg_pv_prev !== "-"){
             		content += "<td class='value " + variation_perc(d.avg_pv,d.avg_pv_prev,"visits")[0] + "'>" + variation_perc(d.avg_pv,d.avg_pv_prev,"visits")[1] + "</td></tr>"
            		}
-
-                //size
-				content += "<tr><td class='label'>" + size + "</td><td class='value'><td class='value " + d.size + "'>" + d.size.toLocaleString() + "</td></tr>"
                 
+                // size
+				content += "<tr>"
+				content += "<td class='label'>" + size + "</td>"
+				content += "<td class='value'>" + d.size.toLocaleString() + "</td>"
+				content += "<td></td>"
+				content += "</tr>"
+
+
             	// discussion
-				content += "<tr><td class='label'>" + discussion + "</td><td class='value'><td class='value " + d.discussion_size + "'>" + d.discussion_size.toLocaleString() + "</td></tr>"
+				content += "<tr>"
+				content += "<td class='label'>" + discussion + "</td>"
+				content += "<td class='value'>" + d.discussion_size.toLocaleString() + "</td>"
+				content += "<td></td>"
+				content += "</tr>"
 
             	// incipit
-				content += "<tr><td class='label'>" + incipit + "</td><td class='value'><td class='value " + d.incipit_size + "'>" + d.incipit_size.toLocaleString() + "</td></tr>"
+				content += "<tr>"
+				content += "<td class='label'>" + incipit + "</td>"
+				content += "<td class='value'>" + d.incipit_size.toLocaleString() + "</td>"
+				content += "<td></td>"
+				content += "</tr>"
 
             	// issues
-				content += "<tr><td class='label'>" + issues + "</td><td class='value'><td class='value " + d.issues + "'>" + d.issues.toLocaleString() + "</td></tr>"
+				content += "<tr>"
+				content += "<td class='label'>" + issues + "</td>"
+				content += "<td class='value'>" + d.issues.toLocaleString() + "</td>"
+				content += "<td></td>"
+				content += "</tr>"
 
 				// images
-				content += "<tr><td class='label'>" + images + "</td><td class='value'><td class='value " + d.images + "'>" + d.images.toLocaleString() + "</td></tr>"
+				content += "<tr>"
+				content += "<td class='label'>" + images + "</td>"
+				content += "<td class='value'>" + d.images.toLocaleString() + "</td>"
+				content += "<td></td>"
+				content += "</tr>"
 
 	            content += "</table>"
                 return content;
