@@ -1,7 +1,7 @@
 const container = "#dv2";
 const font_size = 10;
 
-const filter_item = 50; // also in Wikipedia and Italian school is 120
+const filter_item = 20; // also in Wikipedia and Italian school is 120
 const shiftx_article = 30;
 const wiki_link = "https://it.wikipedia.org/wiki/";
 const variation_line_opacity = 0.7;
@@ -179,14 +179,16 @@ function dv2() {
 
 				let content = "<p style='margin: 0 0 8px 3px;'><span style='font-weight: bold;'>" + d.article + "</span><br/>";
                 // content += "<span style='font-size: 0.8em;'>" + creation_date + format_date(d.first_edit) + "</span></p>"
-                content += '<table>'
 
-                // avg daily visits
-                content += "<tr><td class='label'>" + visits + "</td><td class='value'>" + d.avg_pv.toLocaleString()
-            	if (d.avg_pv_prev !== "-"){
-            		content += "<td class='value " + variation_perc(d.avg_pv,d.avg_pv_prev,"visits")[0] + "'>" + variation_perc(d.avg_pv,d.avg_pv_prev,"visits")[1] + "</td></tr>"
-           		}
+                content += '<table>'
                 
+                // avg daily visits
+                content += "<tr>"
+				content += "<td class='label'>" + visits + "</td>"
+				content += "<td class='value'>" + d.avg_pv.toLocaleString() + "</td>"
+				content += "<td></td>"
+				content += "</tr>"
+
                 // size
 				content += "<tr>"
 				content += "<td class='label'>" + size + "</td>"
