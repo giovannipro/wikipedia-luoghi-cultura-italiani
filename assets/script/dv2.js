@@ -37,7 +37,7 @@ function dv2() {
 		filtered_data = data.filter(item =>
 			item.avg_pv > filter_item
 		)
-		console.log(filtered_data.length)
+		// console.log(filtered_data.length)
 
 		// display data
 		// filtered_data.forEach(item =>{
@@ -340,8 +340,95 @@ function dv2() {
 				return r(Math.sqrt(d.discussion_size/3.14))
 			})
 
+		function chart_scale(){
+
+			function update_scale(scale){
+				y = d3.scaleLinear()
+
+				if (scale == "linear"){
+					y = d3.scaleLinear()
+						.domain([0,y_max+(y_max/100*10)]) 
+						.range([height-margin.top,0])
+				}
+				else if (scale == "log"){
+					y = d3.scaleSymlog(10)
+						.domain([0,y_max+(y_max/100*10)]) 
+						.range([height-margin.top,0])
+				}
+
+				// articles
+				svg.selectAll(".article_circles")
+					.transition()
+					.duration(200)
+					.attr("transform",function (d,i) {
+						return "translate(" + 0 + "," + y(+d.avg_pv) + ")"
+					})	
+
+				// y axis ticks text
+				svg.select("#yAxis")
+					.transition()
+					.duration(200)
+					.call(d3.axisLeft(y)) // it works
+
+				d3.select('#grid')
+					.transition()
+					.duration(200)
+					.call(d3.axisLeft(y)
+						.tickSize(-width-margin.left-margin.right-60)
+					)
+				}
+
+				function to_log(){
+					update_scale("log")
+
+					the_path = load_path() 
+					scale_icon.style.background = "url(" + the_path + "assets/img/scale_linear.svg) center center / 55% no-repeat"
+					scale = "log"
+
+					tootip_linear.style.display = 'none'
+					tootip_log.style.display = 'block'
+				}
+
+				function to_linear(){
+					update_scale("linear")
+
+					the_path = load_path() 
+					scale_icon.style.background = "url(" + the_path + "assets/img/scale_log.svg) center center / 55% no-repeat"
+					scale = "linear"
+
+					tootip_log.style.display = 'none'
+					tootip_linear.style.display = 'block'
+				}
+
+				let scale = "linear"
+				const switch_scale = document.getElementById("scale_button")
+				const scale_icon = document.getElementById("scale_button_icon")
+				const tootip_linear = document.getElementById("scale_tooltip_linear")
+				const tootip_log = document.getElementById("scale_tooltip_logarithmic")
+
+				switch_scale.addEventListener('click', (event) => {
+					if (scale == "linear"){
+						to_log()
+					}
+					else if (scale == "log") {
+						to_linear()
+				    }
+				})
+
+				document.onkeydown = function (e) {
+				    var key = e.key;
+				    if(key == 1) { // s
+						to_linear()
+				    }
+				    else if (key == 2){
+				    	to_log()
+				    }
+				};
+		}
+		chart_scale()
 	}
 }
+
 
 function format_data(data){
 	data.forEach(function (d,i) {
