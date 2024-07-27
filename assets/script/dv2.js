@@ -128,6 +128,7 @@ function dv2() {
 		let tooltip = d3.tip()
 			.attr('class', 'tooltip')
 			.attr('id', 'tooltip_dv1')
+			.attr('max-width',100)
 			.direction(function (d,i) {
 				length = filtered_data.length
 				let n_s = ''
@@ -186,7 +187,7 @@ function dv2() {
 					notes = "notes"
 				}
 
-				let content = "<p style='margin: 0 0 8px 3px;'><span style='font-weight: bold;'>" + d.article + "</span><br/>";
+				let content = "<p style='margin: 0 0 8px 3px; font-weight: bold;'>" + d.article + "</p>";
                 // content += "<span style='font-size: 0.8em;'>" + creation_date + format_date(d.first_edit) + "</span></p>"
 
                 content += '<table>'

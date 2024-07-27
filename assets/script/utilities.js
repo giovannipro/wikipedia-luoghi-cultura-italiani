@@ -477,7 +477,6 @@ function load_path(){
 }
 
 function load_footer(){
-	console.log(2)
 
 	let params = new URLSearchParams(window.location.search);
 	if (params.has('lang') == true) {
@@ -566,7 +565,8 @@ function changeTitle(lang) {
 	document.title = newTitle + ' | ' + base;
 }
 
-window.onload = function() {
+
+window.addEventListener('load', function () {    
 
 	mobile_menu();
 	mobile_filter();
@@ -576,4 +576,4 @@ window.onload = function() {
 
 	// get_statistics();
 	
-}
+})
