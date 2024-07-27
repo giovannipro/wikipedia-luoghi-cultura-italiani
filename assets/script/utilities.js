@@ -568,7 +568,6 @@ function changeTitle(lang) {
 function format_data(data){
 
 	data.forEach(function (d,i) {
-		d.average_daily_visit = +d.average_daily_visit
 		d.article = d.article.replace(/_/g," ")
 		d.size = +d.size
 		d.discussion_size = +d.discussion_size

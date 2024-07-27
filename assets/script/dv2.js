@@ -132,10 +132,16 @@ function dv2() {
 			.attr('id', 'tooltip_dv1')
 			.attr('max-width',100)
 			.direction(function (d,i) {
+
 				let length = filtered_data.length
 				let n_s = ''
 				let w_e = ''
 				let direction = ''
+
+				if (d.new_id == undefined){
+					d.new_id = i
+				}
+				console.log(d.new_id)
 
 				if (d.avg_pv > (y_max/3*2) ){
 					n_s = 's'
@@ -144,7 +150,7 @@ function dv2() {
 					n_s = 'n'
 				}
 
-				if (i < length / 3){
+				if (d.new_id < length / 3){
 					w_e = 'e'
 				}
 				else if (i > (length / 3 * 2) ) {
@@ -388,6 +394,75 @@ function dv2() {
 				return r(Math.sqrt(d.discussion_size/3.14))
 			})
 
+		// sort data
+		// ---------------------------
+		const sort_box = document.getElementById('sort_article')
+
+		sort_box.addEventListener("change", function() {
+			update_sort(this.value)
+		});
+
+		function update_sort(the_sort){
+			console.log(the_sort)
+
+			if (the_sort == 1) {
+				max = total	
+				min = 0
+			}
+			else if (the_sort == 3){
+				max = d3.max(filtered_data, function(d) { 
+					return d.size;
+				})
+				min = d3.min(filtered_data, function(d) { 
+					return d.size;
+				})
+			}
+			else if (the_sort == 4){
+				max = d3.max(filtered_data, function(d) { 
+					return d.discussion_size;
+				})
+				min = d3.min(filtered_data, function(d) { 
+					return d.discussion_size;
+				})
+			}
+
+			filtered_data.map((item,i) => {
+				item.new_id = i
+			})
+			console.log(filtered_data[0])
+
+			x = d3.scaleLinear()
+				.domain([min,max])
+				.range([0,width-100])
+
+			svg.selectAll(".article")
+	       		.data(filtered_data)
+	       		.enter()
+	       		.append("div")
+
+			svg.selectAll(".article")
+				.transition()
+				.attr("transform", function(d,i){
+					if (the_sort == 1) { // "article"
+						return "translate(" + (x(i)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 3){
+						return "translate(" + (x(d.size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 4){
+						return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
+					}
+				})
+		}
+
+
+		// sort_box.change(function() {
+		// 	new_sort = parseInt(this.value);
+		// 	let subject = $("#subjects option:selected").val();
+
+		// 	update_sort(subject,new_sort);
+		// });
+
 		function chart_scale(){
 
 			function update_scale(scale){
@@ -478,5 +553,5 @@ function dv2() {
 }
 
 window.onload = function() {
-	dv2();
+	dv2(1);
 }
