@@ -74,7 +74,7 @@ function dv3() {
 
 		// scale 
 		// ---------------------------
-		let issues_max = 3
+		let issues_max = 4
 		// let issues_max = d3.max(filtered_data, function(d) { 
 		// 	return d.issues
 		// })
@@ -153,7 +153,7 @@ function dv3() {
 			.attr("id","axis")
 
 		let axis_issues = axis.append("g")
-			.attr("transform", "translate(" + (margin.left*1) + "," + (margin.top + (v_shift*2.1)) + ")") // v_shift
+			.attr("transform", "translate(" + (margin.left*1) + "," + (margin.top + (v_shift*4.5)) + ")") // v_shift
 			.call(d3.axisLeft(y_issues_text)
 				.ticks(ticksAmount)
 				.tickValues(d3.range(0,issues_max,1))
