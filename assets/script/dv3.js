@@ -127,6 +127,24 @@ function dv3() {
 	    	return d3.axisLeft(y_features)
 		}
 
+		let grid_issues = grids.append("g")
+			.attr("id","grid_issues")
+			.attr("transform", "translate(-1," + margin.top + ")")
+			.call(make_issue_gridlines()
+				.ticks(ticksAmount)
+				.tickValues(d3.range(0,issues_max,1))
+          		.tickSize(-width-margin.left-margin.right-60)
+			)
+
+        let grid_features = grids.append("g")
+			.attr("id","grid_features")
+			.attr("transform", "translate(-1," + (margin.top + v_shift + (height/2)) + ")")
+			.call(make_features_gridlines()
+				.ticks(ticksAmount)
+          		.tickValues(d3.range(0,my_max_features,25) )
+          		.tickSize(-width-margin.left-margin.right-60) 
+          	)
+
 		// axis
 		// ---------------------------
 
