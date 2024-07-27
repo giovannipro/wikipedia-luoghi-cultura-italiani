@@ -130,17 +130,25 @@ function dv2() {
 			.attr('id', 'tooltip_dv1')
 			.direction(function (d,i) {
 				length = filtered_data.length
+				let n_s = ''
+				let w_e = ''
 				let direction = ''
 
-				if (i < length / 3){
-					direction = 'ne'
-				}
-				else if (i > (length / 3 * 2) ) {
-					direction = 'nw'
+				if (d.avg_pv > (y_max/3*2) ){
+					n_s = 's'
 				}
 				else {
-					return 'n'
+					n_s = 'n'
 				}
+
+				if (i < length / 3){
+					w_e = 'e'
+				}
+				else if (i > (length / 3 * 2) ) {
+					w_e = 'w'
+				}
+
+				direction = n_s + w_e
 
 				return direction
 			})
