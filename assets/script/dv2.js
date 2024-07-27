@@ -130,7 +130,7 @@ function dv2() {
 			.attr('id', 'tooltip_dv1')
 			.attr('max-width',100)
 			.direction(function (d,i) {
-				length = filtered_data.length
+				let length = filtered_data.length
 				let n_s = ''
 				let w_e = ''
 				let direction = ''
@@ -473,52 +473,6 @@ function dv2() {
 		}
 		chart_scale()
 	}
-}
-
-
-function format_data(data){
-	data.forEach(function (d,i) {
-		d.average_daily_visit = +d.average_daily_visit
-		d.article = d.article.replace(/_/g," ")
-		d.size = +d.size
-		d.discussion_size = +d.discussion_size
-		d.incipit_size = +d.incipit_size
-		d.avg_pv = +d.avg_pv
-		d.avg_pv_prev = +d.avg_pv_prev
-		d.issue_clarify = +d.issue_clarify
-
-
-		if (d.references !== "-"){
-			d.references = +d.references
-		}
-		else {
-			d.references = 0
-		}
-
-		if (d.issues !== "-"){
-			d.issues = +d.issues
-		}
-		else {
-			d.issues = 0
-		}
-
-		if (d.notes !== "-"){
-			d.notes = +d.notes
-		}
-		else {
-			d.notes = 0
-		}
-
-		if (d.images !== "-"){
-			d.images = +d.images
-		}
-		else {
-			d.images = 0
-		}
-		
-		d.features = d.references + d.notes + d.images;
-	})
-	return data
 }
 
 window.onload = function() {

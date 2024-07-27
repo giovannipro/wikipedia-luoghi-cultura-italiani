@@ -444,13 +444,13 @@ function language() {
 		path = window.location.pathname
 		// console.log(path)
 
-		if (path == '/'){ // homepage
+		if (path == '/_'){ // homepage
 			update_dv1_lang(lang)
 		}
-		else if (path.indexOf('viste') != -1){
+		else if (path.indexOf('viste_') != -1){
 			update_dv2_lang(lang)
 		}
-		else if (path.indexOf('avvisi') != -1){
+		else if (path.indexOf('avvisi_') != -1){
 			update_dv3_lang(lang)
 		}
 
@@ -565,6 +565,50 @@ function changeTitle(lang) {
 	document.title = newTitle + ' | ' + base;
 }
 
+function format_data(data){
+	data.forEach(function (d,i) {
+		d.average_daily_visit = +d.average_daily_visit
+		d.article = d.article.replace(/_/g," ")
+		d.size = +d.size
+		d.discussion_size = +d.discussion_size
+		d.incipit_size = +d.incipit_size
+		d.avg_pv = +d.avg_pv
+		d.avg_pv_prev = +d.avg_pv_prev
+		d.issue_clarify = +d.issue_clarify
+
+
+		if (d.references !== "-"){
+			d.references = +d.references
+		}
+		else {
+			d.references = 0
+		}
+
+		if (d.issues !== "-"){
+			d.issues = +d.issues
+		}
+		else {
+			d.issues = 0
+		}
+
+		if (d.notes !== "-"){
+			d.notes = +d.notes
+		}
+		else {
+			d.notes = 0
+		}
+
+		if (d.images !== "-"){
+			d.images = +d.images
+		}
+		else {
+			d.images = 0
+		}
+		
+		d.features = d.references + d.notes + d.images;
+	})
+	return data
+}
 
 window.addEventListener('load', function () {    
 
