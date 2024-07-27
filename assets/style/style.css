@@ -535,6 +535,34 @@ footer ul li {
   }
 }
 
+/* ------- statistics ------- */
+#statistics {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #979797;
+  height: 4rem;
+  margin-bottom: 3rem;
+}
+#statistics .value_name {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+  width: 33%;
+  border-left: 1px solid #979797;
+}
+#statistics .value_name .stat_value {
+  width: 15%;
+  text-align: right;
+  font-weight: bold;
+}
+#statistics .value_name .stat_name {
+  width: 80%;
+}
+#statistics .value_name:first-child {
+  border: none;
+}
+
 /* ------- dataviz n. 1 ------- */
 #dv1 {
   height: 75vh;

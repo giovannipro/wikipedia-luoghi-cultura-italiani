@@ -85,7 +85,6 @@ Q16337986	Appartamento_della_Duchessa_d'Aosta	5674	2	0	0	0	0	0	303	5084	2	2	0	0
 Q21236358	Aquae_Mundi	1637	0	0	1	1	1	0	1042	2317	1	1	0	0		
 Q3621099	Aquarium_di_Alghero	1697	0	2	1	0	0	950	871	10415	3	3	0	0	Aquarium di Alghero	
 Q16337013	Aquarium_Mondo_Marino	9901	0	4	0	0	0	44	258	4448	1	1	0	0		
-Q3621152	Ar/ge_kunst_Galleria_Museo	3002	0	0	0	0	0	0	320	ERRORE	ERRORE	ERRORE	0	0		
 Q623612	Ara_Pacis	59359	25	69	0	0	0	6086	984	1178725	358	309	0	0	Ara Pacis	Ara Pacis
 Q3621493	Archeoparco_del_Basileus	2201	0	0	1	0	0	91	1682	3083	1	1	0	0		
 Q3621632	Archivio_audiovisivo_del_movimento_operaio_e_democratico	28170	0	0	0	0	0	1192	776	1360	0	2	0	0		
@@ -226,7 +225,6 @@ Q3661341	Casa_museo_di_Monticello_Amiata	6138	1	1	0	0	0	0	285	2118	1	0	0	0	Casa 
 Q24938462	Casa_museo_di_Osvaldo_Licini	3373	0	5	0	0	0	0	119	3350	1	1	0	0	Casa museo di Osvaldo Licini (Monte Vidon Corrado)	
 Q94634715	Casa_museo_di_palazzo_Sipari	5406	2	5	0	0	0	182	169	1010	0	1	0	0		
 Q3867600	Casa_museo_Fantoni	6219	3	1	0	0	0	1230	503	4760	1	1	0	0	Museo Fantoni (Rovetta)	
-Q106288090	Casa_museo_Giacomo_Matteotti	9668	3	4	0	0	0	38	619	ERRORE	ERRORE	ERRORE	0	0	Casa-Museo Giacomo Matteotti (Fratta Polesine)	
 Q1046411	Casa_museo_Giovanni_Verga	3281	2	2	0	0	0	1982	1175	22583	7	7	0	0	Casa museo Giovanni Verga	
 Q88981589	Casa_museo_Ignazio_Silone	6785	3	9	0	0	0	214	149	2403	1	2	0	0	Museo Silone (Pescina)	
 Q16537648	Casa_museo_Luigi_Capuana	2464	0	0	1	0	0	1017	223	2596	1	1	0	0	Casa museo Luigi Capuana	
@@ -410,7 +408,6 @@ Q5761509	Centro_Storico_Fiat	18152	28	23	0	0	0	2534	952	11053	3	11	0	0	Centro St
 Q16336937	Centro_studi_David_Lazzaretti	7988	0	3	0	0	0	59	535	5569	2	1	0	0		
 Q115743159	Centro_Studi_di_Storia_del_Tessuto,_del_Costume_e_del_Profumo_di_Palazzo_Mocenigo	10600	11	1	0	0	0	0	801	721	10	0				
 Q3664905	Centro_studi_e_archivio_della_comunicazione	8229	0	5	0	0	0	134	1354	15181	5	4	0	0		
-Q53673075	Centro_turistico_culturale_di_San_Basilio	13805	0	17	0	0	0	0	1367	ERRORE	ERRORE	ERRORE	0	0	Centro Turistico Culturale San Basilio di Ariano nel Polesine	
 Q94532315	Centro_verde	2632	0	2	0	0	0	392	212	245	0	0	0	0		
 Q16336923	Centro_visite_del_parco_faunistico_e_delle_riserve_naturali_del_Monte_Amiata	4761	0	1	0	0	0	59	477	2297	1	0				
 Q1056344	Certosa_di_Firenze	30320	18	3	0	0	0	935	200	120094	37	27	0	0	Certosa (Florence)	Certosa di Firenze
@@ -857,13 +854,11 @@ Q1292498	Kaulon	32413	25	32	0	0	0	8108	309	49958	15	13	0	0	Kaulonia	Kaulon
 Q1133966	Keats-Shelley_Memorial_House	2575	1	1	1	0	0	967	301	30590	9	9	0	0	Keats-Shelley Museum (Rome)	Keats-Shelley Museum (Rome)
 Q3815828	Kleine_Berlin	8741	6	0	1	0	0	0	1351	37933	12	9	0	0	Kleine Berlin	
 Q57681083	Kronos_-_Museo_della_cattedrale_di_Piacenza	9065	0	0	0	0	0	0	495	2617	1	1	0	0		
-Q1316490	Kunst_Meran/Merano_Arte	23167	3	5	0	0	0	844	1798	ERRORE	ERRORE	ERRORE	0	0	Kunst Meran	
 Q55368726	La_casa_delle_marionette	3483	0	7	0	0	0	0	353	233	0	0	0	0		
 Q19365785	La_Castiglia	7811	4	9	0	0	0	1000	389	26024	8	8	0	0	Castiglia (Saluzzo)	
 Q20009218	Labirinto_della_Masone	19668	5	34	0	0	0	2476	551	292385	89	82	0	0	Labirinto della Masone	
 Q16337515	Laboratorio_della_civiltà_industriale	3565	0	1	0	0	0	158	632	1366	0	0	0	0		
 Q28870354	Laboratorio_di_scienze_della_terra	13000	4	10	0	0	0	904	766	1739	1	0	0	0	Laboratorio scienze della terra (Spoleto)	
-Q55391759	Laboratorio-Museo_Tecnologicamente	5520	1	6	0	0	0	34	726	ERRORE	ERRORE	ERRORE	0	0	Laboratorio Museo Tecnologicamente	
 Q3217568	Lanificio_Conte	12659	5	8	0	0	0	1212	420	13860	4	4	0	0	Lanificio Conte (Schio)	
 Q776666	Lanterna_di_Genova	32095	40	17	0	0	0	5724	1870	316557	96	85	0	0	Torre della Lanterna (Genoa)	
 Q20009219	Lapidario_del_Capitolium_di_Brescia	5719	1	3	0	0	0	0	477	5476	2	1	0	0		
@@ -1094,7 +1089,6 @@ Q24941299	Museo_archeologico_nazionale_di_Altamura	1805	1	1	1	0	0	0	518	4775	1	2
 Q1735001	Museo_archeologico_nazionale_di_Altino	13141	14	13	0	0	0	2318	902	20556	6	5	0	0	Museo Archeologico Nazionale di Altino (Altino, Quarto d'Altino)	
 Q637182	Museo_archeologico_nazionale_di_Aquileia	21983	1	1	0	0	0	210	425	25146	8	6	0	0	Museo archeologico (Aquileia)	
 Q1151133	Museo_archeologico_nazionale_di_Cagliari	6840	7	0	0	0	0	808	598	34246	10	10	0	0	Museo archeologico nazionale (Cagliari)	
-Q55686092	Museo_archeologico_nazionale_di_Calatia	2821	0	2	0	0	0	0	199	ERRORE	ERRORE	ERRORE	0	0	Museo Archeologico di Calatia (Maddaloni)	
 Q21552041	Museo_archeologico_nazionale_di_Campli	4642	11	5	0	0	0	2479	412	4751	1	2	0	0	Museo archeologico nazionale di Campli	
 Q48803518	Museo_archeologico_nazionale_di_Castiglioncello	2871	2	1	0	0	0	1057	500	2191	1	1	0	0	Museo archeologico nazionale di Castiglioncello	
 Q3329484	Museo_archeologico_nazionale_di_Chiusi	6783	5	1	0	0	0	208	726	19903	6	6	0	0	Museo archeologico nazionale di Chiusi	
@@ -1538,7 +1532,6 @@ Q19545436	Museo_del_corallo_(Ravello)	678	0	0	1	0	0	0	360	2277	1	0	0	0
 Q3867946	Museo_del_costume_e_della_tradizione_della_nostra_gente	3704	3	2	0	0	0	143	749	1892	1	0	0	0	Museo del costume e della tradizione della nostra gente	
 Q3867951	Museo_del_costume_farnesiano	5729	25	0	1	0	0	0	854	2905	1	1	0	0	Museum of Farnese Garments	
 Q3867947	Museo_del_cristallo	4011	4	0	0	0	0	1460	128	4839	1	1	0	0	Museo del Cristallo	
-Q55673024	Museo_del_disco_d'epoca	5148	0	1	0	0	0	0	187	ERRORE	ERRORE	ERRORE	0	0	Museo del disco d'epoca	
 Q124398288	Museo_del_Duomo_(Ravello)	3065	0	3	0	0	0	0	182	108	0	0	0	0	Museo del Duomo (Ravello)	
 Q3867910	Museo_del_duomo_di_Guardiagrele	7160	4	3	0	0	0	143	644	2124	1	0	0	0	Museo del Duomo (Guardiagrele)	
 Q3867914	Museo_del_duomo_di_Udine	2208	3	0	0	0	0	0	1285	3566	1	1	0	0	Museo del duomo di Udine	
@@ -1630,7 +1623,6 @@ Q3849166	Museo_del_Tesoro_di_san_Gennaro	8433	3	7	0	0	0	14239	190	124190	38	49	0
 Q3867932	Museo_del_tesoro_di_santa_Maria_dell'Impruneta	5131	5	0	0	0	0	0	358	2020	1	0	0	0	Museo del tesoro di Santa Maria dell'Impruneta	
 Q54856549	Museo_del_tesoro_di_Santa_Maria_Maggiore_di_Bergamo	11124	5	17	0	0	0	1052	656	4692	1	3	0	0	Tesori di Santa Maria Maggiore	
 Q3867981	Museo_del_tesoro_e_area_archeologica_di_Sant'Eulalia	7080	0	2	0	0	0	54	362	290	0	1	0	0		
-Q27992875	Museo_del_tessile_(Leffe)	2405	0	1	0	0	0	0	358	ERRORE	ERRORE	ERRORE	0	0	Museo del tessile (Leffe)	
 Q16580582	Museo_del_tessile_e_del_costume	8426	6	6	0	0	0	989	995	3839	1	1	0	0	Museo del tessile e del costume. Spoleto	
 Q3867982	Museo_del_tessile_e_dell'abbigliamento_Elena_Aldobrandini	3681	2	3	0	0	0	1569	368	6362	2	2	0	0Museo Aldobrandini (Naples)		
 Q3867987	Museo_del_tessile_e_della_tradizione_industriale_di_Busto_Arsizio	10194	7	5	0	0	0	5162	231	18368	6	5	00Museo del tessile e della tradizione industriale di Busto Arsizio			
@@ -1671,7 +1663,6 @@ Q55359401	Museo_dell'arte_serica_e_laterizia	4537	1	4	0	0	0	0	176	237	0	0	0	0	Mu
 Q3868016	Museo_dell'artigianato_artistico_abruzzese	3627	2	1	0	0	0	143	1051	3606	1	1	0	0		
 Q3868017	Museo_dell'artigianato_tessile,_della_seta,_del_costume_e_della_moda_calabrese	2893	1	0	1	0	0	487	2262	3743	1	100				
 Q3329813	Museo_dell'artigianato_valdostano_di_tradizione	3343	2	1	0	0	0	0	538	3955	1	1	0	0	Museo dell'artigianato valdostano di tradizione	
-Q22916244	Museo_dell'assicurazione_ETS	14904	6	17	0	0	0	7444	330	ERRORE	ERRORE	ERRORE	0	0	Fondazione Mansutti	
 Q55386187	Museo_dell'astronomia_e_Planetario_di_Torino	4318	1	1	2	0	2	3946	536	20954	6	5	0	0		
 Q3868018	Museo_dell'attore_napoletano	2850	0	0	1	0	0	0	2046	3450	1	1	0	0		
 Q3868020	Museo_dell'automobile_Bonfanti-Vimar	5103	3	2	2	0	0	214	117	4666	1	1	0	0	Museo dell'automobile Bonfanti-Vimar	
@@ -1812,7 +1803,6 @@ Q28669814	Museo_della_Manifattura_Chini	3370	1	0	0	0	0	0	280	4349	1	1	0	0	Museo 
 Q3868095	Museo_della_marineria_di_Cesenatico	17083	4	1	1	0	0	1038	887	21569	7	6	0	0	Museo della Marineria (Cesenatico)	
 Q3868096	Museo_della_matematica	1420	0	1	0	0	0	0	563	6659	2	1	0	0		
 Q3868098	Museo_della_media_valle_del_Liri	1654	1	0	1	0	1	93	827	2037	1	1	0	0		
-Q55674491	Museo_della_Memoria_di_Borgo_a_Mozzano	2513	0	4	0	0	0	0	288	ERRORE	ERRORE	ERRORE	0	0		
 Q106449354	Museo_della_memoria,_Assisi_1943-1944	4479	2	0	1	0	0	0	486	1134	0	1	0	0		
 Q25052267	Museo_della_merda	4433	1	5	0	0	0	0	388	7640	2	10	0	0		
 Q55375030	Museo_della_mezzadria_senese	18627	2	15	0	0	0	5742	489	1899	1	1	0	0	Museo della Mezzadria Senese	
@@ -2192,7 +2182,6 @@ Q3868325	Museo_diocesano_del_Montefeltro	2620	0	0	0	0	0	191	715	1834	1	0	0	0
 Q3868326	Museo_diocesano_dell'arredo_sacro	1107	0	0	0	0	0	197	583	693	0	0	0	0		
 Q3868329	Museo_diocesano_della_cattedrale_e_cunicoli_etruschi_di_Chiusi	6452	1	0	0	0	0	208	699	4849	1	2	0	0Museo del Duomo, Chiusi		
 Q3868336	Museo_diocesano_di_arte_moderna_Dedalo_Montali	1685	0	0	0	0	0	190	501	2598	1	1	0	0		
-Q55671640	Museo_diocesano_di_Aversa	2408	0	2	0	0	0	0	138	ERRORE	ERRORE	ERRORE	0	0		
 Q55369253	Museo_diocesano_di_Bari	2668	1	1	1	0	0	236	420	48	0	0	0	0	Museo Diocesano (Bari)	
 Q21196221	Museo_diocesano_di_Capua	4032	1	0	1	0	0	192	918	1952	1	1	0	0	Museo diocesano (Capua)	
 Q3868282	Museo_diocesano_di_Concordia-Pordenone	6774	0	5	0	0	0	2172	137	1436	0	1	0	0		
@@ -2342,7 +2331,6 @@ Q3867611	Museo_Hendrik_Christian_Andersen	24330	6	9	0	0	0	3357	510	42698	13	13	0
 Q531218	Museo_Horne	37327	7	0	0	0	0	1613	1067	28287	9	8	0	0	Museo Horne	
 Q3868384	Museo_ideale_Leonardo_da_Vinci	14444	0	0	0	0	0	1726	113	11975	4	3	0	0		
 Q17636846	Museo_il_Correggio	3665	3	0	0	0	0	0	281	5664	2	2	0	0	Museo Il Correggio (Correggio)	
-Q127273419	Museo_Industriale_Italiano	11821	2	11	0	0	0	56	482	ERRORE	ERRORE	ERRORE	0	0		
 Q3868385	Museo_internazionale_del_cinema_e_dello_spettacolo	12470	7	9	0	0	0	1817	339	10133	3	3	0	0	Museo internazionale del cinema e dello spettacolo	
 Q113078148	Museo_Internazionale_del_Presepe	1292	1	2	0	0	0	0	380	538	0	1	0	0	Museo del Presepe (Greccio)	
 Q3867967	Museo_internazionale_del_presepio_in_miniatura_Guido_Colitti	1560	0	1	1	0	0	0	715	1862	1	0	0	0		
@@ -2375,7 +2363,6 @@ Q1954257	Museo_lapidario_maffeiano	17377	8	18	0	0	0	0	1058	38765	12	11	0	0	Museo
 Q60840190	Museo_Lavazza	3091	2	0	0	0	0	0	251	13102	4	7	0	0	Museo Lavazza	
 Q89403319	Museo_Lechi	1848	1	0	1	0	0	32	601	2249	1	1	0	0		
 Q3868400	Museo_leonardiano_di_Vinci	5428	3	1	1	0	0	954	571	44021	13	8	0	0	Museo Leonardiano (Vinci)	
-Q55675415	Museo_Leoncavallo_(Montalto_Uffugo)	3744	0	4	0	0	0	0	420	ERRORE	ERRORE	ERRORE	0	0		
 Q17636851	Museo_Leone	3085	2	0	2	0	0	0	450	9992	3	3	0	0	Museo Leone (Vercelli)	
 Q89926748	Museo_Loreto_Grande	5544	1	7	0	0	0	743	277	555	0	0	0	0		
 Q16337780	Museo_Louis_Braille	1357	0	0	0	0	0	44	113	3799	1	1	0	0		
@@ -2959,7 +2946,6 @@ Q3905107	Pinacoteca_civica_di_Reggio_Calabria	7596	5	3	0	0	0	0	954	19592	6	5	0	0
 Q18810134	Pinacoteca_civica_e_galleria_d'arte_contemporanea	10286	12	0	0	0	0	1499	303	760	0	1	0	0	Pinacoteca Civica (Jesi)	
 Q3905102	Pinacoteca_civica_Fortunato_Duranti	6088	3	1	0	0	0	0	849	3387	1	1	0	0	Pinacoteca Civica (Montefortino)	
 Q3905105	Pinacoteca_civica_Francesco_Podesti	23815	23	19	0	0	0	4503	1405	21784	7	5	0	0	Pinacoteca civica Francesco Podesti	
-Q18882027	Pinacoteca_civica_Tacchi-Venturi	3839	1	2	0	0	0	0	502	0	0	ERRORE	0	0	Pinacoteca Tacchi-Venturi	
 Q21552331	Pinacoteca_civica_Vincenzo_Bindi	2887	1	2	0	0	0	290	91	2418	1	1	0	0	Palazzo Bindi (Giulianova)	
 Q3905109	Pinacoteca_comunale_(Deruta)	13596	65	0	0	0	0	0	268	3981	1	1	0	0	Pinacoteca comunale (Deruta)	
 Q106766805	Pinacoteca_comunale_Attilio_Moroni	3831	2	1	0	0	0	0	352	793	0	1	0	0		
@@ -3045,7 +3031,6 @@ Q3931110	Reale_tenuta_di_Carditello	10846	10	6	0	0	0	0	530	183505	56	47	0	0	Real
 Q4115652	Reggia_di_Capodimonte	43477	15	68	0	0	0	7531	1080	206604	63	49	1	0	Palace of Capodimonte	
 Q327983	Reggia_di_Caserta	79506	23	92	0	0	0	28016	880	3048501	927	727	0	0	Palace of Caserta	Caserta
 Q19838	Reggia_di_Venaria_Reale	26095	9	21	0	0	0	4302	1554	783519	238	232	0	0	Reggia (Venaria Reale)	
-Q2220343	Repubblica_partigiana_di_Montefiorino#Il_Museo	30024	1	4	1	2	0	8657	2027	ERRORE	ERRORE	ERRORE	0	0		
 Q3934723	Ricetto_di_Candelo	12742	16	1	0	0	0	306	1209	238182	72	64	0	0	Ricetto di Candelo	Ricetto di Candelo
 Q3936777	Riserva_naturale_delle_Grotte_di_Bossea	6483	2	8	0	0	0	6156	1083	24436	7	7	0	0	Riserva naturale delle Grotte di Bossea	
 Q3936598	Riserva_naturale_Incisioni_rupestri_di_Ceto,_Cimbergo_e_Paspardo	10237	15	7	0	0	0	1765	570	16170	5	3	00Riserva naturale Incisioni rupestri di Ceto, Cimbergo e Paspardo			

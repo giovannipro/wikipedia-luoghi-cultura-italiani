@@ -20,7 +20,3 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-
-# Codekit
-config.codekit3
-*.codekit3

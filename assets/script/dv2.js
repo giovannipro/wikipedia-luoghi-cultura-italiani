@@ -37,6 +37,8 @@ function dv2() {
 		filtered_data = data.filter(item =>
 			item.avg_pv > filter_item
 		)
+
+		statistics(data)
 		// console.log(filtered_data.length)
 
 		// display data
@@ -201,7 +203,7 @@ function dv2() {
 
                 // size
 				content += "<tr>"
-				content += "<td class='label'>" + size + "</td>"
+				content += "<td class='label'>" + size + "<span style='color: #b9b9b9;'> (byte)</span></td>"
 				content += "<td class='value'>" + d.size.toLocaleString() + "</td>"
 				content += "<td></td>"
 				content += "</tr>"
@@ -209,14 +211,14 @@ function dv2() {
 
             	// discussion
 				content += "<tr>"
-				content += "<td class='label'>" + discussion + "</td>"
+				content += "<td class='label'>" + discussion + "<span style='color: #b9b9b9;'> (byte)</span></td>"
 				content += "<td class='value'>" + d.discussion_size.toLocaleString() + "</td>"
 				content += "<td></td>"
 				content += "</tr>"
 
             	// incipit
 				content += "<tr>"
-				content += "<td class='label'>" + incipit + "</td>"
+				content += "<td class='label'>" + incipit + "<span style='color: #b9b9b9;'> (byte)</span></td>"
 				content += "<td class='value'>" + d.incipit_size.toLocaleString() + "</td>"
 				content += "<td></td>"
 				content += "</tr>"

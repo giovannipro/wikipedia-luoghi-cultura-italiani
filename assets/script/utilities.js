@@ -566,6 +566,7 @@ function changeTitle(lang) {
 }
 
 function format_data(data){
+
 	data.forEach(function (d,i) {
 		d.average_daily_visit = +d.average_daily_visit
 		d.article = d.article.replace(/_/g," ")
@@ -608,6 +609,26 @@ function format_data(data){
 		d.features = d.references + d.notes + d.images;
 	})
 	return data
+}
+
+function statistics(data){
+	const analized_articles_box = document.getElementById('analized_articles')
+	const avg_pv_articles_box = document.getElementById('avg_pv_articles')
+	const avg_size_articles_box = document.getElementById('avg_size_articles')
+
+	const analized_articles = data.length
+
+	let sum_avg_pv = 0
+	data.forEach(obj => sum_avg_pv += obj.avg_pv);
+	const avg_pv_articles = Math.floor(sum_avg_pv / analized_articles)
+
+	let sum_size = 0
+	data.forEach(obj => sum_size += obj.size);
+	const avg_size_articles = Math.floor(sum_size / analized_articles)
+
+	analized_articles_box.innerHTML = analized_articles
+	avg_pv_articles_box.innerHTML = avg_pv_articles
+	avg_size_articles_box.innerHTML = avg_size_articles
 }
 
 window.addEventListener('load', function () {    

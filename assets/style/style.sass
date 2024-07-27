@@ -6,6 +6,8 @@ $tablet-h: 900px
 
 $light_gray: #d6d5d5
 
+$border: #979797
+
 /* ------- typography ------- */
 
 html, body
@@ -458,13 +460,40 @@ footer
 			display: block
 			margin-bottom: 1rem
 
-	
 
 .desktop_only
 
 	@media only screen and (max-width: $tablet-v)
 		display: none
 
+/* ------- statistics ------- */
+
+#statistics
+	display: flex
+	justify-content: space-between
+	border-bottom: 1px solid $border
+	height: 4rem
+	margin-bottom: 3rem
+
+	.value_name
+		display: flex
+		justify-content: space-between
+		padding: 10px
+		align-items: center
+		width: 33%
+		border-left: 1px solid $border
+
+
+		.stat_value
+			width: 15%
+			text-align: right
+			font-weight: bold
+
+		.stat_name
+			width: 80%
+
+	.value_name:first-child
+		border: none
 
 /* ------- dataviz n. 1 ------- */
 

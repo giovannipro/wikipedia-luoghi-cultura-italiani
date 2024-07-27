@@ -62,6 +62,7 @@ function dv3() {
 		
 		let total = filtered_data.length
 
+		statistics(data)
 
 		// svg and plot
 		// ---------------------------
