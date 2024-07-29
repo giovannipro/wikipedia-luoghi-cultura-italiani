@@ -439,12 +439,25 @@ header a {
   display: flex;
   width: 100%;
 }
-
 #sidebar .item_list .article_list {
   text-decoration: none;
-  width: 70%;
+  width: 40%;
 }
-
+@media only screen and (max-width: 450px) {
+  #sidebar .item_list .article_list {
+    width: 70%;
+  }
+}
+#sidebar .item_list .article_region {
+  width: 30%;
+  color: #9d9b9b;
+  padding-left: 0.5rem;
+}
+@media only screen and (max-width: 450px) {
+  #sidebar .item_list .article_region {
+    display: none;
+  }
+}
 #sidebar .item_list .value {
   width: 30%;
   text-align: right;

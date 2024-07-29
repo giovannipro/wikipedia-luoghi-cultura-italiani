@@ -528,6 +528,7 @@ function dv2(region,the_sort) {
 			});
 
 			function update_sort(region,the_sort){
+				// console.log(region,the_sort)
 
 				// filter data by region
 				// ---------------------------

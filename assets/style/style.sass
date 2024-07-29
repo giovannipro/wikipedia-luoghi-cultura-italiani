@@ -386,15 +386,26 @@ header a
 	display: flex
 	width: 100%
 
-#sidebar .item_list .article_list 
-	text-decoration: none
-	width: 70%
+	.article_list 
+		text-decoration: none
+		width: 40%
 
-#sidebar .item_list .value 
-	width: 30%
-	text-align: right
-	margin-left: 0.5rem
-	color: #9d9b9b
+		@media only screen and (max-width: 450px)
+			width: 70%
+
+	.article_region
+		width: 30%
+		color: #9d9b9b
+		padding-left: .5rem
+
+		@media only screen and (max-width: 450px)
+			display: none
+
+	.value 
+		width: 30%
+		text-align: right
+		margin-left: 0.5rem
+		color: #9d9b9b
 
 #sidebar .bar 
 	height: 0.2rem 
