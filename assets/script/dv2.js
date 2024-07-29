@@ -7,6 +7,9 @@ const wiki_link = "https://it.wikipedia.org/wiki/";
 const variation_line_opacity = 0.7;
 const min_avg_pv = 100;
 
+const min_circle_size = 0;
+const max_circle_size = 35;
+
 const stroke_dash = "3,3";
 
 const log_exponent = 0.5; 
@@ -63,7 +66,7 @@ function dv2(region,the_sort) {
 		})
 
 		let r = d3.scaleLinear()
-			.range([0, 20])
+			.range([min_circle_size, max_circle_size])
 			.domain([0,r_max])
 
 		let x = d3.scaleLinear()
@@ -304,50 +307,50 @@ function dv2(region,the_sort) {
 			}
 			else if (the_sort == 2){
 				min = d3.max(the_data, function(d) { 
-					return +d.days;
+					return d.days;
 				})
 				max = d3.min(the_data, function(d) { 
-					return +d.days;
+					return d.days;
 				})
 			}
 			else if (the_sort == 3){
 				min = d3.min(the_data, function(d) { 
-					return +d.size;
+					return d.size;
 				})
 				max = d3.max(the_data, function(d) { 
-					return +d.size;
+					return d.size;
 				})
 			}
 			else if (the_sort == 4){
 				min = d3.min(the_data, function(d) { 
-					return +d.discussion_size;
+					return d.discussion_size;
 				})
 				max = d3.max(the_data, function(d) { 
-					return +d.discussion_size;
+					return d.discussion_size;
 				})
 			}
 			else if (the_sort == 5){
 				min = d3.min(the_data, function(d) { 
-					return +d.incipit_size;
+					return d.incipit_size;
 				})
 				max = d3.max(the_data, function(d) { 
-					return +d.incipit_size;
+					return d.incipit_size;
 				})
 			}
 			else if (the_sort == 6){
 				min = d3.min(the_data, function(d) { 
-					return +d.issues;
+					return d.issues;
 				})
 				max = d3.max(the_data, function(d) { 
-					return +d.issues;
+					return d.issues;
 				})
 			}
 			else if (the_sort == 7){
 				min = d3.min(the_data, function(d) { 
-					return +d.images;
+					return d.images;
 				})
 				max = d3.max(the_data, function(d) { 
-					return +d.images;
+					return d.images;
 				})
 			}
 			// console.log(min, max)

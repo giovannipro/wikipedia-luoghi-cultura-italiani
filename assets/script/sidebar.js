@@ -227,7 +227,7 @@ function sidebar(dv,data,the_sort){
 			let r_max = Math.sqrt(318000/3.14)
 
 			let r = d3.scaleLinear()
-				.range([0, 20])
+				.range([min_circle_size, max_circle_size])
 				.domain([0,r_max])
 
 			let svg = d3.select('#' + container)
