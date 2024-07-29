@@ -26,7 +26,7 @@ let margin = {top: 20, left: 0-reduction, bottom: 20, right: 60-reduction},
 	width = window_w - (margin.right + margin.right),
 	height = window_h - (margin.top + margin.bottom);
 
-function dv2() {
+function dv2(the_sort) {
 
 	d3.tsv("../assets/data/voci.tsv")
 		.then(loaded)
@@ -132,34 +132,8 @@ function dv2() {
 			.attr('id', 'tooltip_dv1')
 			.attr('max-width',100)
 			.direction(function (d,i) {
-
-				let length = filtered_data.length
-				let n_s = ''
-				let w_e = ''
-				let direction = ''
-
-				if (d.new_id == undefined){
-					d.new_id = i
-				}
-				console.log(d.new_id)
-
-				if (d.avg_pv > (y_max/3*2) ){
-					n_s = 's'
-				}
-				else {
-					n_s = 'n'
-				}
-
-				if (d.new_id < length / 3){
-					w_e = 'e'
-				}
-				else if (i > (length / 3 * 2) ) {
-					w_e = 'w'
-				}
-
-				direction = n_s + w_e
-
-				return direction
+				let direction = tooltip_direction(filtered_data, i, d.avg_pv)
+				return direction 
 			})
 			.offset([-10,0])
 			.html(function(d,i) {
@@ -403,10 +377,10 @@ function dv2() {
 		});
 
 		function update_sort(the_sort){
-			console.log(the_sort)
+			// console.log(the_sort)
 
 			if (the_sort == 1) {
-				max = total	
+				max = filtered_data.length	
 				min = 0
 			}
 			else if (the_sort == 3){
@@ -426,10 +400,10 @@ function dv2() {
 				})
 			}
 
-			filtered_data.map((item,i) => {
-				item.new_id = i
-			})
-			console.log(filtered_data[0])
+			// filtered_data.map((item,i) => {
+			// 	item.new_id = i
+			// })
+			// console.log(filtered_data[filtered_data.length - 1].article,filtered_data[filtered_data.length - 1].new_id)
 
 			x = d3.scaleLinear()
 				.domain([min,max])
@@ -453,15 +427,11 @@ function dv2() {
 						return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
 					}
 				})
+
+			tooltip.direction(function (d,i) {
+				return 'w'
+			})
 		}
-
-
-		// sort_box.change(function() {
-		// 	new_sort = parseInt(this.value);
-		// 	let subject = $("#subjects option:selected").val();
-
-		// 	update_sort(subject,new_sort);
-		// });
 
 		function chart_scale(){
 
@@ -551,6 +521,35 @@ function dv2() {
 		chart_scale()
 	}
 }
+
+function tooltip_direction(data,x,y){
+
+	const x_max = filtered_data.length
+	let y_max = d3.max(data, function(d) { 
+		return d.avg_pv;
+	})
+
+	let n_s = ''
+	let w_e = ''
+
+	if (y > (y_max/3*2) ){
+		n_s = 's'
+	}
+	else {
+		n_s = 'n'
+	}
+
+	if (x < x_max / 3){
+		w_e = 'e'
+	}
+	else if (x > (x_max / 3 * 2) ) {
+		w_e = 'w'
+	}
+
+	const direction = n_s + w_e
+	return direction
+}
+
 
 window.onload = function() {
 	dv2(1);
