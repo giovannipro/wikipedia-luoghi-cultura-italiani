@@ -566,8 +566,11 @@ function changeTitle(lang) {
 }
 
 function format_data(data){
+	// console.log(data)
 
-	data.forEach(function (d,i) {
+	const filteredData = data.filter(item => item.avg_pv !== 'ERRORE');
+
+	filteredData.forEach(function (d,i) {
 		d.article = d.article.replace(/_/g," ")
 		d.size = +d.size
 		d.discussion_size = +d.discussion_size
@@ -607,10 +610,11 @@ function format_data(data){
 		
 		d.features = d.references + d.notes + d.images;
 	})
-	return data
+	return filteredData
 }
 
 function statistics(data){
+	const statistics_box = document.getElementById('statistics')
 	const analized_articles_box = document.getElementById('analized_articles')
 	const avg_pv_articles_box = document.getElementById('avg_pv_articles')
 	const avg_size_articles_box = document.getElementById('avg_size_articles')
@@ -628,6 +632,16 @@ function statistics(data){
 	analized_articles_box.innerHTML = analized_articles
 	avg_pv_articles_box.innerHTML = avg_pv_articles
 	avg_size_articles_box.innerHTML = avg_size_articles
+
+	// function load_values(value){
+
+	// 	let i = 0
+	// 	let t = setInterval(function(){
+	// 		if (i == analized_articles) clearInterval(t);
+	// 		analized_articles_box.innerHTML = i++;
+	// 	}, 1 );
+	// }
+	// load_values(analized_articles)
 }
 
 window.addEventListener('load', function () {    

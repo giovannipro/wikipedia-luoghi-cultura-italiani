@@ -37,6 +37,7 @@ function dv2(the_sort) {
 		filtered_data = data.filter(item =>
 			item.avg_pv > filter_item
 		)
+		console.log(filtered_data)
 
 		statistics(data)
 		// console.log(filtered_data.length)
