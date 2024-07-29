@@ -193,9 +193,8 @@ header a {
 }
 #select_section_1 .select_box .selector, #select_section_2 .select_box .selector, #select_section_3 .select_box .selector {
   padding-top: 50px;
-  width: 32%;
+  width: 49%;
   border-right: 1px solid #d6d5d5;
-  width: 31%;
 }
 @media only screen and (max-width: 768px) {
   #select_section_1 .select_box .selector, #select_section_2 .select_box .selector, #select_section_3 .select_box .selector {
@@ -542,6 +541,13 @@ footer ul li {
   border-bottom: 1px solid #979797;
   height: 4rem;
   margin-bottom: 3rem;
+  width: 100%;
+}
+@media only screen and (max-width: 768px) {
+  #statistics {
+    flex-direction: column;
+    height: auto;
+  }
 }
 #statistics .value_name {
   display: flex;
@@ -549,7 +555,17 @@ footer ul li {
   padding: 10px;
   align-items: center;
   width: 33%;
-  border-left: 1px solid #979797;
+  border-left: 1px solid #d6d6d6;
+}
+@media only screen and (max-width: 768px) {
+  #statistics .value_name {
+    width: 100%;
+    border-left: none;
+    border-bottom: 1px solid #d6d6d6;
+  }
+  #statistics .value_name .value_name:last-child {
+    border-bottom: none;
+  }
 }
 #statistics .value_name .stat_value {
   width: 15%;
@@ -560,7 +576,7 @@ footer ul li {
   width: 80%;
 }
 #statistics .value_name:first-child {
-  border: none;
+  border-left: none;
 }
 
 /* ------- dataviz n. 1 ------- */

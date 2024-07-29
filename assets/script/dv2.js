@@ -26,35 +26,30 @@ let margin = {top: 20, left: 0-reduction, bottom: 20, right: 60-reduction},
 	width = window_w - (margin.right + margin.right),
 	height = window_h - (margin.top + margin.bottom);
 
-function dv2(the_sort) {
+function dv2(region,the_sort) {
 
 	d3.tsv("../assets/data/voci.tsv")
 		.then(loaded)
 
 	function loaded(data) {
-		
+		// console.log(data,region,the_sort)
+
 		data = format_data(data)
+		
 		filtered_data = data.filter(item =>
 			item.avg_pv > filter_item
 		)
+
 		console.log(filtered_data)
-
 		statistics(data)
-		// console.log(filtered_data.length)
 
-		// display data
-		// filtered_data.forEach(item =>{
-		// 	console.log(item)
-		// })
-
-		// svg and plot
+		// svg 
 		// ---------------------------
 		let svg = d3.select(container)
 			.append("svg")
 			.attr("width", width + (margin.right + margin.right))
 			.attr("height",height + (margin.top + margin.bottom))
 			.attr("id", "svg")
-
 
 		// scale 
 		// ---------------------------
@@ -82,7 +77,7 @@ function dv2(the_sort) {
 			.domain([0,y_max+(y_max/100*10)]) 
 			.range([height-margin.top,0])
        
-       	// grid and plot
+		// grid and plot
 		// ---------------------------
 
 		let grid = svg.append("g")
@@ -123,9 +118,9 @@ function dv2(the_sort) {
 			.attr("font-size",font_size)
 
 		function make_y_gridlines() {		
-		    return d3.axisLeft(y)
+			return d3.axisLeft(y)
 		}
-
+	
 		// tooltip
 		// ---------------------------
 		let tooltip = d3.tip()
@@ -133,7 +128,7 @@ function dv2(the_sort) {
 			.attr('id', 'tooltip_dv1')
 			.attr('max-width',100)
 			.direction(function (d,i) {
-				let direction = tooltip_direction(filtered_data, i, 0, filtered_data.length, d.avg_pv)
+				let direction = tooltip_direction(filtered_data, i, 0, filtered_data.length, d.avg_pv,false)
 				return direction 
 			})
 			.offset([-10,0])
@@ -221,282 +216,449 @@ function dv2(the_sort) {
 	            content += "</table>"
                 return content;
             });
-       	plot.call(tooltip);
+	       	plot.call(tooltip);
 
-       	const duration = 0
-	    function handleMouseOver(){
-			// hide circles
-			d3.selectAll(".article_circles,.line_prev,.circle_prev")
-				.transition()
-				.duration(duration)
-				.attr("opacity",0.2)
+	       	const duration = 0
+		    function handleMouseOver(){
+				// hide circles
+				d3.selectAll(".article_circles,.line_prev,.circle_prev")
+					.transition()
+					.duration(duration)
+					.attr("opacity",0.2)
 
-			// highlight
-			d3.select(this)
-				.transition()
-				.duration(duration)
-				.attr("opacity",1)
+				// highlight
+				d3.select(this)
+					.transition()
+					.duration(duration)
+					.attr("opacity",1)
 
-			d3.select(this.previousSibling).select(".circle_prev,.line_prev")
-				.transition()
-				.duration(duration)
-				.attr("opacity",1)
-		}
+				d3.select(this.previousSibling).select(".circle_prev,.line_prev")
+					.transition()
+					.duration(duration)
+					.attr("opacity",1)
+			}
 
-	    function handleMouseOut(){
-			d3.selectAll(".article_circles")
-				.transition()
-				.duration(duration)
-				.attr("opacity",1)
+		    function handleMouseOut(){
+				d3.selectAll(".article_circles")
+					.transition()
+					.duration(duration)
+					.attr("opacity",1)
 
-			d3.selectAll(".variation").select(".circle_prev")
-				.transition()
-				.duration(duration)
-				.attr("opacity",0)
+				d3.selectAll(".variation").select(".circle_prev")
+					.transition()
+					.duration(duration)
+					.attr("opacity",0)
 
-			d3.selectAll(".variation").select(".line_prev")
-				.transition()
-				.duration(duration)
-				.attr("opacity",variation_line_opacity)
-	    }
+				d3.selectAll(".variation").select(".line_prev")
+					.transition()
+					.duration(duration)
+					.attr("opacity",variation_line_opacity)
+		    }
 
-		// plot data
-		// ---------------------------
+			let articles = plot.append("g")	
+				.attr("id","articles")
+				.attr("transform","translate(" + shiftx_article + "," + (margin.top) + ")")	
 
-		let articles = plot.append("g")	
-			.attr("id","articles")
-			.attr("transform","translate(" + shiftx_article + "," + (margin.top) + ")")	
 
-		let article = articles.selectAll("g")
-			.data(filtered_data)
-			.enter()
-			.append("g")
-			.attr("class","article")
-			.attr("id", function(d,i){
-				return i
-			})
-			.attr("data-article", function(d,i){
-				return d.article
-			})
-			.attr("data-subject", function(d,i){
-				return d.subject
-			})
-			.attr("transform", function(d,i){
-				return "translate(" + (x(i)+50) + ",0)"
-			})
-			.on("mouseover", tooltip.show) 
-			.on("mouseout", tooltip.hide)
+			let article = articles.selectAll("g")
+				.data(filtered_data)
+				.enter()
+				.append("g")
+				.attr("class","article")
+				.attr("id", function(d,i){
+					return i
+				})
+				.attr("data-article", function(d,i){
+					return d.article
+				})
+				.attr("data-subject", function(d,i){
+					return d.subject
+				})
+				.attr("transform", function(d,i){
+					return "translate(" + (x(i)+50) + ",0)"
+				})
+				.on("mouseover", tooltip.show) 
+				.on("mouseout", tooltip.hide)
 
-		// articles
-		let article_circles = article.append("g")
-			.attr("class","article_circles")
-			.attr("transform",function (d,i) {
-				return "translate(" + 0 + "," + y(+d.avg_pv) + ")"
-			})	
-			.attr("id", function(d,i){
-				return 'id_' + d.id_wikidata
-			})
-			.on("mouseover", handleMouseOver) 
-			.on("mouseout", handleMouseOut)
-			.append("a")
-			.attr("xlink:href", function(d,i){
-				return wiki_link + d.article
-			})
-			.attr("target","_blank")
+		let the_data;
 
-		let circles = article_circles.append("circle")
-			.transition()
-			.duration(500)
-			.delay(function(d,i){ 
-				return i * 2
-			})
-			.attr("cx",0)
-			.attr("cy",0)	
-			.attr("fill", function(d,i){
-				return "#00b2ff"
-			})
-			.attr("opacity",0.5)
-			.attr("r",0)
-			.transition()
-			.ease(d3.easeLinear)
-			.duration(500) 
-			.attr("r", function(d,i){
-				return r(Math.sqrt(d.size/3.14)) 
-			})
-			.attr("data-size", function(d,i){
-				return d.size
-			})
+		function display_data(region,the_sort){
+			// console.log(region,the_sort)
 
-		let incipit = article_circles.append("circle")
-			.transition()
-			.duration(500)
-			.delay(function(d,i){ 
-				return i * 2
-			})
-			.attr("cx",0)
-			.attr("cy",0)
-			.attr("fill", function(d,i){
-				return "#00b2ff"
-			})
-			.attr("opacity",0.5)
-			.attr("r", function(d,i){
-				return r(Math.sqrt(d.incipit_size/3.14))
-			})
-			.attr("data-incipit", function(d,i){
-				return d.incipit_size
-			})
+			article.remove()
 
-		let discussion = article_circles.append("circle")
-			.transition()
-			.duration(500)
-			.delay(function(d,i){ 
-				return i * 2
-			})
-			.attr("cx",0)
-			.attr("cy",0)
-			.attr("stroke", function(d,i){
-				return "#00b2ff"
-			})
-			.attr("fill","transparent")
-			.attr("stroke-width",0.5)
-			.attr("opacity",0.9)
-			.attr("r",0)
-			.transition()
-			.delay(500)
-			.ease(d3.easeLinear)
-			.duration(500) 
-			.attr("r", function(d,i){
-				return r(Math.sqrt(d.discussion_size/3.14))
-			})
+			// filter data by region
+			// ---------------------------
+			if (region == 'all'){
+				the_data = filtered_data
+			}
+			else {
+				the_data = filtered_data.filter(item => item.region == region)
+			}
 
-		// sort data
-		// ---------------------------
-		const sort_box = document.getElementById('sort_article')
-
-		sort_box.addEventListener("change", function() {
-			update_sort(this.value)
-		});
-
-		function update_sort(the_sort){
+			// review the elements attributes
+			// ---------------------------
 
 			if (the_sort == 1) {
 				min = 0
-				max = filtered_data.length	
+				max = the_data.length
 			}
 			else if (the_sort == 2){
-				min = d3.min(filtered_data, function(d) { 
-					return d.days;
+				min = d3.max(the_data, function(d) { 
+					return +d.days;
 				})
-				max = d3.max(filtered_data, function(d) { 
-					return d.days;
+				max = d3.min(the_data, function(d) { 
+					return +d.days;
 				})
 			}
 			else if (the_sort == 3){
-				min = d3.min(filtered_data, function(d) { 
-					return d.size;
+				min = d3.min(the_data, function(d) { 
+					return +d.size;
 				})
-				max = d3.max(filtered_data, function(d) { 
-					return d.size;
+				max = d3.max(the_data, function(d) { 
+					return +d.size;
 				})
 			}
 			else if (the_sort == 4){
-				min = d3.min(filtered_data, function(d) { 
-					return d.discussion_size;
+				min = d3.min(the_data, function(d) { 
+					return +d.discussion_size;
 				})
-				max = d3.max(filtered_data, function(d) { 
-					return d.discussion_size;
+				max = d3.max(the_data, function(d) { 
+					return +d.discussion_size;
 				})
 			}
 			else if (the_sort == 5){
-				min = d3.min(filtered_data, function(d) { 
-					return d.incipit_size;
+				min = d3.min(the_data, function(d) { 
+					return +d.incipit_size;
 				})
-				max = d3.max(filtered_data, function(d) { 
-					return d.incipit_size;
+				max = d3.max(the_data, function(d) { 
+					return +d.incipit_size;
 				})
 			}
 			else if (the_sort == 6){
-				min = d3.min(filtered_data, function(d) { 
-					return d.issues;
+				min = d3.min(the_data, function(d) { 
+					return +d.issues;
 				})
-				max = d3.max(filtered_data, function(d) { 
-					return d.issues;
+				max = d3.max(the_data, function(d) { 
+					return +d.issues;
 				})
 			}
 			else if (the_sort == 7){
-				min = d3.min(filtered_data, function(d) { 
-					return d.images;
+				min = d3.min(the_data, function(d) { 
+					return +d.images;
 				})
-				max = d3.max(filtered_data, function(d) { 
-					return d.images;
+				max = d3.max(the_data, function(d) { 
+					return +d.images;
 				})
 			}
+			// console.log(min, max)
+
+			y_min = d3.min(the_data, function(d) { 
+				return d.avg_pv;
+			})
+
+			y_max = d3.max(the_data, function(d) { 
+				return d.avg_pv;
+			})
 
 			x = d3.scaleLinear()
 				.domain([min,max])
 				.range([0,width-100])
 
-			svg.selectAll(".article")
-	       		.data(filtered_data)
-	       		.enter()
-	       		.append("div")
-
-			svg.selectAll(".article")
-				.transition()
-				.attr("transform", function(d,i){
-					if (the_sort == 1) { // "article"
-						return "translate(" + (x(i)+50) + "," + 0 + ")"
-					}
-					else if (the_sort == 2){
-						return "translate(" + (x(d.days)+50) + "," + 0 + ")"
-					}
-					else if (the_sort == 3){
-						return "translate(" + (x(d.size)+50) + "," + 0 + ")"
-					}
-					else if (the_sort == 4){
-						return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
-					}
-					else if (the_sort == 5){
-						return "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
-					}
-					else if (the_sort == 6){
-						return "translate(" + (x(d.issues)+50) + "," + 0 + ")"
-					}
-					else if (the_sort == 7){
-						return "translate(" + (x(d.images)+50) + "," + 0 + ")"
-					}
-				})
+			y = d3.scaleLinear()
+				.domain([0,y_max+(y_max/100*10)]) 
+				.range([height-margin.top,0])
 
 			tooltip
 				.direction(function (d,i) {
-
-					let direction = ''
-					if (the_sort == 1) { // title
-						direction = tooltip_direction(filtered_data, i, d.avg_pv)
-					}
-					else if (the_sort == 2){
-						direction = tooltip_direction(filtered_data,d.days,min,max,d.avg_pv)
-					}
-					else if (the_sort == 3){
-						direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv)
-					}
-					else if (the_sort == 4){
-						direction = tooltip_direction(filtered_data,d.discussion_size,min,max,d.avg_pv)
-					}
-					else if (the_sort == 5){
-						direction = tooltip_direction(filtered_data,d.incipit_size,min,max,d.avg_pv)
-					}
-					else if (the_sort == 6){
-						direction = tooltip_direction(filtered_data,d.issues,min,max,d.avg_pv)
-					}
-					else if (the_sort == 7){
-						direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv)
-					}
-
+					let direction = tooltip_direction(the_data, i, 0, the_data.length, d.avg_pv, false)
 					return direction 
 				})
-		}
 
+			svg.select("#yAxis")
+			    .transition()
+			    .duration(200)
+			    .call(d3.axisLeft(y))
+
+			d3.select('#grid')
+				.transition()
+			    .duration(200)
+			    .call(d3.axisLeft(y)
+			    	.tickSize(-width-margin.left-margin.right-60)
+			    )
+
+			// plot data
+			// ---------------------------
+
+			article = articles.selectAll("g")
+				.data(the_data)
+				.enter()
+				.append("g")
+				.attr("class","article")
+				.attr("id", function(d,i){
+					return i
+				})
+				.attr("data-article", function(d,i){
+					return d.article
+				})
+				.attr("data-subject", function(d,i){
+					return d.subject
+				})
+				.attr("transform", function(d,i){
+					if (the_sort == 1) { // "article"
+						x_position = "translate(" + (x(i)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 2){
+						x_position = "translate(" + (x(d.days)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 3){
+						x_position = "translate(" + (x(d.size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 4){
+						x_position = "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 5){
+						x_position = "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 6){
+						x_position = "translate(" + (x(d.issues)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 7){
+						x_position = "translate(" + (x(d.images)+50) + "," + 0 + ")"
+					}
+					// console.log(d.article, x_position)
+					return x_position
+				})
+				.on("mouseover", tooltip.show) 
+				.on("mouseout", tooltip.hide)
+
+			// articles
+			let article_circles = article.append("g")
+				.attr("class","article_circles")
+				.attr("transform",function (d,i) {
+					return "translate(" + 0 + "," + y(+d.avg_pv) + ")"
+				})	
+				.attr("id", function(d,i){
+					return 'id_' + d.id_wikidata
+				})
+				.on("mouseover", handleMouseOver) 
+				.on("mouseout", handleMouseOut)
+				.append("a")
+				.attr("xlink:href", function(d,i){
+					return wiki_link + d.article
+				})
+				.attr("target","_blank")
+
+			let circles = article_circles.append("circle")
+				.transition()
+				.duration(500)
+				.delay(function(d,i){ 
+					return i * 2
+				})
+				.attr("cx",0)
+				.attr("cy",0)	
+				.attr("fill", function(d,i){
+					return "#00b2ff"
+				})
+				.attr("opacity",0.5)
+				.attr("r",0)
+				.transition()
+				.ease(d3.easeLinear)
+				.duration(500) 
+				.attr("r", function(d,i){
+					return r(Math.sqrt(d.size/3.14)) 
+				})
+				.attr("data-size", function(d,i){
+					return d.size
+				})
+
+			let incipit = article_circles.append("circle")
+				.transition()
+				.duration(500)
+				.delay(function(d,i){ 
+					return i * 2
+				})
+				.attr("cx",0)
+				.attr("cy",0)
+				.attr("fill", function(d,i){
+					return "#00b2ff"
+				})
+				.attr("opacity",0.5)
+				.attr("r", function(d,i){
+					return r(Math.sqrt(d.incipit_size/3.14))
+				})
+				.attr("data-incipit", function(d,i){
+					return d.incipit_size
+				})
+
+			let discussion = article_circles.append("circle")
+				.transition()
+				.duration(500)
+				.delay(function(d,i){ 
+					return i * 2
+				})
+				.attr("cx",0)
+				.attr("cy",0)
+				.attr("stroke", function(d,i){
+					return "#00b2ff"
+				})
+				.attr("fill","transparent")
+				.attr("stroke-width",0.5)
+				.attr("opacity",0.9)
+				.attr("r",0)
+				.transition()
+				.delay(500)
+				.ease(d3.easeLinear)
+				.duration(500) 
+				.attr("r", function(d,i){
+					return r(Math.sqrt(d.discussion_size/3.14))
+				})
+
+			// sort data
+			// ---------------------------
+			const sort_box = document.getElementById('sort_article')
+			sort_box.addEventListener("change", function() {
+				const region_box = document.getElementById('regions')
+
+				let new_sort = this.value;
+				let new_region = region_box.options[region_box.selectedIndex].value;
+
+				update_sort(new_region,new_sort)
+			});
+
+			function update_sort(region,the_sort){
+
+				// filter data by region
+				// ---------------------------
+				if (region == 'all'){
+					the_data = filtered_data
+				}
+				else {
+					the_data = filtered_data.filter(item => item.region == region)
+				}
+
+				if (the_sort == 1) {
+					min = 0
+					max = the_data.length
+				}
+				else if (the_sort == 2){
+					min = d3.max(the_data, function(d) { 
+						return d.days;
+					})
+					max = d3.min(the_data, function(d) { 
+						return d.days;
+					})
+				}
+				else if (the_sort == 3){
+					min = d3.min(the_data, function(d) { 
+						return d.size;
+					})
+					max = d3.max(the_data, function(d) { 
+						return d.size;
+					})
+				}
+				else if (the_sort == 4){
+					min = d3.min(the_data, function(d) { 
+						return d.discussion_size;
+					})
+					max = d3.max(the_data, function(d) { 
+						return d.discussion_size;
+					})
+				}
+				else if (the_sort == 5){
+					min = d3.min(the_data, function(d) { 
+						return d.incipit_size;
+					})
+					max = d3.max(the_data, function(d) { 
+						return d.incipit_size;
+					})
+				}
+				else if (the_sort == 6){
+					min = d3.min(the_data, function(d) { 
+						return d.issues;
+					})
+					max = d3.max(the_data, function(d) { 
+						return d.issues;
+					})
+				}
+				else if (the_sort == 7){
+					min = d3.min(the_data, function(d) { 
+						return d.images;
+					})
+					max = d3.max(the_data, function(d) { 
+						return d.images;
+					})
+				}
+
+				x = d3.scaleLinear()
+					.domain([min,max])
+					.range([0,width-100])
+
+				svg.selectAll(".article")
+		       		.data(the_data)
+		       		.enter()
+		       		.append("div")
+
+				svg.selectAll(".article")
+					.transition()
+					.attr("transform", function(d,i){
+						if (the_sort == 1) { // "article"
+							return "translate(" + (x(i)+50) + "," + 0 + ")"
+						}
+						else if (the_sort == 2){
+							return "translate(" + (x(d.days)+50) + "," + 0 + ")"
+						}
+						else if (the_sort == 3){
+							return "translate(" + (x(d.size)+50) + "," + 0 + ")"
+						}
+						else if (the_sort == 4){
+							return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
+						}
+						else if (the_sort == 5){
+							return "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
+						}
+						else if (the_sort == 6){
+							return "translate(" + (x(d.issues)+50) + "," + 0 + ")"
+						}
+						else if (the_sort == 7){
+							return "translate(" + (x(d.images)+50) + "," + 0 + ")"
+						}
+					})
+
+				tooltip
+					.direction(function (d,i) {
+
+						let direction = ''
+						if (the_sort == 1) { // title
+							direction = tooltip_direction(the_data, i, min, max, d.avg_pv, false)
+						}
+						else if (the_sort == 2){
+							direction = tooltip_direction(the_data,d.days,min,max,d.avg_pv, true)
+						}
+						else if (the_sort == 3){
+							direction = tooltip_direction(the_data,d.size,min,max,d.avg_pv, false)
+						}
+						else if (the_sort == 4){
+							direction = tooltip_direction(the_data,d.discussion_size,min,max,d.avg_pv, false)
+						}
+						else if (the_sort == 5){
+							direction = tooltip_direction(the_data,d.incipit_size,min,max,d.avg_pv, false)
+						}
+						else if (the_sort == 6){
+							direction = tooltip_direction(the_data,d.issues,min,max,d.avg_pv, false)
+						}
+						else if (the_sort == 7){
+							direction = tooltip_direction(the_data,d.images,min,max,d.avg_pv, false)
+						}
+						return direction 
+					})
+			}
+
+		}
+		display_data(region,the_sort)
+
+		// chart scale
+		// ---------------------------
 
 		function chart_scale(){
 
@@ -584,10 +746,33 @@ function dv2(the_sort) {
 				};
 		}
 		chart_scale()
+
+
+		// filter data by region
+		// ---------------------------
+
+		const region_selection = document.getElementById('regions')
+
+		region_selection.addEventListener('change', function() {
+			let new_region = this.value;
+			let new_sort =  $("#sort_article option:selected").val();
+
+			display_data(new_region,new_sort)
+		});
 	}
+
+
 }
 
-function tooltip_direction(data,x,x_min,x_max,y){
+// const array = [10, 'apple', 'A', 0, true]
+// const object = {}
+
+// const sports = ['footbal','golf','judo','boxe','karate'] 
+// const sports_lenght = sports.length 
+
+// console.log(sports_lenght)
+
+function tooltip_direction(data,x,x_min,x_max,y,invert){
 
 	let y_max = d3.max(data, function(d) { 
 		return d.avg_pv;
@@ -599,20 +784,31 @@ function tooltip_direction(data,x,x_min,x_max,y){
 
 	let n_s = ''
 	let w_e = ''
-
+	
 	if (y > (y_max/3*2) ){
 		n_s = 's'
 	}
 	else {
 		n_s = 'n'
-	}
+	}		
 
-	let range = x_max - x_min
-	if (x < (x_min + range / 3)){
-		w_e = 'e'
+	if (invert == false){
+		let range = x_max - x_min
+		if (x < (x_min + range / 3)){
+			w_e = 'e'
+		}
+		else if ( x > (x_min + range / 3 * 2) ) {
+			w_e = 'w'
+		}
 	}
-	else if ( x > (x_min + range / 3 * 2) ) {
-		w_e = 'w'
+	else {
+		let range = x_max - x_min
+		if (x > (x_min + range / 3)){
+			w_e = 'e'
+		}
+		else if ( x < (x_min + range / 3 * 2) ) {
+			w_e = 'w'
+		}
 	}
 
 	const direction = n_s + w_e
@@ -621,5 +817,5 @@ function tooltip_direction(data,x,x_min,x_max,y){
 
 
 window.onload = function() {
-	dv2(1);
+	dv2('all',1);
 }
