@@ -35,12 +35,9 @@ function dv2(region,the_sort) {
 		// console.log(data,region,the_sort)
 
 		data = format_data(data)
-		
-		filtered_data = data.filter(item =>
-			item.avg_pv > filter_item
-		)
-
-		console.log(filtered_data)
+		filtered_data = data
+		console.log(data)
+	
 		statistics(data)
 
 		// svg 
@@ -290,11 +287,14 @@ function dv2(region,the_sort) {
 			// filter data by region
 			// ---------------------------
 			if (region == 'all'){
-				the_data = filtered_data
+				the_data = filtered_data.filter(item =>
+					item.avg_pv > filter_item
+				)
 			}
 			else {
 				the_data = filtered_data.filter(item => item.region == region)
 			}
+			console.log(the_data.length)
 
 			// review the elements attributes
 			// ---------------------------
@@ -763,11 +763,6 @@ function dv2(region,the_sort) {
 		// make the visualization responsive
 		// ---------------------------
 		function responsive_chart(width){
-			console.log(0)
-
-			if (width < 400){
-				width = width + 100
-			}
 
 			svg
 				.attr("width", width + (margin.right + margin.right))
