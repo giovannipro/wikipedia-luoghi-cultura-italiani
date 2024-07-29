@@ -356,8 +356,7 @@ header a {
 #sidebar_button_close {
   display: flex;
   justify-content: space-between;
-  padding: 0 0 0.75rem;
-  height: 65px;
+  height: 75px;
   background-color: white;
   cursor: pointer;
   position: sticky;
@@ -366,10 +365,31 @@ header a {
 }
 
 #sidebar_text {
-  width: 60%;
-  padding: 1.3rem 1rem 1.3rem 1rem;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.75rem;
   font-size: 14px;
   color: gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#sidebar_text .a {
+  margin-left: 60px;
+  width: 40%;
+}
+#sidebar_text .b {
+  width: 30%;
+}
+@media only screen and (max-width: 450px) {
+  #sidebar_text .b {
+    display: none;
+  }
+}
+#sidebar_text .c {
+  width: 30%;
+  position: relative;
+  top: 10px;
 }
 
 #sidebar_close_icon {
@@ -377,10 +397,12 @@ header a {
   width: 2.5rem;
   height: 2.5rem;
   padding: 0.3rem;
-  margin: 0.75rem 1.5rem 0.75rem 0rem;
   float: right;
   border-radius: 2.5rem;
   border: 1px solid #727272;
+  position: relative;
+  top: -9px;
+  right: 12px;
 }
 
 #sidebar_open_icon {

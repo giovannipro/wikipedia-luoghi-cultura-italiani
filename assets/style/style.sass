@@ -311,8 +311,8 @@ header a
 #sidebar_button_close 
 	display: flex
 	justify-content: space-between
-	padding: 0 0 0.75rem
-	height: 65px
+	// padding: 0 0 0.75rem
+	height: 75px
 	background-color: white
 	cursor: pointer
 	position: sticky
@@ -320,20 +320,42 @@ header a
 	border-bottom: 1px solid #d6d5d5
 
 #sidebar_text 
-	width: 60%
-	padding: 1.3rem 1rem 1.3rem 1rem
+	width: 100%
+	padding-left: .5rem
+	padding-right: .75rem
 	font-size: 14px
 	color: gray
+	display: flex
+	justify-content: space-between
+	align-items: center
+
+	.a
+		margin-left: 60px
+		width: 40%
+
+	.b
+		width: 30%
+
+		@media only screen and (max-width: 450px)
+			display: none
+
+	.c
+		width: 30%
+		position: relative
+		top: 10px
 
 #sidebar_close_icon 
 	background: url(../img/close-menu.svg) center center / 55% no-repeat
 	width: 2.5rem
 	height: 2.5rem
 	padding: 0.3rem
-	margin: 0.75rem 1.5rem 0.75rem 0rem
+	// margin: 0.75rem 1.5rem 0.75rem 0rem
 	float: right
 	border-radius: 2.5rem
 	border: 1px solid #727272
+	position: relative
+	top: -9px // 0.75rem 1.5rem
+	right: 12px
 
 #sidebar_open_icon 
 	float: right
@@ -411,8 +433,6 @@ header a
 	height: 0.2rem 
 	background-color: #d1cfcf
 	margin-top: 0.2rem
-
-
 
 /* ------- dataviz and legend ------- */
 
