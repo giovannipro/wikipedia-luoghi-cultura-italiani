@@ -583,7 +583,7 @@ function format_data(data){
 		d.avg_pv = +d.avg_pv
 		d.avg_pv_prev = +d.avg_pv_prev
 		d.issue_clarify = +d.issue_clarify
-
+		d.days = +d.days
 
 		if (d.references !== "-"){
 			d.references = +d.references

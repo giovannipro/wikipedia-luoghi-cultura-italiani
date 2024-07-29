@@ -256,7 +256,6 @@ function dv2(region,the_sort) {
 			.attr("id","articles")
 			.attr("transform","translate(" + shiftx_article + "," + (margin.top) + ")")	
 
-
 		let article = articles.selectAll("g")
 			.data(filtered_data)
 			.enter()

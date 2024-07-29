@@ -8,8 +8,6 @@ function update_sidebar_text(){
 }
 
 function sidebar(dv,data,the_sort){
-	// console.log(data)
-	// console.log(the_sort)
 
 	const button_open = document.getElementById('sidebar_button_open');
 	const button_close = document.getElementById('sidebar_close_icon');
@@ -182,13 +180,16 @@ function sidebar(dv,data,the_sort){
 			}
 
 			output += '<li>'
-			output += '<a href=" ' + wiki_link + d.article + '" target="_blank">' 
+			output += '<a class="item_box" href=" ' + wiki_link + d.article + '" target="_blank"">' 
+
+			output += '<div class="item_bubble" id="' + d.id_wikidata + '"></div>'
+
+			output += '<div class="item_value">'
 			output += '<div class="item_list">'
 			output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
 
 			if (isNaN(max) == false || max < 0) {
 				output += '<div class="value">' + detail + '</div>'
-				// console.log(max)
 			}
 
 			output += '</div>'
@@ -196,13 +197,80 @@ function sidebar(dv,data,the_sort){
 			if (the_sort != 2 || isNaN(max) == false){
 				output += '<div class="bar" style="width: ' + size + '%;"></div>'
 			}
+			output += '</div>'
 
-			output += '</a></li>'
+			output += '</a>'
+			output += '</li>'
+
+
+			let container = d.id_wikidata
+			make_article_bubble(container,d)
+
 		})
 
 		output += '</ul>'
 
 		container.innerHTML = output
+
+		// add bubbles
+		data.forEach(function (d,i) {
+			let container = d.id_wikidata
+			make_article_bubble(container,d)
+		})
+
+		function make_article_bubble(container,individual_data){
+			// console.log(individual_data)	
+
+			const box_size = 40
+
+			let r_max = Math.sqrt(318000/3.14)
+
+			let r = d3.scaleLinear()
+				.range([0, 20])
+				.domain([0,r_max])
+
+			let svg = d3.select('#' + container)
+				.append("svg")
+				.attr("width", box_size)
+				.attr("height", box_size)
+				.attr("class", "bubble_svg")
+
+			let article_box = svg.append("g")
+
+			// article circle
+			let article = article_box
+				.append("circle")
+				.attr("cx", box_size/2)
+				.attr("cy", box_size/2)
+				.attr("r", r(Math.sqrt(individual_data.size/3.14)) )
+				.attr("fill", function(d,i){
+					return "#00b2ff"
+				})
+				.attr("opacity",0.5)
+
+			let incipit = article_box
+				.append("circle")
+				.attr("cx", box_size/2)
+				.attr("cy", box_size/2)
+				.attr("r", r(Math.sqrt(individual_data.incipit_size/3.14)) )
+				.attr("fill", function(d,i){
+					return "#00b2ff"
+				})
+				.attr("opacity",0.5)
+
+			let discussion = article_box
+				.append("circle")
+				.attr("cx", box_size/2)
+				.attr("cy", box_size/2)
+				.attr("r", r(Math.sqrt(individual_data.discussion_size/3.14)) )
+				.attr("stroke", function(d,i){
+					return "#00b2ff"
+				})
+				.attr("opacity",0.9)
+				.attr("fill","transparent")
+				.attr("stroke-width",0.5)
+		}
+
 	}
 	load_sidebar()
 
