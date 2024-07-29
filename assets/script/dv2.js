@@ -171,7 +171,7 @@ function dv2(the_sort) {
 				}
 
 				let content = "<p style='margin: 0 0 8px 3px; font-weight: bold;'>" + d.article + "</p>";
-                // content += "<span style='font-size: 0.8em;'>" + creation_date + format_date(d.first_edit) + "</span></p>"
+                content += "<p style='font-size: 0.8em; margin-bottom: 1rem;'>" + creation_date + format_date(d.first_edit) + "</p>"
 
                 content += '<table>'
                 
@@ -383,6 +383,14 @@ function dv2(the_sort) {
 				min = 0
 				max = filtered_data.length	
 			}
+			else if (the_sort == 2){
+				min = d3.min(filtered_data, function(d) { 
+					return d.days;
+				})
+				max = d3.max(filtered_data, function(d) { 
+					return d.days;
+				})
+			}
 			else if (the_sort == 3){
 				min = d3.min(filtered_data, function(d) { 
 					return d.size;
@@ -439,6 +447,9 @@ function dv2(the_sort) {
 					if (the_sort == 1) { // "article"
 						return "translate(" + (x(i)+50) + "," + 0 + ")"
 					}
+					else if (the_sort == 2){
+						return "translate(" + (x(d.days)+50) + "," + 0 + ")"
+					}
 					else if (the_sort == 3){
 						return "translate(" + (x(d.size)+50) + "," + 0 + ")"
 					}
@@ -463,7 +474,10 @@ function dv2(the_sort) {
 					if (the_sort == 1) { // title
 						direction = tooltip_direction(filtered_data, i, d.avg_pv)
 					}
-					else if (the_sort == 3){ // size
+					else if (the_sort == 2){
+						direction = tooltip_direction(filtered_data,d.days,min,max,d.avg_pv)
+					}
+					else if (the_sort == 3){
 						direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv)
 					}
 					else if (the_sort == 4){
@@ -578,6 +592,10 @@ function tooltip_direction(data,x,x_min,x_max,y){
 	let y_max = d3.max(data, function(d) { 
 		return d.avg_pv;
 	})
+
+	x = parseInt(x)
+	x_min = parseInt(x_min)
+	x_max = parseInt(x_max)
 
 	let n_s = ''
 	let w_e = ''

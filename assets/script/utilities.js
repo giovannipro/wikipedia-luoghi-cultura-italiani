@@ -27,11 +27,17 @@ function apply_color(subject){
 
 function format_date(date){
 	if (date != 0) {
-		const year = date.substring(0,4);
-		const month = date.substring(5,7);
-		const day = date.substring(8,10);
+		const year = date.substring(6,10);
+		const month = date.substring(3,5);
+		const day = date.substring(0,2);
 		return day + "-" + month + "-" + year
 	}
+	// if (date != 0) {
+	// 	const year = date.substring(0,4);
+	// 	const month = date.substring(5,7);
+	// 	const day = date.substring(8,10);
+	// 	return day + "-" + month + "-" + year
+	// }
 	else {
 		return "-"
 	}
