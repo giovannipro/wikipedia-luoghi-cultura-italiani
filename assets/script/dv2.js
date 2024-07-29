@@ -162,7 +162,7 @@ function dv2(region,the_sort) {
 					notes = "notes"
 				}
 
-				let content = "<p style='margin: 0 0 8px 3px; font-weight: bold;'>" + d.article + "</p>";
+				let content = "<p style='margin: 0 0 .1rem 0; font-weight: bold;'>" + d.article + "</p>";
                 content += "<p style='font-size: 0.8em; margin-bottom: 1rem;'>" + creation_date + format_date(d.first_edit) + "</p>"
 
                 content += '<table>'
@@ -213,7 +213,7 @@ function dv2(region,the_sort) {
 	            content += "</table>"
                 return content;
             });
-	       	plot.call(tooltip);
+	    plot.call(tooltip);
 
        	const duration = 0
 	    function handleMouseOver(){
@@ -294,7 +294,7 @@ function dv2(region,the_sort) {
 			else {
 				the_data = filtered_data.filter(item => item.region == region)
 			}
-			console.log(the_data.length)
+			// console.log(the_data.length)
 
 			// review the elements attributes
 			// ---------------------------
@@ -514,6 +514,8 @@ function dv2(region,the_sort) {
 					return r(Math.sqrt(d.discussion_size/3.14))
 				})
 
+			sidebar(1,the_data,the_sort)
+
 			// sort data
 			// ---------------------------
 			const sort_box = document.getElementById('sort_article')
@@ -652,6 +654,8 @@ function dv2(region,the_sort) {
 						}
 						return direction 
 					})
+
+				sidebar(1,the_data,the_sort)
 			}
 
 		}
@@ -804,14 +808,13 @@ function dv2(region,the_sort) {
 		}
 
 		window.addEventListener("resize", (event) => {
-			console.log(0)
 			window_w = document.getElementById("dv2").offsetWidth;
 			width = window_w - (margin.right + margin.right)
 
 			responsive_chart(width)
 		});
-	}
 
+	}
 }
 
 // const array = [10, 'apple', 'A', 0, true]

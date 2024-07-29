@@ -60,17 +60,7 @@
 	width: 100%;
 }
 
-@media only screen and (max-width: 900px) {
-	#sidebar {
-		width: 45%;
-	}
-}
-
 @media only screen and (max-width: 768px) {
-
-	#sidebar {
-		width: 80%;
-	}
 
 	#sidebar .data .value {
 		width: 30%;
