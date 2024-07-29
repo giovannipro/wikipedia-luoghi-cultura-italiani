@@ -132,7 +132,7 @@ function dv2(the_sort) {
 			.attr('id', 'tooltip_dv1')
 			.attr('max-width',100)
 			.direction(function (d,i) {
-				let direction = tooltip_direction(filtered_data, i, d.avg_pv)
+				let direction = tooltip_direction(filtered_data, i, 0, filtered_data.length, d.avg_pv)
 				return direction 
 			})
 			.offset([-10,0])
@@ -377,33 +377,51 @@ function dv2(the_sort) {
 		});
 
 		function update_sort(the_sort){
-			// console.log(the_sort)
 
 			if (the_sort == 1) {
-				max = filtered_data.length	
 				min = 0
+				max = filtered_data.length	
 			}
 			else if (the_sort == 3){
-				max = d3.max(filtered_data, function(d) { 
+				min = d3.min(filtered_data, function(d) { 
 					return d.size;
 				})
-				min = d3.min(filtered_data, function(d) { 
+				max = d3.max(filtered_data, function(d) { 
 					return d.size;
 				})
 			}
 			else if (the_sort == 4){
-				max = d3.max(filtered_data, function(d) { 
-					return d.discussion_size;
-				})
 				min = d3.min(filtered_data, function(d) { 
 					return d.discussion_size;
 				})
+				max = d3.max(filtered_data, function(d) { 
+					return d.discussion_size;
+				})
 			}
-
-			// filtered_data.map((item,i) => {
-			// 	item.new_id = i
-			// })
-			// console.log(filtered_data[filtered_data.length - 1].article,filtered_data[filtered_data.length - 1].new_id)
+			else if (the_sort == 5){
+				min = d3.min(filtered_data, function(d) { 
+					return d.incipit_size;
+				})
+				max = d3.max(filtered_data, function(d) { 
+					return d.incipit_size;
+				})
+			}
+			else if (the_sort == 6){
+				min = d3.min(filtered_data, function(d) { 
+					return d.issues;
+				})
+				max = d3.max(filtered_data, function(d) { 
+					return d.issues;
+				})
+			}
+			else if (the_sort == 7){
+				min = d3.min(filtered_data, function(d) { 
+					return d.images;
+				})
+				max = d3.max(filtered_data, function(d) { 
+					return d.images;
+				})
+			}
 
 			x = d3.scaleLinear()
 				.domain([min,max])
@@ -426,12 +444,44 @@ function dv2(the_sort) {
 					else if (the_sort == 4){
 						return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
 					}
+					else if (the_sort == 5){
+						return "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 6){
+						return "translate(" + (x(d.issues)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 7){
+						return "translate(" + (x(d.images)+50) + "," + 0 + ")"
+					}
 				})
 
-			tooltip.direction(function (d,i) {
-				return 'w'
-			})
+			tooltip
+				.direction(function (d,i) {
+
+					let direction = ''
+					if (the_sort == 1) { // title
+						direction = tooltip_direction(filtered_data, i, d.avg_pv)
+					}
+					else if (the_sort == 3){ // size
+						direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv)
+					}
+					else if (the_sort == 4){
+						direction = tooltip_direction(filtered_data,d.discussion_size,min,max,d.avg_pv)
+					}
+					else if (the_sort == 5){
+						direction = tooltip_direction(filtered_data,d.incipit_size,min,max,d.avg_pv)
+					}
+					else if (the_sort == 6){
+						direction = tooltip_direction(filtered_data,d.issues,min,max,d.avg_pv)
+					}
+					else if (the_sort == 7){
+						direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv)
+					}
+
+					return direction 
+				})
 		}
+
 
 		function chart_scale(){
 
@@ -522,9 +572,8 @@ function dv2(the_sort) {
 	}
 }
 
-function tooltip_direction(data,x,y){
+function tooltip_direction(data,x,x_min,x_max,y){
 
-	const x_max = filtered_data.length
 	let y_max = d3.max(data, function(d) { 
 		return d.avg_pv;
 	})
@@ -539,10 +588,11 @@ function tooltip_direction(data,x,y){
 		n_s = 'n'
 	}
 
-	if (x < x_max / 3){
+	let range = x_max - x_min
+	if (x < (x_min + range / 3)){
 		w_e = 'e'
 	}
-	else if (x > (x_max / 3 * 2) ) {
+	else if ( x > (x_min + range / 3 * 2) ) {
 		w_e = 'w'
 	}
 
