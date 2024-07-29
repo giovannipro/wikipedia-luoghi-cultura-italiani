@@ -218,67 +218,67 @@ function dv2(region,the_sort) {
             });
 	       	plot.call(tooltip);
 
-	       	const duration = 0
-		    function handleMouseOver(){
-				// hide circles
-				d3.selectAll(".article_circles,.line_prev,.circle_prev")
-					.transition()
-					.duration(duration)
-					.attr("opacity",0.2)
+       	const duration = 0
+	    function handleMouseOver(){
+			// hide circles
+			d3.selectAll(".article_circles,.line_prev,.circle_prev")
+				.transition()
+				.duration(duration)
+				.attr("opacity",0.2)
 
-				// highlight
-				d3.select(this)
-					.transition()
-					.duration(duration)
-					.attr("opacity",1)
+			// highlight
+			d3.select(this)
+				.transition()
+				.duration(duration)
+				.attr("opacity",1)
 
-				d3.select(this.previousSibling).select(".circle_prev,.line_prev")
-					.transition()
-					.duration(duration)
-					.attr("opacity",1)
-			}
+			d3.select(this.previousSibling).select(".circle_prev,.line_prev")
+				.transition()
+				.duration(duration)
+				.attr("opacity",1)
+		}
 
-		    function handleMouseOut(){
-				d3.selectAll(".article_circles")
-					.transition()
-					.duration(duration)
-					.attr("opacity",1)
+	    function handleMouseOut(){
+			d3.selectAll(".article_circles")
+				.transition()
+				.duration(duration)
+				.attr("opacity",1)
 
-				d3.selectAll(".variation").select(".circle_prev")
-					.transition()
-					.duration(duration)
-					.attr("opacity",0)
+			d3.selectAll(".variation").select(".circle_prev")
+				.transition()
+				.duration(duration)
+				.attr("opacity",0)
 
-				d3.selectAll(".variation").select(".line_prev")
-					.transition()
-					.duration(duration)
-					.attr("opacity",variation_line_opacity)
-		    }
+			d3.selectAll(".variation").select(".line_prev")
+				.transition()
+				.duration(duration)
+				.attr("opacity",variation_line_opacity)
+		}
 
-			let articles = plot.append("g")	
-				.attr("id","articles")
-				.attr("transform","translate(" + shiftx_article + "," + (margin.top) + ")")	
+		let articles = plot.append("g")	
+			.attr("id","articles")
+			.attr("transform","translate(" + shiftx_article + "," + (margin.top) + ")")	
 
 
-			let article = articles.selectAll("g")
-				.data(filtered_data)
-				.enter()
-				.append("g")
-				.attr("class","article")
-				.attr("id", function(d,i){
-					return i
-				})
-				.attr("data-article", function(d,i){
-					return d.article
-				})
-				.attr("data-subject", function(d,i){
-					return d.subject
-				})
-				.attr("transform", function(d,i){
-					return "translate(" + (x(i)+50) + ",0)"
-				})
-				.on("mouseover", tooltip.show) 
-				.on("mouseout", tooltip.hide)
+		let article = articles.selectAll("g")
+			.data(filtered_data)
+			.enter()
+			.append("g")
+			.attr("class","article")
+			.attr("id", function(d,i){
+				return i
+			})
+			.attr("data-article", function(d,i){
+				return d.article
+			})
+			.attr("data-subject", function(d,i){
+				return d.subject
+			})
+			.attr("transform", function(d,i){
+				return "translate(" + (x(i)+50) + ",0)"
+			})
+			.on("mouseover", tooltip.show) 
+			.on("mouseout", tooltip.hide)
 
 		let the_data;
 
@@ -747,7 +747,6 @@ function dv2(region,the_sort) {
 		}
 		chart_scale()
 
-
 		// filter data by region
 		// ---------------------------
 
@@ -759,8 +758,64 @@ function dv2(region,the_sort) {
 
 			display_data(new_region,new_sort)
 		});
-	}
 
+
+		// make the visualization responsive
+		// ---------------------------
+		function responsive_chart(width){
+			console.log(0)
+
+			if (width < 400){
+				width = width + 100
+			}
+
+			svg
+				.attr("width", width + (margin.right + margin.right))
+
+			grid
+				.call(make_y_gridlines()
+					.tickSize(-width-margin.left-margin.right-60)
+				)
+
+			x = d3.scaleLinear()
+				.domain([min,max])
+				.range([0,width-100])
+
+			svg.selectAll(".article")
+				.transition()
+				.attr("transform", function(d,i){
+					if (the_sort == 1) { // "article"
+						return "translate(" + (x(i)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 2){
+						return "translate(" + (x(d.days)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 3){
+						return "translate(" + (x(d.size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 4){
+						return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 5){
+						return "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 6){
+						return "translate(" + (x(d.issues)+50) + "," + 0 + ")"
+					}
+					else if (the_sort == 7){
+						return "translate(" + (x(d.images)+50) + "," + 0 + ")"
+					}
+				})
+		}
+
+		window.addEventListener("resize", (event) => {
+			console.log(0)
+			window_w = document.getElementById("dv2").offsetWidth;
+			width = window_w - (margin.right + margin.right)
+
+			responsive_chart(width)
+		});
+	}
 
 }
 

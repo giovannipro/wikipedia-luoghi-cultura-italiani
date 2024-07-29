@@ -559,7 +559,7 @@ footer ul li {
 }
 @media only screen and (max-width: 768px) {
   #statistics .value_name {
-    width: 100%;
+    width: auto;
     border-left: none;
     border-bottom: 1px solid #d6d6d6;
   }
