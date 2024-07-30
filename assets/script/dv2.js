@@ -7,7 +7,7 @@ const wiki_link = "https://it.wikipedia.org/wiki/";
 const variation_line_opacity = 0.7;
 const min_avg_pv = 100;
 
-const min_circle_size = 0;
+const min_circle_size = 0.5;
 const max_circle_size = 35;
 
 const stroke_dash = "3,3";
@@ -282,7 +282,7 @@ function dv2(region,the_sort) {
 		let the_data;
 
 		function display_data(region,the_sort){
-			// console.log(region,the_sort)
+			console.log(region,the_sort)
 
 			article.remove()
 
@@ -373,7 +373,28 @@ function dv2(region,the_sort) {
 
 			tooltip
 				.direction(function (d,i) {
-					let direction = tooltip_direction(the_data, i, 0, the_data.length, d.avg_pv, false)
+					let direction = ''
+					if (the_sort == 1) { // title
+						direction = tooltip_direction(the_data, i, min, max, d.avg_pv, false)
+					}
+					else if (the_sort == 2){
+						direction = tooltip_direction(the_data,d.days,min,max,d.avg_pv, true)
+					}
+					else if (the_sort == 3){
+						direction = tooltip_direction(the_data,d.size,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 4){
+						direction = tooltip_direction(the_data,d.discussion_size,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 5){
+						direction = tooltip_direction(the_data,d.incipit_size,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 6){
+						direction = tooltip_direction(the_data,d.issues,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 7){
+						direction = tooltip_direction(the_data,d.images,min,max,d.avg_pv, false)
+					}
 					return direction 
 				})
 
@@ -531,7 +552,7 @@ function dv2(region,the_sort) {
 			});
 
 			function update_sort(region,the_sort){
-				// console.log(region,the_sort)
+				console.log(region,the_sort)
 
 				// filter data by region
 				// ---------------------------
@@ -556,6 +577,7 @@ function dv2(region,the_sort) {
 				}
 				else if (the_sort == 3){
 					min = d3.min(the_data, function(d) { 
+						console.log(d.size)
 						return d.size;
 					})
 					max = d3.max(the_data, function(d) { 
@@ -602,7 +624,7 @@ function dv2(region,the_sort) {
 				svg.selectAll(".article")
 		       		.data(the_data)
 		       		.enter()
-		       		.append("div")
+		       	// 	.append("div")
 
 				svg.selectAll(".article")
 					.transition()
