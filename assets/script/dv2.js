@@ -2,6 +2,7 @@ const container = "#dv2";
 const font_size = 10;
 
 const filter_item = 20; // also in Wikipedia and Italian school is 120
+
 const shiftx_article = 30;
 const wiki_link = "https://it.wikipedia.org/wiki/";
 const variation_line_opacity = 0.7;
@@ -56,6 +57,7 @@ function dv2(region,the_sort) {
 
 		let min = 0
 		let max = filtered_data.length
+		// console.log(min,max)
 
 		let y_max = d3.max(filtered_data, function(d) { 
 			return d.avg_pv;
@@ -69,13 +71,13 @@ function dv2(region,the_sort) {
 			.range([min_circle_size, max_circle_size])
 			.domain([0,r_max])
 
-		let x = d3.scaleLinear()
-			.domain([min,max])
-			.range([0,width-100])
-
 		let y = d3.scaleLinear() // scaleSymlog() > it works
 			.domain([0,y_max+(y_max/100*10)]) 
 			.range([height-margin.top,0])
+
+		let x = d3.scaleLinear()
+			.domain([min,max])
+			.range([0,width-100])
        
 		// grid and plot
 		// ---------------------------
@@ -128,11 +130,11 @@ function dv2(region,the_sort) {
 			.attr('id', 'tooltip_dv1')
 			.attr('max-width',100)
 			.direction(function (d,i) {
-				let direction = tooltip_direction(filtered_data, i, 0, filtered_data.length, d.avg_pv,false)
-				return direction 
+				return 'n'
 			})
 			.offset([-10,0])
 			.html(function(d,i) {
+				// console.log(d.article)
 
 				let params = new URLSearchParams(window.location.search);
 				if (params.has('lang') == true) {
@@ -279,89 +281,95 @@ function dv2(region,the_sort) {
 			.on("mouseover", tooltip.show) 
 			.on("mouseout", tooltip.hide)
 
-		let the_data;
+		plot.call(tooltip)
 
 		function display_data(region,the_sort){
-			console.log(region,the_sort)
+
+			the_sort = parseInt(the_sort)
+			// console.log(region,the_sort)
 
 			article.remove()
 
 			// filter data by region
 			// ---------------------------
 			if (region == 'all'){
-				the_data = filtered_data.filter(item =>
+				filtered_data = filtered_data.filter(item =>
 					item.avg_pv > filter_item
 				)
 			}
 			else {
-				the_data = filtered_data.filter(item => item.region == region)
+				filtered_data = filtered_data.filter(item => item.region == region)
 			}
-			// console.log(the_data.length)
+			// console.log(filtered_data)
 
 			// review the elements attributes
 			// ---------------------------
 
 			if (the_sort == 1) {
 				min = 0
-				max = the_data.length
+				max = filtered_data.length - 1
 			}
 			else if (the_sort == 2){
-				min = d3.max(the_data, function(d) { 
+				min = d3.min(filtered_data, function(d) { 
 					return d.days;
 				})
-				max = d3.min(the_data, function(d) { 
+				max = d3.max(filtered_data, function(d) { 
 					return d.days;
 				})
 			}
 			else if (the_sort == 3){
-				min = d3.min(the_data, function(d) { 
+				min = d3.min(filtered_data, function(d) { 
 					return d.size;
 				})
-				max = d3.max(the_data, function(d) { 
+				max = d3.max(filtered_data, function(d) { 
 					return d.size;
 				})
 			}
 			else if (the_sort == 4){
-				min = d3.min(the_data, function(d) { 
+				min = d3.min(filtered_data, function(d) { 
 					return d.discussion_size;
 				})
-				max = d3.max(the_data, function(d) { 
+				max = d3.max(filtered_data, function(d) { 
 					return d.discussion_size;
 				})
 			}
 			else if (the_sort == 5){
-				min = d3.min(the_data, function(d) { 
+				min = d3.min(filtered_data, function(d) { 
 					return d.incipit_size;
 				})
-				max = d3.max(the_data, function(d) { 
+				max = d3.max(filtered_data, function(d) { 
 					return d.incipit_size;
 				})
 			}
 			else if (the_sort == 6){
-				min = d3.min(the_data, function(d) { 
+				min = d3.min(filtered_data, function(d) { 
 					return d.issues;
 				})
-				max = d3.max(the_data, function(d) { 
+				max = d3.max(filtered_data, function(d) { 
 					return d.issues;
 				})
 			}
 			else if (the_sort == 7){
-				min = d3.min(the_data, function(d) { 
+				min = d3.min(filtered_data, function(d) { 
 					return d.images;
 				})
-				max = d3.max(the_data, function(d) { 
+				max = d3.max(filtered_data, function(d) { 
 					return d.images;
 				})
 			}
-			// console.log(min, max)
+			console.log(min, max)
 
-			y_min = d3.min(the_data, function(d) { 
+			y_min = d3.min(filtered_data, function(d) { 
 				return d.avg_pv;
 			})
 
-			y_max = d3.max(the_data, function(d) { 
+			y_max = d3.max(filtered_data, function(d) { 
 				return d.avg_pv;
 			})
+
+			x = d3.scaleLinear()
+				.domain([min,max])
+				.range([0,width-100])
 
 			x = d3.scaleLinear()
 				.domain([min,max])
@@ -375,25 +383,25 @@ function dv2(region,the_sort) {
 				.direction(function (d,i) {
 					let direction = ''
 					if (the_sort == 1) { // title
-						direction = tooltip_direction(the_data, i, min, max, d.avg_pv, false)
+						direction = tooltip_direction(filtered_data, i, min, max, d.avg_pv, false)
 					}
 					else if (the_sort == 2){
-						direction = tooltip_direction(the_data,d.days,min,max,d.avg_pv, true)
+						direction = tooltip_direction(filtered_data,d.days,min,max,d.avg_pv, true)
 					}
 					else if (the_sort == 3){
-						direction = tooltip_direction(the_data,d.size,min,max,d.avg_pv, false)
+						direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv, false)
 					}
 					else if (the_sort == 4){
-						direction = tooltip_direction(the_data,d.discussion_size,min,max,d.avg_pv, false)
+						direction = tooltip_direction(filtered_data,d.discussion_size,min,max,d.avg_pv, false)
 					}
 					else if (the_sort == 5){
-						direction = tooltip_direction(the_data,d.incipit_size,min,max,d.avg_pv, false)
+						direction = tooltip_direction(filtered_data,d.incipit_size,min,max,d.avg_pv, false)
 					}
 					else if (the_sort == 6){
-						direction = tooltip_direction(the_data,d.issues,min,max,d.avg_pv, false)
+						direction = tooltip_direction(filtered_data,d.issues,min,max,d.avg_pv, false)
 					}
 					else if (the_sort == 7){
-						direction = tooltip_direction(the_data,d.images,min,max,d.avg_pv, false)
+						direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv, false)
 					}
 					return direction 
 				})
@@ -414,7 +422,7 @@ function dv2(region,the_sort) {
 			// ---------------------------
 
 			article = articles.selectAll("g")
-				.data(the_data)
+				.data(filtered_data)
 				.enter()
 				.append("g")
 				.attr("class","article")
@@ -429,28 +437,30 @@ function dv2(region,the_sort) {
 				})
 				.attr("transform", function(d,i){
 					if (the_sort == 1) { // "article"
-						x_position = "translate(" + (x(i)+50) + "," + 0 + ")"
+						x_position = x(i)
 					}
 					else if (the_sort == 2){
-						x_position = "translate(" + (x(d.days)+50) + "," + 0 + ")"
+						x_position = x(d.days)
 					}
 					else if (the_sort == 3){
-						x_position = "translate(" + (x(d.size)+50) + "," + 0 + ")"
+						x_position = x(d.size)
 					}
 					else if (the_sort == 4){
-						x_position = "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
+						x_position = x(d.discussion_size)
 					}
 					else if (the_sort == 5){
-						x_position = "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
+						x_position = x(d.incipit_size)
 					}
 					else if (the_sort == 6){
-						x_position = "translate(" + (x(d.issues)+50) + "," + 0 + ")"
+						x_position = x(d.issues)
 					}
 					else if (the_sort == 7){
-						x_position = "translate(" + (x(d.images)+50) + "," + 0 + ")"
+						x_position = x(d.images)
 					}
-					// console.log(d.article, x_position)
-					return x_position
+					else { // the_sort === undefined
+						x_position = x(i)
+					}
+					return "translate(" + x_position + 50 + "," + 0 + ")"
 				})
 				.on("mouseover", tooltip.show) 
 				.on("mouseout", tooltip.hide)
@@ -536,8 +546,11 @@ function dv2(region,the_sort) {
 				.attr("r", function(d,i){
 					return r(Math.sqrt(d.discussion_size/3.14))
 				})
+				.attr("data-discussion", function(d,i){
+					return d.discussion_size
+				})
 
-			sidebar(1,the_data,the_sort)
+			sidebar(1,filtered_data,the_sort)
 
 			// sort data
 			// ---------------------------
@@ -552,104 +565,138 @@ function dv2(region,the_sort) {
 			});
 
 			function update_sort(region,the_sort){
-				console.log(region,the_sort)
+				
+				the_sort = parseInt(the_sort)
+
+				// document.getElementById('tooltip_dv1').remove()
+				// plot.call(tooltip)
 
 				// filter data by region
 				// ---------------------------
-				if (region == 'all'){
-					the_data = filtered_data
-				}
-				else {
-					the_data = filtered_data.filter(item => item.region == region)
-				}
+				// if (region == 'all'){
+				// 	filtered_data = filtered_data.filter(item =>
+				// 		item.avg_pv > filter_item
+				// 	)
+				// }
+				// else {
+				// 	filtered_data = filtered_data.filter(item => item.region == region)
+				// }
+
+				// console.log(region,the_sort,filtered_data.length)
 
 				if (the_sort == 1) {
 					min = 0
-					max = the_data.length
+					max = filtered_data.length
 				}
 				else if (the_sort == 2){
-					min = d3.max(the_data, function(d) { 
+					min = d3.min(filtered_data, function(d) { 
 						return d.days;
 					})
-					max = d3.min(the_data, function(d) { 
+					max = d3.max(filtered_data, function(d) { 
 						return d.days;
 					})
 				}
 				else if (the_sort == 3){
-					min = d3.min(the_data, function(d) { 
-						console.log(d.size)
+					min = d3.min(filtered_data, function(d) { 
 						return d.size;
 					})
-					max = d3.max(the_data, function(d) { 
+					max = d3.max(filtered_data, function(d) { 
 						return d.size;
 					})
 				}
 				else if (the_sort == 4){
-					min = d3.min(the_data, function(d) { 
+					min = d3.min(filtered_data, function(d) { 
 						return d.discussion_size;
 					})
-					max = d3.max(the_data, function(d) { 
+					max = d3.max(filtered_data, function(d) { 
 						return d.discussion_size;
 					})
 				}
 				else if (the_sort == 5){
-					min = d3.min(the_data, function(d) { 
+					min = d3.min(filtered_data, function(d) { 
 						return d.incipit_size;
 					})
-					max = d3.max(the_data, function(d) { 
+					max = d3.max(filtered_data, function(d) { 
 						return d.incipit_size;
 					})
 				}
 				else if (the_sort == 6){
-					min = d3.min(the_data, function(d) { 
+					min = d3.min(filtered_data, function(d) { 
 						return d.issues;
 					})
-					max = d3.max(the_data, function(d) { 
+					max = d3.max(filtered_data, function(d) { 
 						return d.issues;
 					})
 				}
 				else if (the_sort == 7){
-					min = d3.min(the_data, function(d) { 
+					min = d3.min(filtered_data, function(d) { 
 						return d.images;
 					})
-					max = d3.max(the_data, function(d) { 
+					max = d3.max(filtered_data, function(d) { 
 						return d.images;
 					})
 				}
 
-				x = d3.scaleLinear()
-					.domain([min,max])
-					.range([0,width-100])
+				if (the_sort == 2){
+					x = d3.scaleLinear()
+						.domain([max,min])
+						.range([0,width-100])
+				}
+				else {
+					x = d3.scaleLinear()
+						.domain([min,max])
+						.range([0,width-100])
+				}
+				// console.log(filtered_data)
 
-				svg.selectAll(".article")
-		       		.data(the_data)
-		       		.enter()
-		       	// 	.append("div")
+				let sort = [
+					"article",		// 1
+					"publication",	// 2
+					"size",			// 3
+					"discussion",	// 4
+					"incipit",		// 5
+					"issue",		// 6
+					"images"		// 7
+				]
+
+				// svg.selectAll(".article")
+		       	// 	.data(filtered_data)
+		       	// 	.enter()
 
 				svg.selectAll(".article")
 					.transition()
 					.attr("transform", function(d,i){
+
+						x_position = 0
+
 						if (the_sort == 1) { // "article"
-							return "translate(" + (x(i)+50) + "," + 0 + ")"
+							x_position = x(i)
 						}
 						else if (the_sort == 2){
-							return "translate(" + (x(d.days)+50) + "," + 0 + ")"
+							x_position = x(d.days)
 						}
 						else if (the_sort == 3){
-							return "translate(" + (x(d.size)+50) + "," + 0 + ")"
+							x_position = x(d.size)
+							console.log(d.article, "translate(" + x_position + "," + 0 + ")")
 						}
 						else if (the_sort == 4){
-							return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
+							x_position = x(d.discussion_size)
 						}
 						else if (the_sort == 5){
-							return "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
+							x_position = x(d.incipit_size)
 						}
 						else if (the_sort == 6){
-							return "translate(" + (x(d.issues)+50) + "," + 0 + ")"
+							x_position = x(d.issues)
 						}
 						else if (the_sort == 7){
-							return "translate(" + (x(d.images)+50) + "," + 0 + ")"
+							x_position = x(d.images)
 						}
+						else { // the_sort === undefined
+							console.log('b')
+							x_position = x(i)
+						}
+						// console.log(d.article,min,max,d.size,width,x_position)
+						return "translate(" + x_position + "," + 0 + ")"
 					})
 
 				tooltip
@@ -657,30 +704,30 @@ function dv2(region,the_sort) {
 
 						let direction = ''
 						if (the_sort == 1) { // title
-							direction = tooltip_direction(the_data, i, min, max, d.avg_pv, false)
+							direction = tooltip_direction(filtered_data, i, min, max, d.avg_pv, false)
 						}
 						else if (the_sort == 2){
-							direction = tooltip_direction(the_data,d.days,min,max,d.avg_pv, true)
+							direction = tooltip_direction(filtered_data,d.days,min,max,d.avg_pv, true)
 						}
 						else if (the_sort == 3){
-							direction = tooltip_direction(the_data,d.size,min,max,d.avg_pv, false)
+							direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv, false)
 						}
 						else if (the_sort == 4){
-							direction = tooltip_direction(the_data,d.discussion_size,min,max,d.avg_pv, false)
+							direction = tooltip_direction(filtered_data,d.discussion_size,min,max,d.avg_pv, false)
 						}
 						else if (the_sort == 5){
-							direction = tooltip_direction(the_data,d.incipit_size,min,max,d.avg_pv, false)
+							direction = tooltip_direction(filtered_data,d.incipit_size,min,max,d.avg_pv, false)
 						}
 						else if (the_sort == 6){
-							direction = tooltip_direction(the_data,d.issues,min,max,d.avg_pv, false)
+							direction = tooltip_direction(filtered_data,d.issues,min,max,d.avg_pv, false)
 						}
 						else if (the_sort == 7){
-							direction = tooltip_direction(the_data,d.images,min,max,d.avg_pv, false)
+							direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv, false)
 						}
 						return direction 
 					})
 
-				sidebar(1,the_data,the_sort)
+				sidebar(1,filtered_data,the_sort)
 			}
 
 		}
@@ -808,27 +855,36 @@ function dv2(region,the_sort) {
 			svg.selectAll(".article")
 				.transition()
 				.attr("transform", function(d,i){
+					x_position = 0
+
 					if (the_sort == 1) { // "article"
-						return "translate(" + (x(i)+50) + "," + 0 + ")"
+						x_position = x(i)
 					}
 					else if (the_sort == 2){
-						return "translate(" + (x(d.days)+50) + "," + 0 + ")"
+						x_position = x(d.days)
 					}
 					else if (the_sort == 3){
-						return "translate(" + (x(d.size)+50) + "," + 0 + ")"
+						x_position = x(d.size)
+						console.log(d.article, "translate(" + x_position + "," + 0 + ")")
 					}
 					else if (the_sort == 4){
-						return "translate(" + (x(d.discussion_size)+50) + "," + 0 + ")"
+						x_position = x(d.discussion_size)
 					}
 					else if (the_sort == 5){
-						return "translate(" + (x(d.incipit_size)+50) + "," + 0 + ")"
+						x_position = x(d.incipit_size)
 					}
 					else if (the_sort == 6){
-						return "translate(" + (x(d.issues)+50) + "," + 0 + ")"
+						x_position = x(d.issues)
 					}
 					else if (the_sort == 7){
-						return "translate(" + (x(d.images)+50) + "," + 0 + ")"
+						x_position = x(d.images)
 					}
+					else { // the_sort === undefined
+						console.log('b')
+						x_position = x(i)
+					}
+					// console.log(d.article,min,max,d.size,width,x_position)
+					return "translate(" + x_position + "," + 0 + ")"
 				})
 		}
 
@@ -841,14 +897,6 @@ function dv2(region,the_sort) {
 
 	}
 }
-
-// const array = [10, 'apple', 'A', 0, true]
-// const object = {}
-
-// const sports = ['footbal','golf','judo','boxe','karate'] 
-// const sports_lenght = sports.length 
-
-// console.log(sports_lenght)
 
 function tooltip_direction(data,x,x_min,x_max,y,invert){
 
@@ -895,5 +943,5 @@ function tooltip_direction(data,x,x_min,x_max,y,invert){
 
 
 window.onload = function() {
-	dv2('all',1);
+	dv2('all', 1);
 }
