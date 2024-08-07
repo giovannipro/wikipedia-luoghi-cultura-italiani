@@ -133,11 +133,10 @@ function dv2(region, category, the_sort) {
 		let tooltip = d3.tip()
 			.attr('class', 'tooltip')
 			.attr('id', 'tooltip_dv1')
-			.attr('max-width',100)
+			// .attr('max-width',100)
 			.direction(function (d,i) {
 				return 'n'
 			})
-			.offset([-10,0])
 			.html(function(d,i) {
 				// console.log(d.article)
 
@@ -380,6 +379,45 @@ function dv2(region, category, the_sort) {
 				.range([height - (margin.top * 1.6),0])
 
 			tooltip
+				.offset(function (d,i){
+					let direction = ''
+					let off = [0,0] // [top, left]
+
+					if (the_sort == 1) { // title
+						direction = tooltip_direction(filtered_data, i, min, max, d.avg_pv, false)
+					}
+					else if (the_sort == 2){
+						direction = tooltip_direction(filtered_data,d.days,min,max,d.avg_pv, true)
+					}
+					else if (the_sort == 3){
+						direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 4){
+						direction = tooltip_direction(filtered_data,d.discussion_size,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 5){
+						direction = tooltip_direction(filtered_data,d.incipit_size,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 6){
+						direction = tooltip_direction(filtered_data,d.issues,min,max,d.avg_pv, false)
+					}
+					else if (the_sort == 7){
+						direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv, false)
+					}
+					console.log(d.article, direction)
+					// let size = (r(Math.sqrt(d.size/3.14)) * 0.10) + 20
+					if (direction == 'nw'){
+						off = [-10,-10] 
+					}
+					else if (direction == 'n'){
+						off = [-10,0] 
+					}
+					else if (direction == 'ne'){
+						off = [-10,-10] 
+					}
+
+					return off
+				})
 				.direction(function (d,i) {
 					let direction = ''
 					if (the_sort == 1) { // title
