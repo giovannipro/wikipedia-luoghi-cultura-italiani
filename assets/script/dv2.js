@@ -1,7 +1,7 @@
 const container = "#dv2";
 const font_size = 10;
 
-const filter_item = 15; // also in Wikipedia and Italian school is 120
+const filter_item = 12; // also in Wikipedia and Italian school is 120
 
 const shiftx_article = 30;
 const wiki_link = "https://it.wikipedia.org/wiki/";
