@@ -377,7 +377,7 @@ function dv2(region, category, the_sort) {
 
 			y = d3.scaleLinear()
 				.domain([0,y_max+(y_max/100*10)]) 
-				.range([height - margin.top,0])
+				.range([height - (margin.top * 1.6),0])
 
 			tooltip
 				.direction(function (d,i) {
