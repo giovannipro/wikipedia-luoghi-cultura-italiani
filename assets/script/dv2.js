@@ -1,7 +1,7 @@
 const container = "#dv2";
 const font_size = 10;
 
-const filter_item = 20; // also in Wikipedia and Italian school is 120
+const filter_item = 15; // also in Wikipedia and Italian school is 120
 
 const shiftx_article = 30;
 const wiki_link = "https://it.wikipedia.org/wiki/";
@@ -30,7 +30,7 @@ let margin = {top: 20, left: 0-reduction, bottom: 20, right: 60-reduction},
 	width = window_w - (margin.right + margin.right),
 	height = window_h - (margin.top + margin.bottom);
 
-function dv2(region,the_sort) {
+function dv2(region, category, the_sort) {
 
 	d3.tsv("../assets/data/voci.tsv")
 		.then(loaded)
@@ -44,9 +44,10 @@ function dv2(region,the_sort) {
 	
 		statistics(data)
 
-		// filtered_data.forEach(item =>
-		// 	console.log(item.id_wikidata, '\t', item.article, '\t', get_category(item.id_wikidata, item.article, item.instances))
-		// )
+		filtered_data.forEach(item =>
+			// console.log(get_category(item.id_wikidata, item.article, item.instances))
+			console.log(item.id_wikidata, '\t', item.article, '\t', get_category(item.id_wikidata, item.article, item.instances))
+		)
 
 		// svg 
 		// ---------------------------
@@ -173,8 +174,8 @@ function dv2(region,the_sort) {
 
 				let content = ""
 				// content += "<p style='color: red; margin: 0;'>" + i + "</p>" // debug  
-				content += "<p style='margin: 0 0 .1rem 0; font-weight: bold;'>" + d.article + "</p>";
-                content += "<p style='font-size: 0.8em; margin-bottom: 1rem;'>" 
+				content += "<p style='font-weight: bold; margin: 0 0 0 .2rem;'>" + d.article + "</p>";
+                content += "<p style='margin: 0 0 .8rem .2rem; font-size: 0.8em;'>" 
                 content += "<span>" + d.region + " | " + d.category + "</span><br>" // get_category(d.id_wikidata ,d.article, d.instances)
                 content += "<span>" + creation_date + format_date(d.first_edit) + "</span></p>"
 
@@ -271,7 +272,7 @@ function dv2(region,the_sort) {
 
 		plot.call(tooltip)
 
-		function display_data(region,the_sort){
+		function display_data(region, category, the_sort){
 
 			the_sort = parseInt(the_sort)
 
@@ -279,7 +280,7 @@ function dv2(region,the_sort) {
 				d3.selectAll('.article').remove()
 			}
 
-			// filter data by region
+			// filter data by region and category
 			// ---------------------------
 			if (region == 'all'){
 				filtered_data = data.filter(item =>
@@ -291,7 +292,13 @@ function dv2(region,the_sort) {
 					item.region == region
 				)
 			}
-			console.log(filtered_data)
+
+			if (category != 'all'){
+				filtered_data = filtered_data.filter(item =>
+					item.category == category
+				)
+			}
+			console.log(category, filtered_data)
 
 			// review the elements attributes
 			// ---------------------------
@@ -704,7 +711,7 @@ function dv2(region,the_sort) {
 			}
 
 		}
-		display_data(region,the_sort)
+		display_data(region, category, the_sort)
 
 		// chart scale
 		// ---------------------------
@@ -803,9 +810,23 @@ function dv2(region,the_sort) {
 
 		region_selection.addEventListener('change', function() {
 			let new_region = this.value;
+			let new_category = $("#categories option:selected").val();
 			let new_sort =  $("#sort_article option:selected").val();
 
-			display_data(new_region,new_sort)
+			display_data(new_region, new_category, new_sort)
+		});
+
+		// filter data by category
+		// ---------------------------
+
+		const category_selection = document.getElementById('categories')
+
+		category_selection.addEventListener('change', function() {
+			let new_region = $("#regions option:selected").val();
+			let new_category = this.value;
+			let new_sort =  $("#sort_article option:selected").val();
+
+			display_data(new_region, new_category, new_sort)
 		});
 
 
@@ -916,61 +937,64 @@ function get_category(id, name, instances){
 	let category = ''
 
 	const instances_array = instances.split(',')
+	name = name.toLowerCase()
 
 	instances_array.sort(function(a,b){
     	return a.localeCompare(b);
 	})
 
-	if (name.includes('anfiteatro romano') || instances_array.some(e => e.includes('anfiteatro romano')) ){
-		category = 'anfiteatro romano'
-	}
-	else if (name.includes('archivio') || instances_array.some(e => e.includes('archivio')) ){
-		category = 'archivio'
-	}
-	else if (name.includes('basilica') || instances_array.some(e => e.includes('basilica')) ){
-		category = 'basilica'
-	}
-	else if (name.includes('biblioteca') || instances_array.some(e => e.includes('biblioteca')) ){
-		category = 'biblioteca'
-	}
-	else if (name.includes('castello') || instances_array.some(e => e.includes('castello')) || instances_array.some(e => e.includes('castelli'))){
-		category = 'castello'
-	}
-	else if (name.includes('cattedrale') || instances_array.some(e => e.includes('cattedrale')) ){
-		category = 'cattedrale'
-	}
-	else if (name.includes('chiesa') || instances_array.some(e => e.includes('chiesa')) ){
-		category = 'chiesa'
-	}
-	else if (name.includes('giardino') || instances_array.some(e => e.includes('giardino')) ){
-		category = 'giardino'
-	}
-	else if (name.includes('palazzo') || instances_array.some(e => e.includes('palazzo')) ){
-		category = 'palazzo'
-	}
-	else if (name.includes('parco archeologico') || instances_array.some(e => e.includes('parco archeologico')) || instances_array.some(e => e.includes('sito archeologico')) ){
-		category = 'sito archeologico'
-	}
-	else if (name.includes('pinacoteca') || instances_array.some(e => e.includes('pinacoteca')) ){
-		category = 'pinacoteca'
-	}
-	else if (name.includes('teatro') || instances_array.some(e => e.includes('teatro')) ){
-		category = 'teatro'
-	}
-	else if (name.includes('tempio') || instances_array.some(e => e.includes('tempio')) ){
-		category = 'tempio'
-	}
-	else if (name.includes('museo') || instances_array.some(e => e.includes('museo')) ){
+	const categories = [
+		'museo',
+		'archivio',
+		'biblioteca',
+		'palazzo',
+		'pinacoteca'
+	]
+
+	// console.log(categories)
+	if (name.includes('museo')){
 		category = 'museo'
 	}
-	else {
-		category = 'altro luogo della cultura' // instances_array
+	else if (name.includes('castello') || name.includes('castel')) {
+		category = 'castello'
 	}
-	// console.log(id, name, category)
+	else if (name.includes('archivio') || name.includes('cineteca')){
+		category = 'archivio'
+	}
+	else if (name.includes('biblioteca')) {
+		category = 'biblioteca'
+	}
+	else if (name.includes('chiesa') || name.includes('basilica') || name.includes('cattedrale') || name.includes('abbazia') || name.includes('cappella') || name.includes('oratorio')  || name.includes('santuario') ){
+		category = 'sito religioso'
+	}
+	else if (name.includes('archeologico') || name.includes('archeologica') || name.includes('anfiteatro') || name.includes('necropoli') ){
+		category = 'sito archeologico'
+	}
+	else {
+		if (instances_array.some(e => e.includes('museo'))){
+			category = 'museo'
+		}
+		else if (instances_array.some(e => e.includes('archivio'))){
+			category = 'archivio'
+		}
+		else if (instances_array.some(e => e.includes('pinacoteca'))){
+			category = 'pinacoteca'
+		}
+		else if (instances_array.some(e => e.includes('chiesa')) || instances_array.some(e => e.includes('basilica')) || instances_array.some(e => e.includes('cattedrale')) ){
+			category = 'sito religioso'
+		}
+		else if (instances_array.some(e => e.includes('parco archeologico')) || instances_array.some(e => e.includes('sito archeologico'))){
+			category = 'sito archeologico'
+		}
+		else {
+			category = 'altro luogo della cultura' // instances_array
+		}
+	}
+	// console.log(name, category)
 	return category
 }
 
 
 window.onload = function() {
-	dv2('all', 1);
+	dv2('all', 'all', 1);
 }
