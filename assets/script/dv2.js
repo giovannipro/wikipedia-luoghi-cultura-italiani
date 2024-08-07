@@ -167,8 +167,11 @@ function dv2(region,the_sort) {
 					notes = "notes"
 				}
 
-				let content = "<p style='margin: 0 0 .1rem 0; font-weight: bold;'>" + d.article + "</p>";
-                content += "<p style='font-size: 0.8em; margin-bottom: 1rem;'>" + creation_date + format_date(d.first_edit) + "</p>"
+				let content = ""
+				// content += "<p style='color: red; margin: 0;'>" + i + "</p>" // debug  
+				content += "<p style='margin: 0 0 .1rem 0; font-weight: bold;'>" + d.article + "</p>";
+				// content += "<p style='margin: -.1rem 0 .5rem 0;'>" +  + "</p>";
+                content += "<p style='font-size: 0.8em; margin-bottom: 1rem;'>" + d.region + " | " +creation_date + format_date(d.first_edit) + "</p>"
 
                 content += '<table>'
                 
@@ -261,46 +264,29 @@ function dv2(region,the_sort) {
 			.attr("id","articles")
 			.attr("transform","translate(" + shiftx_article + "," + (margin.top) + ")")	
 
-		let article = articles.selectAll("g")
-			.data(filtered_data)
-			.enter()
-			.append("g")
-			.attr("class","article")
-			.attr("id", function(d,i){
-				return i
-			})
-			.attr("data-article", function(d,i){
-				return d.article
-			})
-			.attr("data-subject", function(d,i){
-				return d.subject
-			})
-			.attr("transform", function(d,i){
-				return "translate(" + (x(i)+50) + ",0)"
-			})
-			.on("mouseover", tooltip.show) 
-			.on("mouseout", tooltip.hide)
-
 		plot.call(tooltip)
 
 		function display_data(region,the_sort){
 
 			the_sort = parseInt(the_sort)
-			// console.log(region,the_sort)
 
-			article.remove()
+			if (d3.selectAll('.article')){
+				d3.selectAll('.article').remove()
+			}
 
 			// filter data by region
 			// ---------------------------
 			if (region == 'all'){
-				filtered_data = filtered_data.filter(item =>
+				filtered_data = data.filter(item =>
 					item.avg_pv > filter_item
 				)
 			}
 			else {
-				filtered_data = filtered_data.filter(item => item.region == region)
+				filtered_data = data.filter(item => 
+					item.region == region
+				)
 			}
-			// console.log(filtered_data)
+			console.log(filtered_data)
 
 			// review the elements attributes
 			// ---------------------------
@@ -357,7 +343,7 @@ function dv2(region,the_sort) {
 					return d.images;
 				})
 			}
-			console.log(min, max)
+			// console.log(min, max)
 
 			y_min = d3.min(filtered_data, function(d) { 
 				return d.avg_pv;
@@ -460,7 +446,7 @@ function dv2(region,the_sort) {
 					else { // the_sort === undefined
 						x_position = x(i)
 					}
-					return "translate(" + x_position + 50 + "," + 0 + ")"
+					return "translate(" + (x_position + 50) + "," + 0 + ")"
 				})
 				.on("mouseover", tooltip.show) 
 				.on("mouseout", tooltip.hide)
@@ -568,22 +554,6 @@ function dv2(region,the_sort) {
 				
 				the_sort = parseInt(the_sort)
 
-				// document.getElementById('tooltip_dv1').remove()
-				// plot.call(tooltip)
-
-				// filter data by region
-				// ---------------------------
-				// if (region == 'all'){
-				// 	filtered_data = filtered_data.filter(item =>
-				// 		item.avg_pv > filter_item
-				// 	)
-				// }
-				// else {
-				// 	filtered_data = filtered_data.filter(item => item.region == region)
-				// }
-
-				// console.log(region,the_sort,filtered_data.length)
-
 				if (the_sort == 1) {
 					min = 0
 					max = filtered_data.length
@@ -677,7 +647,6 @@ function dv2(region,the_sort) {
 						}
 						else if (the_sort == 3){
 							x_position = x(d.size)
-							console.log(d.article, "translate(" + x_position + "," + 0 + ")")
 						}
 						else if (the_sort == 4){
 							x_position = x(d.discussion_size)
@@ -692,11 +661,10 @@ function dv2(region,the_sort) {
 							x_position = x(d.images)
 						}
 						else { // the_sort === undefined
-							console.log('b')
 							x_position = x(i)
 						}
 						// console.log(d.article,min,max,d.size,width,x_position)
-						return "translate(" + x_position + "," + 0 + ")"
+						return "translate(" + (x_position + 50) + "," + 0 + ")"
 					})
 
 				tooltip
@@ -865,7 +833,6 @@ function dv2(region,the_sort) {
 					}
 					else if (the_sort == 3){
 						x_position = x(d.size)
-						console.log(d.article, "translate(" + x_position + "," + 0 + ")")
 					}
 					else if (the_sort == 4){
 						x_position = x(d.discussion_size)
@@ -880,7 +847,6 @@ function dv2(region,the_sort) {
 						x_position = x(d.images)
 					}
 					else { // the_sort === undefined
-						console.log('b')
 						x_position = x(i)
 					}
 					// console.log(d.article,min,max,d.size,width,x_position)
