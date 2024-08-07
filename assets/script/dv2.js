@@ -44,10 +44,10 @@ function dv2(region, category, the_sort) {
 	
 		statistics(data)
 
-		filtered_data.forEach(item =>
-			// console.log(get_category(item.id_wikidata, item.article, item.instances))
-			console.log(item.id_wikidata, '\t', item.article, '\t', get_category(item.id_wikidata, item.article, item.instances))
-		)
+		// filtered_data.forEach(item =>
+		// 	// console.log(get_category(item.id_wikidata, item.article, item.instances))
+		// 	console.log(item.id_wikidata, '\t', item.article, '\t', get_category(item.id_wikidata, item.article, item.instances))
+		// )
 
 		// svg 
 		// ---------------------------
@@ -77,8 +77,8 @@ function dv2(region, category, the_sort) {
 			.domain([0,r_max])
 
 		let y = d3.scaleLinear() // scaleSymlog() > it works
-			.domain([0,y_max+(y_max/100*10)]) 
-			.range([height-margin.top,0])
+			// .domain([0,y_max + (y_max/100*10)]) 
+			// .range([height - (margin.top * 10), 0])
 
 		let x = d3.scaleLinear()
 			.domain([min,max])
@@ -174,10 +174,12 @@ function dv2(region, category, the_sort) {
 
 				let content = ""
 				// content += "<p style='color: red; margin: 0;'>" + i + "</p>" // debug  
-				content += "<p style='font-weight: bold; margin: 0 0 0 .2rem;'>" + d.article + "</p>";
-                content += "<p style='margin: 0 0 .8rem .2rem; font-size: 0.8em;'>" 
+				content += "<p style='font-weight: bold; margin: 0 0 .4rem .2rem;'>" + d.article + "</p>";
+                content += "<p style='margin: 0 0 .8rem .2rem;'>" 
                 content += "<span>" + d.region + " | " + d.category + "</span><br>" // get_category(d.id_wikidata ,d.article, d.instances)
                 content += "<span>" + creation_date + format_date(d.first_edit) + "</span></p>"
+
+                content += '<hr style="border: 0.5px solid #e3e3e3"/>'
 
                 content += '<table>'
                 
@@ -375,7 +377,7 @@ function dv2(region, category, the_sort) {
 
 			y = d3.scaleLinear()
 				.domain([0,y_max+(y_max/100*10)]) 
-				.range([height-margin.top,0])
+				.range([height - margin.top,0])
 
 			tooltip
 				.direction(function (d,i) {
