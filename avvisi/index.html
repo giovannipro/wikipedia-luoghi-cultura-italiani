@@ -90,75 +90,52 @@
 						<div id="mobile_filter_icon"></div>
 					</div>
 					<div class="select_box" id="select_box">
-						<!-- <div id="select_year" class="selector">
-							<p class="key noselect lang_switch" data-it="Anno" data-en="Year">Anno</p>
-							<select name="subjects" id="year" class="select value noselect">
-								<option value="2022">2022</option>
-								<option value="2021">2021</option>
-								<option value="2020">2020</option>
+						<div id="select_region" class="selector">
+							<p class="key noselect lang_switch" data-it="Regioni" data-en="Regions">Regioni</p>
+							<select name="regions" id="regions"  class="select value noselect">
+								<option value="all" class="lang_switch" data-it="tutte le regioni" data-en="All regions">
+									tutte le regioni
+								</option>
+								<option value="Abruzzo">Abruzzo</option>
+								<option value="Basilicata">Basilicata</option>
+								<option value="Calabria">Calabria</option>
+								<option value="Campania">Campania</option>
+								<option value="Emilia-Romagna">Emilia-Romagna</option>
+								<option value="Friuli-Venezia Giulia">Friuli Venezia Giulia</option>
+								<option value="Lazio">Lazio</option>
+								<option value="Liguria">Liguria</option>
+								<option value="Lombardia">Lombardia</option>
+								<option value="Marche">Marche</option>
+								<option value="Molise">Molise</option>
+								<option value="Piemonte">Piemonte</option>
+								<option value="Puglia">Puglia</option>
+								<option value="Sardegna">Sardegna</option>
+								<option value="Sicilia">Sicilia</option>
+								<option value="Toscana">Toscana</option>
+								<option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+								<option value="Umbria">Umbria</option>
+								<option value="Valle d'Aosta">Valle d'Aosta</option>
+								<option value="Veneto">Veneto</option>
+							</select>
 							</select>
 						</div>
-						<div id="select_subject" class="selector">
-							<p class="key noselect lang_switch" data-it="Materia" data-en="Subject">Materia</p>
-							<select name="subjects" id="subjects"  class="select value noselect">
-								<option value="all" class="lang_switch" data-it="Tutte le materie" data-en="All subjects">
-									Tutte le materie
+						<div id="select_category" class="selector">
+							<p class="key noselect lang_switch" data-it="Categoria" data-en="Categoriy">Categoria</p>
+							<select name="categories" id="categories"  class="select value noselect">
+								<option value="all" class="lang_switch" data-it="tutte le categorie" data-en="All categories">
+									tutte le categorie
 								</option>
-								<option value="Biologia" class="lang_switch" data-it="Biologia" data-en="Biology">
-									Biologia
-								</option>
-								<option value="Chimica" class="lang_switch" data-it="Chimica" data-en="Chemistry">
-									Chimica
-								</option>
-								<option value="Cittadinanza e costituzione" class="lang_switch" data-it="Cittadinanza e costituzione" data-en="Citizenship and Constitution">
-									Cittadinanza e costituzione
-								</option>
-								<option value="Diritto e Economia" class="lang_switch" data-it="Diritto e Economia" data-en="Law and Economics">
-									Diritto e Economia
-								</option>
-								<option value="Filosofia" class="lang_switch" data-it="Filosofia" data-en="Philosophy">
-									Filosofia
-								</option>
-								<option value="Fisica" class="lang_switch" data-it="Fisica" data-en="Physics">
-									Fisica
-								</option>
-								<option value="Geografia" class="lang_switch" data-it="Geografia" data-en="Geography">
-									Geografia
-								</option>
-								<option value="Grammatica italiana" class="lang_switch" data-it="Grammatica italiana" data-en="Italian grammar">
-									Grammatica italiana
-								</option>
-								<option value="Grammatica latina" class="lang_switch" data-it="Grammatica latina" data-en="Latin grammar">Grammatica latina</option>
-								<option value="Informatica" class="lang_switch" data-it="Informatica" data-en="Informatics">
-									Informatica
-								</option>
-								<option value="Letteratura italiana" class="lang_switch" data-it="Letteratura italiana" data-en="Italian literature">
-									Letteratura italiana
-								</option>
-								<option value="Letteratura latina" class="lang_switch" data-it="Letteratura latina" data-en="Latin literature">
-									Letteratura latina
-								</option>
-								<option value="Matematica" class="lang_switch" data-it="Matematica" data-en="Mathematics">
-									Matematica
-								</option>
-								<option value="Scienze della Terra" class="lang_switch" data-it="Scienze della Terra" data-en="Earth Sciences">
-									Scienze della Terra
-								</option>
-								<option value="Scienze" class="lang_switch" data-it="Scienze" data-en="Science">
-									Scienze
-								</option>
-								<option value="Storia dell'arte" class="lang_switch" data-it="Storia dell'arte" data-en="Art History">
-									Storia dell'arte
-								</option>
-								<option value="Storia" class="lang_switch" data-it="Storia" data-en="History">
-									Storia
-								</option>
-								<option value="Tecnologia" class="lang_switch" data-it="Tecnologia" data-en="Technology">
-									Tecnologia
-								</option>
+								<option value="archivio">archivio</option>
+								<option value="biblioteca">biblioteca</option>
+								<option value="castello">castello</option>
+								<option value="museo">museo</option>
+								<option value="sito archeologico">sito archeologico</option>
+								<option value="sito religioso">sito religioso</option>
+								<option value="altro luogo della cultura">altro</option>
+							</select>
 							</select>
 						</div>
-						<div id="select_sort" class="selector">
+						<div class="selector">
 							<p class="key noselect lang_switch" data-it="Ordina per" data-en="Sort by">Ordina per</p>
 							<select name="sort" id="sort_article"  class="select value noselect">
 								<option name="issue" value="1" class="lang_switch" data-it="numero di avvisi" data-en="number of issues">
@@ -183,7 +160,7 @@
 									dimensione voce
 								</option>
 							</select>
-						</div> -->
+						</div>
 					</div>
 				</div>
 
