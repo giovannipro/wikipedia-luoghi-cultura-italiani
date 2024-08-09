@@ -15,22 +15,23 @@ const stroke_dash = "3,3";
 
 const log_exponent = 0.5; 
 
-// let multiply = 1;
-let window_w = document.getElementById("dv2").offsetWidth;
-	window_h = document.getElementById("dv2").offsetHeight;
-
-if (window_w <= 768){
-	reduction = 20;
-}
-else {
-	reduction = 0;
-}
-
-let margin = {top: 20, left: 0-reduction, bottom: 20, right: 60-reduction},
-	width = window_w - (margin.right + margin.right),
-	height = window_h - (margin.top + margin.bottom);
-
 function dv2(region, category, the_sort) {
+
+	let window_w = document.getElementById("dv2").offsetWidth;
+		window_h = document.getElementById("dv2").offsetHeight;
+
+	let margin = {top: 20, left: 0, bottom: 20, right: 60},
+		width = window_w - (margin.right + margin.right),
+		height = window_h - (margin.top + margin.bottom);
+
+	if (width <= 768){
+		translate_articles = 10
+		reduction = 30
+	}
+	else {
+		translate_articles = shiftx_article
+		reduction = 100
+	}
 
 	d3.tsv("../assets/data/voci.tsv")
 		.then(loaded)
@@ -82,7 +83,7 @@ function dv2(region, category, the_sort) {
 
 		let x = d3.scaleLinear()
 			.domain([min,max])
-			.range([0,width-100])
+			.range([0,width - reduction])
        
 		// grid and plot
 		// ---------------------------
@@ -269,7 +270,7 @@ function dv2(region, category, the_sort) {
 
 		let articles = plot.append("g")	
 			.attr("id","articles")
-			.attr("transform","translate(" + shiftx_article + "," + (margin.top) + ")")	
+			.attr("transform","translate(" + translate_articles + "," + (margin.top) + ")")	
 
 		plot.call(tooltip)
 
@@ -878,6 +879,17 @@ function dv2(region, category, the_sort) {
 		// ---------------------------
 		function responsive_chart(width){
 
+			if (width <= 768){
+				translate_articles = 10
+				reduction = 30
+
+			}
+			else {
+				translate_articles = shiftx_article
+				reduction = 100
+			}
+			console.log(width, translate_articles, reduction)
+
 			svg
 				.attr("width", width + (margin.right + margin.right))
 
@@ -888,7 +900,9 @@ function dv2(region, category, the_sort) {
 
 			x = d3.scaleLinear()
 				.domain([min,max])
-				.range([0,width-100])
+				.range([0,width - reduction])
+
+			articles.attr("transform","translate(" + translate_articles + "," + margin.top + ")") 
 
 			svg.selectAll(".article")
 				.transition()
