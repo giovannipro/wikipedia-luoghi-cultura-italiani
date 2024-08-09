@@ -317,6 +317,12 @@ function dv3(region, category, the_sort) {
 					item.region == region
 				)
 			}
+
+			if (category != 'all'){
+				filtered_data = filtered_data.filter(item =>
+					item.category == category
+				)
+			}
 			console.log(category, filtered_data)
 
 			if (filtered_data.length == 0){
@@ -496,13 +502,15 @@ function dv3(region, category, the_sort) {
 
 		// filter data by region
 		// ---------------------------
+		
+		const select_region = document.getElementById("regions")
+		const select_category = document.getElementById("categories")
+		const select_sort = document.getElementById("sort_article")
 
-		const region_selection = document.getElementById('regions')
-
-		region_selection.addEventListener('change', function() {
+		select_region.addEventListener('change', function() {
 			let new_region = this.value;
-			let new_category = $("#categories option:selected").val();
-			let new_sort =  $("#sort_article option:selected").val();
+			let new_category = select_category.value;
+			let new_sort = select_sort.value;
 
 			display_data(new_region, new_category, new_sort)
 		});
@@ -510,12 +518,10 @@ function dv3(region, category, the_sort) {
 		// filter data by category
 		// ---------------------------
 
-		const category_selection = document.getElementById('categories')
-
-		category_selection.addEventListener('change', function() {
-			let new_region = $("#regions option:selected").val();
+		select_category.addEventListener('change', function() {
+			let new_region = select_region.value;
 			let new_category = this.value;
-			let new_sort =  $("#sort_article option:selected").val();
+			let new_sort = select_sort.value;
 
 			display_data(new_region, new_category, new_sort)
 		});

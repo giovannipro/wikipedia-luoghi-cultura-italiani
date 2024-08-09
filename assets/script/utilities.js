@@ -193,7 +193,7 @@ function mobile_filter() {
 		
 		if (open == false) {
 
-			if (path.indexOf("viste") != -1 || path.indexOf("autori") != -1){ 
+			if (path.indexOf("viste") != -1 || path.indexOf("avvisi") != -1){ 
 				$("#mobile_filter_icon").css("background","url('../assets/img/arrow-up.svg') center center no-repeat").css("background-size","55%");
 			}
 			else {
@@ -205,7 +205,7 @@ function mobile_filter() {
 			open = true;
 		}
 		else {
-			if (path.indexOf("viste") != -1 || path.indexOf("autori") != -1){ 
+			if (path.indexOf("viste") != -1 || path.indexOf("avvisi") != -1){ 
 				$("#mobile_filter_icon").css("background","url('../assets/img/arrow-down.svg') center center no-repeat").css("background-size","55%");			
 			}
 			else {
