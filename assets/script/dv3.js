@@ -16,7 +16,6 @@ let c_issues = '#EC4C4E',
 
 const stroke_dash = "2,2"
 
-
 function dv3(region, category, the_sort) {
 
 	// size constants
@@ -63,7 +62,8 @@ function dv3(region, category, the_sort) {
 		})
 		console.log(filtered_data)
 		
-		let total = filtered_data.length
+		// let bar_width = (width - (total * 2)) / total
+		// console.log(bar_width)
 
 		statistics(data)
 
@@ -78,6 +78,7 @@ function dv3(region, category, the_sort) {
 		// scale 
 		// ---------------------------
 
+		let total = filtered_data.length
 		let article_width = ((width-margin.left*2) - (h_space*(total-1))) / total
 
 		let max_range = article_width/2 * circle_size
@@ -86,8 +87,6 @@ function dv3(region, category, the_sort) {
 			max_range = article_width / 2 * 1
 		}
 		// console.log(article_width,max_range)
-
-
 
 		let issues_max = 4
 		// let issues_max = d3.max(filtered_data, function(d) { 
@@ -198,6 +197,9 @@ function dv3(region, category, the_sort) {
 			.attr("id", "d3_plot")
 			.attr("transform", "translate(" + 50 + "," + margin.top + ")");
 
+		let articles = plot.append("g")	
+			.attr("id","articles")
+
 		// tooltip
 		// ---------------------------
 		let tooltip = d3.tip()
@@ -294,9 +296,8 @@ function dv3(region, category, the_sort) {
        	plot.call(tooltip);
 
 
-       	function display_data(region, category, the_sort){
-
-       		the_sort = parseInt(the_sort)
+		function display_data(region, category, the_sort){
+       		console.log(region, category, the_sort)
 
        		if (d3.selectAll('.article')){
 				d3.selectAll('.article').remove()
@@ -332,14 +333,15 @@ function dv3(region, category, the_sort) {
 			// review the elements attributes
 			// ---------------------------
 
-
+			// total = filtered_data.length
+			// article_width = ((width-margin.left*2) - (h_space*(total-1))) / total
+			
+			// x.domain([0,article_width * filtered_data.length]) 
 
 			// plot data
 			// ---------------------------
 
-			let article = plot.append("g")	
-				.attr("id","articles")
-				.selectAll("g")
+			let article = articles.selectAll("g")
 				.data(filtered_data)
 				.enter()
 				.append("g")
@@ -510,7 +512,7 @@ function dv3(region, category, the_sort) {
 		select_region.addEventListener('change', function() {
 			let new_region = this.value;
 			let new_category = select_category.value;
-			let new_sort = select_sort.value;
+			let new_sort = parseInt(select_sort.value);
 
 			display_data(new_region, new_category, new_sort)
 		});
@@ -521,7 +523,7 @@ function dv3(region, category, the_sort) {
 		select_category.addEventListener('change', function() {
 			let new_region = select_region.value;
 			let new_category = this.value;
-			let new_sort = select_sort.value;
+			let new_sort = parseInt(select_sort.value);
 
 			display_data(new_region, new_category, new_sort)
 		});
@@ -543,6 +545,68 @@ function dv3(region, category, the_sort) {
 	    function show_no_data(){
 	    	console.log('no data')
 	    }
+
+	    // sort data
+		// ---------------------------
+		select_sort.addEventListener("change", function() {
+			let new_region = select_region.value;
+			let new_category = select_category.value;
+			let new_sort = this.value;
+
+			update_sort(new_region,new_sort)
+		});
+
+		function update_sort(region,the_sort){
+
+			// sort
+			if (the_sort == 1){
+				filtered_data = filtered_data.sort(function(a, b){
+					return d3.descending(+a.issues, +b.issues);
+				})
+			}
+			else if (the_sort == 2){
+				filtered_data = filtered_data.sort(function(a, b){
+					return d3.ascending(a.article, b.article);
+				})
+			}
+			else if (the_sort == 3){
+				filtered_data = filtered_data.sort(function(a, b){
+					return d3.descending(+a.references, +b.references);
+				})
+			}
+			else if (the_sort == 4){
+				filtered_data = filtered_data.sort(function(a, b){
+					return d3.descending(+a.notes, +b.notes);
+				})
+			}
+			else if (the_sort == 5){
+				filtered_data = filtered_data.sort(function(a, b){
+					return d3.descending(+a.images, +b.images);
+				})
+			}
+			else if (the_sort == 6){
+				filtered_data = filtered_data.sort(function(a, b){
+					return d3.descending(+a.size, +b.size);
+				})
+			}
+
+			filtered_data.forEach(function(d,i){
+				d.new_id = i;
+			})
+
+			if (filtered_data.length < 10){
+				article_width = 100
+			}
+
+			x.domain([0, filtered_data.length]) 
+
+			svg.selectAll(".article")
+				.transition()
+				.attr("transform", function(d,i){
+					return "translate(" + x(d.new_id) + "," + 0 + ")"
+				})
+		}
+
 	}
 }
 
