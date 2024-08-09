@@ -17,6 +17,7 @@ const log_exponent = 0.5;
 
 function dv2(region, category, the_sort) {
 
+	// size constants
 	let window_w = document.getElementById("dv2").offsetWidth;
 		window_h = document.getElementById("dv2").offsetHeight;
 
@@ -33,6 +34,7 @@ function dv2(region, category, the_sort) {
 		reduction = 100
 	}
 
+	// load data
 	d3.tsv("../assets/data/voci.tsv")
 		.then(loaded)
 
@@ -233,6 +235,7 @@ function dv2(region, category, the_sort) {
 
        	const duration = 0
 	    function handleMouseOver(){
+	    	
 			// hide circles
 			d3.selectAll(".article_circles,.line_prev,.circle_prev")
 				.transition()
