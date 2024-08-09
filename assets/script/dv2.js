@@ -121,7 +121,7 @@ function dv2(region, category, the_sort) {
 			.text("visite giornaliere (media)")
 			.attr("data-it","visite giornaliere (media)")
 			.attr("data-en","daily visits (average)")
-			.attr("y",-6)
+			.attr("y",2)
 			.attr("font-size",font_size)
 
 		function make_y_gridlines() {		
@@ -299,7 +299,11 @@ function dv2(region, category, the_sort) {
 					item.category == category
 				)
 			}
-			console.log(category, filtered_data)
+			// console.log(category, filtered_data)
+
+			if (filtered_data.length == 0){
+				show_no_data()
+			}
 
 			// review the elements attributes
 			// ---------------------------
@@ -404,7 +408,7 @@ function dv2(region, category, the_sort) {
 					else if (the_sort == 7){
 						direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv, false)
 					}
-					console.log(d.article, direction)
+					// console.log(d.article, direction)
 					// let size = (r(Math.sqrt(d.size/3.14)) * 0.10) + 20
 					if (direction == 'nw'){
 						off = [-10,-10] 
@@ -445,9 +449,9 @@ function dv2(region, category, the_sort) {
 				})
 
 			svg.select("#yAxis")
-			    .transition()
-			    .duration(200)
-			    .call(d3.axisLeft(y))
+				.transition()
+				.duration(200)
+				.call(d3.axisLeft(y))
 
 			d3.select('#grid')
 				.transition()
@@ -927,6 +931,53 @@ function dv2(region, category, the_sort) {
 			responsive_chart(width)
 		});
 
+		function show_no_data(){
+
+			const lineData = [
+				{y: 1},
+				{y: 2},
+				{y: 3},
+				{y: 4},
+				{y: 5},
+				{y: 6},
+				{y: 7}
+			]
+
+			const line_height = (height - (margin.top * 1.5)) / lineData.length 
+
+			group = articles.append("g")
+				.attr("class","article")
+				.attr("transform","translate(" + (-90) + ",0)")
+
+			lines = group.append("g")
+				.attr("class","lines")
+				.selectAll("lines")
+				.data(lineData)
+				.enter()
+				.append("line")
+				.attr("x1", 0)
+				.attr("y1", d => d.y * line_height)
+				.attr("x2", window_w)
+				.attr("y2", d => d.y * line_height) 
+				.attr("stroke", "#e9e4e4")
+				.attr("stroke-width", 1);
+
+			text_box = group.append("g")
+				.attr("class","text")
+				.attr("transform","translate(" + 0 + ",-20)")
+
+			text_a = text_box.append("text")
+				.text("Purtroppo qui non ci sono dati.")
+				.attr("x",window_w / 2)
+				.attr("y",height / 2)
+				.attr("text-anchor","middle")
+
+			text_b = text_box.append("text")
+				.text("Prova a cambiare la selezione.")
+				.attr("x",window_w / 2)
+				.attr("y",height / 2 + 20)
+				.attr("text-anchor","middle")
+		}
 	}
 }
 
