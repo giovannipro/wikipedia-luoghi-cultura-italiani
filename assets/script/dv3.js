@@ -200,101 +200,8 @@ function dv3(region, category, the_sort) {
 		let articles = plot.append("g")	
 			.attr("id","articles")
 
-		// tooltip
-		// ---------------------------
-		let tooltip = d3.tip()
-			.attr('class', 'tooltip')
-			.attr('id', 'tooltip_dv3')
-			.direction(function (d,i) {
-				let length = filtered_data.length
-				let n_s = ''
-				let w_e = ''
-				let direction = ''
-
-				if (d.issues > 2 ){
-					n_s = 's'
-				}
-				else {
-					n_s = 'n'
-				}
-
-				if (i < length / 3){
-					w_e = 'e'
-				}
-				else if (i > (length / 3 * 2) ) {
-					w_e = 'w'
-				}
-
-				direction = n_s + w_e
-
-				return direction
-			})
-			.offset(function (d,i){
-				return [-20,0]
-			})
-			.html(function(d) {
-
-				let params = new URLSearchParams(window.location.search);
-				if (params.has('lang') == true) {
-					lang = params.get('lang')
-				}
-
-				lang = 'it'
-
-				if (lang == 'it'){
-					creation_date = "Creato il: "
-					issues = "avvisi"
-					references = "riferimenti bibliog."
-					notes = "note"
-					images = "immagini"
-				}
-				else {
-					creation_date = "Created on: "
-					issues = "issues"
-					references = "references"
-					notes = "notes"
-					images = "images"
-				}
-
-				let content = "<p style='margin: 0 0 8px 3px; font-weight: bold;'>" + d.article + "</p>";
-                // content += "<span style='font-size: 0.8em;'>" + creation_date + format_date(d.first_edit) + "</span></p><table>"
-
-				content += '<table>'
-
-	            // issues
-				content += "<tr>"
-				content += "<td class='label'>" + issues + "</td>"
-				content += "<td class='value'>" + d.issues.toLocaleString() + "</td>"
-				content += "<td></td>"
-				content += "</tr>"
-
-                // references
-				content += "<tr>"
-				content += "<td class='label'>" + references + "</td>"
-				content += "<td class='value'>" + d.references.toLocaleString() + "</td>"
-				content += "<td></td>"
-				content += "</tr>"
-
-				// notes
-				content += "<tr>"
-				content += "<td class='label'>" + notes + "</td>"
-				content += "<td class='value'>" + d.notes.toLocaleString() + "</td>"
-				content += "<td></td>"
-				content += "</tr>"
-
-                // images
-				content += "<tr>"
-				content += "<td class='label'>" + images + "</td>"
-				content += "<td class='value'>" + d.images.toLocaleString() + "</td>"
-				content += "<td></td>"
-				content += "</tr>"
-
-	            content += "</table>"
-
-	            return content;
-	        })
+		let tooltip = get_tooltip('dv3')
        	plot.call(tooltip);
-
 
 		function display_data(region, category, the_sort){
        		console.log(region, category, the_sort)
@@ -498,6 +405,75 @@ function dv3(region, category, the_sort) {
 				.attr("height", function(d,i){
 					return y_features(d.references)
 				})
+
+			// tooltip
+			// 	.offset(function (d,i){
+			// 		let direction = ''
+			// 		let off = [0,0] // [top, left]
+
+			// 		if (the_sort == 1) { // title
+			// 			direction = tooltip_direction(filtered_data, i, min, max, d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 2){
+			// 			direction = tooltip_direction(filtered_data,d.days,min,max,d.avg_pv, true)
+			// 		}
+			// 		else if (the_sort == 3){
+			// 			direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 4){
+			// 			direction = tooltip_direction(filtered_data,d.discussion_size,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 5){
+			// 			direction = tooltip_direction(filtered_data,d.incipit_size,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 6){
+			// 			direction = tooltip_direction(filtered_data,d.issues,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 7){
+			// 			direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv, false)
+			// 		}
+			// 		// console.log(d.article, direction)
+			// 		// let size = (r(Math.sqrt(d.size/3.14)) * 0.10) + 20
+			// 		if (direction == 'nw'){
+			// 			off = [-10,-10] 
+			// 		}
+			// 		else if (direction == 'n'){
+			// 			off = [-10,0] 
+			// 		}
+			// 		else if (direction == 'ne'){
+			// 			off = [-10,-10] 
+			// 		}
+
+			// 		return off
+			// 	})
+			// 	.direction(function (d,i) {
+			// 		let direction = ''
+			// 		if (the_sort == 1) { // title
+			// 			direction = tooltip_direction(filtered_data, i, min, max, d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 2){
+			// 			direction = tooltip_direction(filtered_data,d.days,min,max,d.avg_pv, true)
+			// 		}
+			// 		else if (the_sort == 3){
+			// 			direction = tooltip_direction(filtered_data,d.size,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 4){
+			// 			direction = tooltip_direction(filtered_data,d.discussion_size,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 5){
+			// 			direction = tooltip_direction(filtered_data,d.incipit_size,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 6){
+			// 			direction = tooltip_direction(filtered_data,d.issues,min,max,d.avg_pv, false)
+			// 		}
+			// 		else if (the_sort == 7){
+			// 			direction = tooltip_direction(filtered_data,d.images,min,max,d.avg_pv, false)
+			// 		}
+			// 		return direction 
+			// 	})
+
+			// min_circle_size = 1
+			// sidebar(2,filtered_data,the_sort)
 		}
 		display_data(region, category, the_sort)
 
@@ -608,6 +584,10 @@ function dv3(region, category, the_sort) {
 		}
 
 	}
+}
+
+function tooltip_direction(data,x,x_min,x_max,y,invert){
+
 }
 
 window.onload = function() {

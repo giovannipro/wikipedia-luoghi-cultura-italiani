@@ -649,6 +649,136 @@ function statistics(data){
 	// load_values(analized_articles)
 }
 
+function get_tooltip(dv) {
+	let tooltip = d3.tip()
+		.attr('class', 'tooltip')
+		.attr('id', 'tooltip_' + dv)
+		.direction(function (d,i) {
+			return 'n'
+		})
+		.html(function(d,i) {
+			let params = new URLSearchParams(window.location.search);
+			if (params.has('lang') == true) {
+				lang = params.get('lang')
+			}
+
+			lang = 'it'
+			if (lang == 'it'){
+				creation_date = "Voce creata il: "
+				visits = "visite giornaliere"
+				size = "dimensioni"
+				discussion = "discussione"
+				issues = "avvisi"
+				images = "immagini"
+				incipit = 'incipit'
+
+				references = "riferimenti bibliog."
+				notes = "note"
+			}
+			else {
+				creation_date = "Created on: "
+				visits = "daily visits"
+				size = "size"
+				discussion = "discussion"
+				issues = "issues"
+				images = "images"
+				incipit = "lead section"
+
+				references = "references"
+				notes = "notes"
+			}
+
+			let content = ""
+			// content += "<p style='color: red; margin: 0;'>" + i + "</p>" // debug  
+			content += "<p style='font-weight: bold; margin: 0 0 .4rem .2rem;'>" + d.article + "</p>";
+            content += "<p style='margin: 0 0 .8rem .2rem;'>" 
+            content += "<span>" + d.region + " | " + d.category + "</span><br>" // get_category(d.id_wikidata ,d.article, d.instances)
+            content += "<span>" + creation_date + format_date(d.first_edit) + "</span></p>"
+
+            content += '<hr style="border: 0.5px solid #e3e3e3"/>'
+
+            content += '<table>'
+
+            avg_daily_visits = ''
+            avg_daily_visits += "<tr>"
+			avg_daily_visits += "<td class='label'>" + visits + "</td>"
+			avg_daily_visits += "<td class='value'>" + d.avg_pv.toLocaleString() + "</td>"
+			avg_daily_visits += "<td></td>"
+			avg_daily_visits += "</tr>"
+
+            the_size = ''
+			the_size += "<tr>"
+			the_size += "<td class='label'>" + size + "<span style='color: #b9b9b9;'> (byte)</span></td>"
+			the_size += "<td class='value'>" + d.size.toLocaleString() + "</td>"
+			the_size += "<td></td>"
+			the_size += "</tr>"
+
+        	the_incipit = ''
+			the_incipit += "<tr>"
+			the_incipit += "<td class='label'>" + incipit + "<span style='color: #b9b9b9;'> (byte)</span></td>"
+			the_incipit += "<td class='value'>" + d.incipit_size.toLocaleString() + "</td>"
+			the_incipit += "<td></td>"
+			the_incipit += "</tr>"
+
+        	the_discussion = ''
+			the_discussion += "<tr>"
+			the_discussion += "<td class='label'>" + discussion + "<span style='color: #b9b9b9;'> (byte)</span></td>"
+			the_discussion += "<td class='value'>" + d.discussion_size.toLocaleString() + "</td>"
+			the_discussion += "<td></td>"
+			the_discussion += "</tr>"
+
+        	the_issues = ''
+			the_issues += "<tr>"
+			the_issues += "<td class='label'>" + issues + "</td>"
+			the_issues += "<td class='value'>" + d.issues.toLocaleString() + "</td>"
+			the_issues += "<td></td>"
+			the_issues += "</tr>"
+
+			the_images = ''
+			the_images += "<tr>"
+			the_images += "<td class='label'>" + images + "</td>"
+			the_images += "<td class='value'>" + d.images.toLocaleString() + "</td>"
+			the_images += "<td></td>"
+			the_images += "</tr>"
+
+			the_references = ''
+			the_references += "<tr>"
+			the_references += "<td class='label'>" + references + "</td>"
+			the_references += "<td class='value'>" + d.references.toLocaleString() + "</td>"
+			the_references += "<td></td>"
+			the_references += "</tr>"		
+
+			the_notes = ''
+			the_notes += "<tr>"
+			the_notes += "<td class='label'>" + notes + "</td>"
+			the_notes += "<td class='value'>" + d.notes.toLocaleString() + "</td>"
+			the_notes += "<td></td>"
+			the_notes += "</tr>"
+
+			if (dv == 'dv2') {
+				content += avg_daily_visits
+				content += the_size
+				content += the_incipit
+				content += the_discussion
+				content += the_issues
+				content += the_images
+			}
+			else if (dv == 'dv3'){
+				content += avg_daily_visits
+				content += the_size
+				content += the_issues
+				content += the_references
+				content += the_notes
+				content += the_images
+			}
+
+            content += "</table>"
+
+            return content;
+        });
+	return tooltip
+}
+
 window.addEventListener('load', function () {    
 
 	mobile_menu();
