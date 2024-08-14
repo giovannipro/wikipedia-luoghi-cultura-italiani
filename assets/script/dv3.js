@@ -1,6 +1,6 @@
 const container = "#dv3";
 const font_size = 10;
-const shiftx_article = 30;
+const shiftx_article = 10;
 const v_shift = 8;
 const h_space = 2;
 const wiki_link = "https://it.wikipedia.org/wiki/";
@@ -39,7 +39,7 @@ function dv3(region, category, the_sort) {
 	width = window_w - (margin.right + margin.right),
 	height = window_h - (margin.top + margin.bottom);
 
-	const ticksAmount = 10;
+	const ticksAmount = 6;
 
 	const issue_height = height/2.4;
 	const features_height = height/2.4;
@@ -199,6 +199,7 @@ function dv3(region, category, the_sort) {
 
 		let articles = plot.append("g")	
 			.attr("id","articles")
+			.attr('transform',"translate(" + shiftx_article + "," + margin.top + ")") 
 
 		let tooltip = get_tooltip('dv3')
        	plot.call(tooltip);
@@ -321,13 +322,13 @@ function dv3(region, category, the_sort) {
 
 			//issues
 			let issues = article.append("rect")
-				.attr("class","issue_b")
 				.attr("x",0)
 				.attr("y",y_issues(issues_max))
 				.attr("height",0)
 				.attr("width",article_width)
 				.attr("fill","red")
-				.attr("class", function(d,i){
+				.attr("class","article_rect")
+				.attr("data-issue", function(d,i){
 					return "iss " + d.issues 
 				})
 				.transition()
@@ -585,6 +586,90 @@ function dv3(region, category, the_sort) {
 
 			sidebar(3,filtered_data,the_sort)
 		}
+
+		// make the visualization responsive
+		// ---------------------------
+		function responsive_chart(width){
+
+			if (width <= 768){
+				translate_articles = 5
+				reduction = 0
+
+			}
+			else {
+				translate_articles = shiftx_article
+				reduction = 100
+			}
+			// console.log(width, translate_articles, reduction)
+
+			svg
+				.attr("width", width + (margin.right + margin.right))
+
+			grid_features
+				.call(make_issue_gridlines()
+					.ticks(ticksAmount)
+          			.tickSize(-width-margin.left-margin.right-60)
+          		)
+
+			x = d3.scaleLinear()
+				.domain([0,filtered_data.length])
+				.range([0,width - reduction])
+
+			articles.attr("transform","translate(" + translate_articles + "," + margin.top + ")") 
+
+			svg.selectAll(".article")
+				.transition()
+				.attr("transform", function(d,i){
+					x_position = 0
+
+					if (the_sort == 1) { // "article"
+						x_position = x(i)
+					}
+					else if (the_sort == 2){
+						x_position = x(d.days)
+					}
+					else if (the_sort == 3){
+						x_position = x(d.size)
+					}
+					else if (the_sort == 4){
+						x_position = x(d.discussion_size)
+					}
+					else if (the_sort == 5){
+						x_position = x(d.incipit_size)
+					}
+					else if (the_sort == 6){
+						x_position = x(d.issues)
+					}
+					else if (the_sort == 7){
+						x_position = x(d.images)
+					}
+					else { // the_sort === undefined
+						x_position = x(i)
+					}
+					// console.log(d.article,min,max,d.size,width,x_position)
+					return "translate(" + x_position + "," + 0 + ")"
+				})
+				
+
+			svg.selectAll(".article_rect")
+				.attr("width", function(d,i){
+					rect_width = ((width-margin.left*2) - (h_space*(total-1))) / total // (width / filtered_data.length) - 8// - (1 * filtered_data.length)
+					
+					if (rect_width < 1) {
+						rect_width = 1
+					}
+					
+					console.log(rect_width)
+					return rect_width
+				})
+		}
+
+		window.addEventListener("resize", (event) => {
+			window_w = document.getElementById("dv3").offsetWidth;
+			width = window_w - (margin.right + margin.right)
+
+			responsive_chart(width)
+		});
 
 	}
 }

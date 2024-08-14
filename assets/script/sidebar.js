@@ -8,7 +8,7 @@ function update_sidebar_text(){
 }
 
 function sidebar(dv,data,the_sort){
-	console.log(dv, the_sort)
+	// console.log(dv, the_sort)
 
 	const button_open = document.getElementById('sidebar_button_open');
 	const button_close = document.getElementById('sidebar_close_icon');
