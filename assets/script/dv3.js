@@ -1,6 +1,6 @@
 const container = "#dv3";
 const font_size = 10;
-const shiftx_article = 10;
+const shiftx_article = 50;
 const v_shift = 8;
 const h_space = 2;
 const wiki_link = "https://it.wikipedia.org/wiki/";
@@ -195,7 +195,7 @@ function dv3(region, category, the_sort) {
 		// ---------------------------
 		let plot = svg.append("g")
 			.attr("id", "d3_plot")
-			.attr("transform", "translate(" + 50 + "," + margin.top + ")");
+			// .attr("transform", "translate(" + 50 + "," + margin.top + ")");
 
 		let articles = plot.append("g")	
 			.attr("id","articles")
@@ -592,7 +592,7 @@ function dv3(region, category, the_sort) {
 		function responsive_chart(width){
 
 			if (width <= 768){
-				translate_articles = 5
+				translate_articles = 40
 				reduction = 0
 
 			}
@@ -604,6 +604,12 @@ function dv3(region, category, the_sort) {
 
 			svg
 				.attr("width", width + (margin.right + margin.right))
+			
+			grid_issues 
+				.call(make_issue_gridlines()
+					.ticks(ticksAmount)
+    	      		.tickSize(-width-margin.left-margin.right-60)
+          		)
 
 			grid_features
 				.call(make_issue_gridlines()
@@ -658,7 +664,7 @@ function dv3(region, category, the_sort) {
 					if (rect_width < 1) {
 						rect_width = 1
 					}
-					
+
 					console.log(rect_width)
 					return rect_width
 				})
