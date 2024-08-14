@@ -472,8 +472,8 @@ function dv3(region, category, the_sort) {
 			// 		return direction 
 			// 	})
 
-			// min_circle_size = 1
-			// sidebar(2,filtered_data,the_sort)
+			min_circle_size = 1
+			sidebar(3,filtered_data,the_sort)
 		}
 		display_data(region, category, the_sort)
 
@@ -533,6 +533,7 @@ function dv3(region, category, the_sort) {
 		});
 
 		function update_sort(region,the_sort){
+			the_sort = parseInt(the_sort)
 
 			// sort
 			if (the_sort == 1){
@@ -581,6 +582,8 @@ function dv3(region, category, the_sort) {
 				.attr("transform", function(d,i){
 					return "translate(" + x(d.new_id) + "," + 0 + ")"
 				})
+
+			sidebar(3,filtered_data,the_sort)
 		}
 
 	}

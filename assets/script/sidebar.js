@@ -8,6 +8,7 @@ function update_sidebar_text(){
 }
 
 function sidebar(dv,data,the_sort){
+	console.log(dv, the_sort)
 
 	const button_open = document.getElementById('sidebar_button_open');
 	const button_close = document.getElementById('sidebar_close_icon');
@@ -28,7 +29,7 @@ function sidebar(dv,data,the_sort){
 		update_sidebar_text()
 
 		// sort data and get max
-		if (dv == 1){
+		if (dv == 2){
 			if (the_sort == 1){
 				data.sort((a, b) => {
 					return a.article - b.article;
@@ -78,7 +79,7 @@ function sidebar(dv,data,the_sort){
 				max = Math.max(...data.map((a,b) => a.linguistic_versions))
 			}
 		}
-		else if (dv == 2) {
+		else if (dv == 3) {
 			if (the_sort == 1){
 				max = Math.max(...data.map(item => item.issues));
 			}
@@ -95,9 +96,6 @@ function sidebar(dv,data,the_sort){
 				max = Math.max(...data.map(item => item.images));
 			}
 			else if (the_sort == 6){
-				max = Math.max(...data.map(item => item.linguistic_versions));
-			}
-			else if (the_sort == 7){
 				max = Math.max(...data.map(item => item.size));
 			}
 		}
@@ -106,7 +104,7 @@ function sidebar(dv,data,the_sort){
 		// add item in the sidebar
 		data.forEach(function (d,i) {
 
-			if (dv ==1){
+			if (dv == 2){
 				if (the_sort == 1){
 					detail = ''
 					num = 0
@@ -135,12 +133,12 @@ function sidebar(dv,data,the_sort){
 					detail = d.images
 					num = d.images
 				}
-				else if (the_sort == 8){
-					detail = formatNumber(d.linguistic_versions) //.toLocaleString()
-					num = d.linguistic_versions
-				}
+				// else if (the_sort == 8){
+				// 	detail = formatNumber(d.linguistic_versions) //.toLocaleString()
+				// 	num = d.linguistic_versions
+				// }
 			}
-			else if (dv == 2) {
+			else if (dv == 3) {
 				if (the_sort == 1){
 					detail = d.issues
 					num = d.issues
@@ -162,13 +160,13 @@ function sidebar(dv,data,the_sort){
 					num = d.images
 				}
 				else if (the_sort == 6){
-					detail = formatNumber(d.linguistic_versions) //.toLocaleString()
-					num = d.linguistic_versions
-				}
-				else if (the_sort == 7){
 					detail = formatNumber(d.size) //.toLocaleString()
 					num = d.size
 				}
+				// else if (the_sort == 6){
+				// 	detail = formatNumber(d.linguistic_versions) //.toLocaleString()
+				// 	num = d.linguistic_versions
+				// }
 			}
 			// console.log(the_sort)
 
@@ -195,7 +193,7 @@ function sidebar(dv,data,the_sort){
 
 			output += '</div>'
 
-			if (the_sort != 2 || isNaN(max) == false){
+			if (the_sort != 1 || isNaN(max) == false){
 				output += '<div class="bar" style="width: ' + size + '%;"></div>'
 			}
 			output += '</div>'

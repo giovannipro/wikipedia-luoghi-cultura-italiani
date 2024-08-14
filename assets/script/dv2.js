@@ -497,7 +497,7 @@ function dv2(region, category, the_sort) {
 					return d.discussion_size
 				})
 
-			sidebar(1,filtered_data,the_sort)
+			sidebar(2,filtered_data,the_sort)
 
 			// sort data
 			// ---------------------------
@@ -656,7 +656,7 @@ function dv2(region, category, the_sort) {
 						return direction 
 					})
 
-				sidebar(1,filtered_data,the_sort)
+				sidebar(2,filtered_data,the_sort)
 			}
 
 		}
