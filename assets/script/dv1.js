@@ -2,6 +2,8 @@ const map_contaier = "map1"
 const map_maxZoom = 17
 const map_minZoom =  6
 
+const wiki_link = "https://it.wikipedia.org/wiki/";
+
 // make the map
 function dv1(){
 
@@ -21,7 +23,7 @@ function dv1(){
 		console.log(data)
 
 		let filtered_data = data.filter((item) => {
-			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated"
+			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" // && item.article_wikipedia !== "Voce non esistente"
 		})
 		display_data(filtered_data) //(filtered_data.slice(1, 5900))
 
@@ -59,7 +61,20 @@ function display_data(data){
 	data.forEach(element => {
 		let lat = parseFloat(element.latitude)
 		let lon = parseFloat(element.longitude)
+		let title = element.article_wikidata
 		// console.log(lat,lon)
+
+		if (element.article_wikipedia !== "Voce non esistente"){
+			link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
+		}
+		else {
+			link = title
+		}
+
+		let web = element.website
+		if (element.website !== "Nessun sito web"){
+			web = `<a href="${element.website}" target="_blank">sito web</a>`
+		}
 
 		let marker = L.marker([
 			lat, lon
@@ -70,9 +85,13 @@ function display_data(data){
 
 		marker.bindPopup(`
 				<span id='popup_header'>
-					<strong>${element.article_wikidata}</strong><br/>
+					<strong>${link}</strong><br/>
 					${element.type}<br/>
-					${element.public_private}
+					${element.public_private}<br/>
+					visitatori: ${element.visitors}<br/>
+					${web}<br/><br/>
+
+					editor unici: ${element.unique_editors}
 				</span>
 			`
 		)
