@@ -23,6 +23,8 @@ function dv1(){
 		});
 		console.log(data)
 
+		statistics(data)
+
 		let filtered_data = data.filter((item) => {
 			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" // && item.article_wikipedia !== "Voce non esistente"
 		})
@@ -59,17 +61,17 @@ function display_data(data){
 	// 	return lat !== NaN && lon !== NaN
 	// })
 
-	function mapHue(value, inputMin, inputMax, outputMin, outputMax) {
-		console.log(value, inputMin, inputMax, outputMin, outputMax)
-		// Clamp the value to the input range to avoid extrapolation
-		value = Math.max(inputMin, Math.min(value, inputMax));
-		console.log(value)
+	// function mapHue(value, inputMin, inputMax, outputMin, outputMax) {
+	// 	console.log(value, inputMin, inputMax, outputMin, outputMax)
+	// 	// Clamp the value to the input range to avoid extrapolation
+	// 	value = Math.max(inputMin, Math.min(value, inputMax));
+	// 	console.log(value)
 	  
-		// Perform the mapping
-		map = outputMin + ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin);
+	// 	// Perform the mapping
+	// 	map = outputMin + ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin);
 		
-		return map
-	}
+	// 	return map
+	// }
 
 	const markers = L.markerClusterGroup({
 
@@ -193,6 +195,28 @@ function update_dv1_lang(lang){
 		the_container.innerText = content
 	}
 }
+
+
+function statistics(data){
+	// console.log(data)
+
+	all_glams_box = document.getElementById("all_glams")
+	no_wikipedia_box = document.getElementById("no_wikipedia")
+	no_website_box = document.getElementById("no_website")
+
+	all_glams = data.length
+	no_wikipedia = data.filter(item => item.article_wikipedia == "Voce non esistente")
+	no_website = data.filter(item => item.website == "Nessun sito web")
+	// no_wikipedia.forEach(item => console.log(item.article_wikidata))
+
+
+	all_glams_box.innerText = all_glams
+	no_wikipedia_box.innerText = no_wikipedia.length
+	no_website_box.innerText = no_website.length
+
+
+}
+
 
 window.addEventListener("load", function(){
     dv1()
