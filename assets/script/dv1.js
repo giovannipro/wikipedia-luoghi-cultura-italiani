@@ -1,5 +1,6 @@
 const map_contaier = "map1"
 const map_maxZoom = 17
+const map_startZoom =  6
 const map_minZoom =  6
 
 const wiki_link = "https://it.wikipedia.org/wiki/";
@@ -37,7 +38,7 @@ function display_data(data){
 
 	let map = L.map(map_contaier, {
 		center: [42.1, 12.5],
-		zoom: 6
+		zoom: map_startZoom
 	});
 
 	let markerGroup;
@@ -58,6 +59,54 @@ function display_data(data){
 	// 	return lat !== NaN && lon !== NaN
 	// })
 
+	function mapHue(value, inputMin, inputMax, outputMin, outputMax) {
+		console.log(value, inputMin, inputMax, outputMin, outputMax)
+		// Clamp the value to the input range to avoid extrapolation
+		value = Math.max(inputMin, Math.min(value, inputMax));
+		console.log(value)
+	  
+		// Perform the mapping
+		map = outputMin + ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin);
+		
+		return map
+	}
+
+	const markers = L.markerClusterGroup({
+
+		iconCreateFunction: function (cluster) {
+			const count = cluster.getChildCount(); // Get the number of markers in the cluster
+			// console.log(cluster)
+		
+			// Define the size of the cluster based on the count
+			let sizeClass = 'small-cluster';
+			
+			if (count > 100 && count < 500) {
+				sizeClass = 'medium-cluster';
+			}
+			else if (count >= 500) {
+				sizeClass = 'large-cluster';
+			} 
+
+			let the_size = count * 0.05
+			if (the_size < 20){
+				the_size = 30
+			}
+			
+			// let hue = mapHue(count, 50, 1400, 190, 220);
+			// console.log(hue)
+
+			// Create a custom icon
+			return L.divIcon({ // style="background-color: hsla(${hue}, 75%, 45%, 0.4); border-radius: 100%; 
+				html: `<div> 
+					<span>${count}</span>
+				</div>`,
+				className: `custom-cluster ${sizeClass}`,
+				iconSize: L.point(the_size, the_size) // Adjust size if needed
+			});
+		}
+
+	})
+
 	data.forEach(element => {
 		let lat = parseFloat(element.latitude)
 		let lon = parseFloat(element.longitude)
@@ -76,12 +125,20 @@ function display_data(data){
 			web = `<a href="${element.website}" target="_blank">sito web</a>`
 		}
 
-		let marker = L.marker([
+
+		const marker = L.marker([
 			lat, lon
 		])
-		// .addTo(map)
+  		markers.addLayer(marker);
 
-		markerGroup.addLayer(marker);
+	
+
+		// let marker = L.marker([
+		// 	lat, lon
+		// ])
+		// // .addTo(map)
+
+		// markerGroup.addLayer(marker);
 
 		marker.bindPopup(`
 				<span id='popup_header'>
@@ -97,8 +154,10 @@ function display_data(data){
 		)
 	});
 
-	map.addLayer(markerGroup);
-	console.log(markerGroup)
+	// map.addLayer(markerGroup);
+	// console.log(markerGroup)
+
+	map.addLayer(markers);
 
 	L.control.locate().addTo(map);
 }
