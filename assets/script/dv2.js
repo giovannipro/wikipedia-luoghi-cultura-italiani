@@ -8,9 +8,6 @@ const wiki_link = "https://it.wikipedia.org/wiki/";
 const variation_line_opacity = 0.7;
 const min_avg_pv = 100;
 
-const min_circle_size = 0.5;
-const max_circle_size = 35;
-
 const stroke_dash = "3,3";
 
 const log_exponent = 0.5; 

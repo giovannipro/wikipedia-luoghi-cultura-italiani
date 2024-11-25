@@ -162,6 +162,10 @@ function display_data(data){
 	map.addLayer(markers);
 
 	L.control.locate().addTo(map);
+
+	the_sort = 1;
+	the_data = data.filter(item => item.unique_editors != "No editori")
+	sidebar(1,the_data,the_sort)
 }
 
 function update_dv1_lang(lang){

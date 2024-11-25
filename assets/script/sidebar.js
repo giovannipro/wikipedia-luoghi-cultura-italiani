@@ -1,3 +1,6 @@
+const min_circle_size = 0.5;
+const max_circle_size = 35;
+
 function update_sidebar_text(){
 	// const sort_option = document.getElementById('sort_article');
 	// const text_box = document.getElementById('sidebar_text');
@@ -28,13 +31,22 @@ function sidebar(dv,data,the_sort){
 
 		update_sidebar_text()
 
+
+		if (dv == 1){
+			
+			data.sort((a, b) => {
+				return a.article_wikidata - b.article_wikidata;
+			})
+			max = -Infinity;
+		}
+
 		// sort data and get max
 		if (dv == 2){
 			if (the_sort == 1){
 				data.sort((a, b) => {
 					return a.article - b.article;
 				})
-				max = -Infinity;
+				max = Math.max(...data.map((a,b) => a.editors))
 			}
 			else if (the_sort == 2){
 				data.sort((a, b) => {
@@ -103,6 +115,11 @@ function sidebar(dv,data,the_sort){
 
 		// add item in the sidebar
 		data.forEach(function (d,i) {
+
+			if (dv == 1){
+				detail = formatNumber(d.unique_editors) // d.type
+				num = d.unique_editors
+			}
 
 			if (dv == 2){
 				if (the_sort == 1){
