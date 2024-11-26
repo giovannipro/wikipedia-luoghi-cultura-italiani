@@ -6,6 +6,7 @@ const map_minZoom =  6
 const wiki_link = "https://it.wikipedia.org/wiki/";
 
 const typology_selector = document.getElementById("typology")
+const region_selector = document.getElementById("region")
 
 let the_data;
 
@@ -65,6 +66,7 @@ function display_data(data){
 	});
 
 	let markerGroup;
+	let bounds = L.latLngBounds([]);
 
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -114,6 +116,7 @@ function display_data(data){
 
 		// remove markers
 		markers.clearLayers();
+		bounds = L.latLngBounds([]);
 
 		// add markers
 		data.forEach(element => {
@@ -137,7 +140,7 @@ function display_data(data){
 			const marker = L.marker([
 				lat, lon
 			])
-			
+
 			marker.bindPopup(`
 					<span id='popup_header'>
 						<strong>${link}</strong><br/>
@@ -151,35 +154,65 @@ function display_data(data){
 				`
 			)
 
+			bounds.extend([lat,lon]);
 			markers.addLayer(marker);
+
+			// console.log(lat, lon)
 		});
 
 	}
 	load_markers(data)
 
+	map.fitBounds(bounds);
 	map.addLayer(markers);
+	// console.log(bounds)
+	
+	
 
 	typology_selector.addEventListener('change', function() {
 		let new_type = this.value;
+		new_region = region_selector.value;
+
 		console.log(new_type)
 
-		if (new_type === "museo"){
-			filtered_data = the_museums
-		}
-		else if (new_type === "archivio"){
-			filtered_data = the_archives
+		if (new_region == 'all'){
+			filtered_data = the_data.filter(item => item.category == new_type)
 		}
 		else {
-			filtered_data = the_libraries
+			filtered_data = the_data.filter(item => item.region === new_region)
+				.filter(item => item.category == new_type)
 		}
 
-		console.log(filtered_data)
+		// console.log(filtered_data)
 		load_markers(filtered_data)
+		map.fitBounds(bounds);
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
 		sidebar(1,filtered_data,the_sort)
 	})
+
+	region_selector.addEventListener('change', function() {
+		let new_region = this.value;
+		new_type = typology_selector.value;
+
+		if (new_region == 'all'){
+			filtered_data = the_data.filter(item => item.category == new_type)
+		}
+		else {
+			filtered_data = the_data.filter(item => item.region === new_region)
+				.filter(item => item.category == new_type)
+		}
+
+		load_markers(filtered_data)
+		map.fitBounds(bounds);
+
+		the_sort = 1;
+		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
+		sidebar(1,filtered_data,the_sort)
+	})
+
+
 
 
 	L.control.locate().addTo(map);
