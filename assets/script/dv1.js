@@ -26,7 +26,7 @@ function dv1(){
 		statistics(data)
 
 		let filtered_data = data.filter((item) => {
-			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" // && item.article_wikipedia !== "Voce non esistente"
+			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
 		})
 		display_data(filtered_data) //(filtered_data.slice(1, 5900))
 
@@ -112,7 +112,7 @@ function display_data(data){
 	data.forEach(element => {
 		let lat = parseFloat(element.latitude)
 		let lon = parseFloat(element.longitude)
-		let title = element.article_wikidata
+		let title = element.article
 		// console.log(lat,lon)
 
 		if (element.article_wikipedia !== "Voce non esistente"){
