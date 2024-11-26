@@ -89,7 +89,7 @@ function display_data(data){
 				sizeClass = 'large-cluster';
 			} 
 
-			let the_size = count * 0.05
+			let the_size = count * 0.04
 			if (the_size < 20){
 				the_size = 30
 			}
@@ -127,13 +127,10 @@ function display_data(data){
 			web = `<a href="${element.website}" target="_blank">sito web</a>`
 		}
 
-
 		const marker = L.marker([
 			lat, lon
 		])
   		markers.addLayer(marker);
-
-	
 
 		// let marker = L.marker([
 		// 	lat, lon
