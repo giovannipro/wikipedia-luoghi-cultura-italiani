@@ -117,8 +117,8 @@ function sidebar(dv,data,the_sort){
 		data.forEach(function (d,i) {
 
 			if (dv == 1){
-				detail = formatNumber(d.unique_editors) // d.type
-				num = d.unique_editors
+				detail = 0 // formatNumber(d.unique_editors) // d.type
+				num = 0 //d.unique_editors
 			}
 
 			if (dv == 2){
@@ -202,7 +202,13 @@ function sidebar(dv,data,the_sort){
 			output += '<div class="item_value">'
 			output += '<div class="item_list">'
 			output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
-			output += '<div class="article_region">' + d.region + '</div>'
+
+			if (dv != 1){
+				output += '<div class="article_region">' + d.region + '</div>'
+			}
+			else {
+				output += '<div class="article_region">' + '&nbsp;'  + '</div>'
+			}
 
 			if (isNaN(max) == false || max < 0) {
 				output += '<div class="value">' + detail + '</div>'

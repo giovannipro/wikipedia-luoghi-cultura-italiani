@@ -5,6 +5,10 @@ const map_minZoom =  6
 
 const wiki_link = "https://it.wikipedia.org/wiki/";
 
+// const typology_selector = document.getElementById("typology")
+
+let the_data;
+
 // make the map
 function dv1(){
 
@@ -25,10 +29,12 @@ function dv1(){
 
 		statistics(data)
 
-		let filtered_data = data.filter((item) => {
+		let filtered_data = data.filter(item => {
 			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
 		})
-		display_data(filtered_data) //(filtered_data.slice(1, 5900))
+		the_data = data;
+
+		display_data(filtered_data)
 
 	}).catch(error => {
 		console.log("There is an error: ",error)
@@ -37,6 +43,8 @@ function dv1(){
 
 function display_data(data){
 	console.log(data)
+
+	// data = data.filter(item => item.category === "museo")
 
 	let map = L.map(map_contaier, {
 		center: [42.1, 12.5],
@@ -53,25 +61,6 @@ function display_data(data){
 	})
 	.addTo(map);
 	markerGroup = L.markerClusterGroup();
-
-	// const places = data.filter((item) => {
-	// 	let lat =  parseFloat(item.latitude)
-	// 	let lon = parseFloat(item.longitude)
-
-	// 	return lat !== NaN && lon !== NaN
-	// })
-
-	// function mapHue(value, inputMin, inputMax, outputMin, outputMax) {
-	// 	console.log(value, inputMin, inputMax, outputMin, outputMax)
-	// 	// Clamp the value to the input range to avoid extrapolation
-	// 	value = Math.max(inputMin, Math.min(value, inputMax));
-	// 	console.log(value)
-	  
-	// 	// Perform the mapping
-	// 	map = outputMin + ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin);
-		
-	// 	return map
-	// }
 
 	const markers = L.markerClusterGroup({
 
@@ -93,12 +82,9 @@ function display_data(data){
 			if (the_size < 20){
 				the_size = 30
 			}
-			
-			// let hue = mapHue(count, 50, 1400, 190, 220);
-			// console.log(hue)
 
 			// Create a custom icon
-			return L.divIcon({ // style="background-color: hsla(${hue}, 75%, 45%, 0.4); border-radius: 100%; 
+			return L.divIcon({ 
 				html: `<div> 
 					<span>${count}</span>
 				</div>`,
@@ -109,60 +95,75 @@ function display_data(data){
 
 	})
 
-	data.forEach(element => {
-		let lat = parseFloat(element.latitude)
-		let lon = parseFloat(element.longitude)
-		let title = element.article
-		// console.log(lat,lon)
+	function load_markers(data){
 
-		if (element.article_wikipedia !== "Voce non esistente"){
-			link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
-		}
-		else {
-			link = title
-		}
+		// remove markers
+		markers.clearLayers();
 
-		let web = element.website
-		if (element.website !== "Nessun sito web"){
-			web = `<a href="${element.website}" target="_blank">sito web</a>`
-		}
+		// add markers
+		data.forEach(element => {
+			let lat = parseFloat(element.latitude)
+			let lon = parseFloat(element.longitude)
+			let title = element.article
+			// console.log(lat,lon)
+	
+			if (element.article_wikipedia !== "Voce non esistente"){
+				link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
+			}
+			else {
+				link = title
+			}
+	
+			let web = element.website
+			if (element.website !== "Nessun sito web"){
+				web = `<a href="${element.website}" target="_blank">sito web</a>`
+			}
+	
+			const marker = L.marker([
+				lat, lon
+			])
+			markers.addLayer(marker);
+	
+			marker.bindPopup(`
+					<span id='popup_header'>
+						<strong>${link}</strong><br/>
+						${element.type}<br/>
+						${element.public_private}<br/>
+						visitatori: ${element.visitors}<br/>
+						${web}<br/><br/>
+	
+						editor unici: ${element.unique_editors}
+					</span>
+				`
+			)
+		});
 
-		const marker = L.marker([
-			lat, lon
-		])
-  		markers.addLayer(marker);
+	}
+	load_markers(data)
 
-		// let marker = L.marker([
-		// 	lat, lon
-		// ])
-		// // .addTo(map)
+	map.addLayer(markers);
 
-		// markerGroup.addLayer(marker);
+	// typology_selector.addEventListener('change', function() {
+	// 	let new_type = this.value;
+	// 	console.log(new_type)
 
-		marker.bindPopup(`
-				<span id='popup_header'>
-					<strong>${link}</strong><br/>
-					${element.type}<br/>
-					${element.public_private}<br/>
-					visitatori: ${element.visitors}<br/>
-					${web}<br/><br/>
+	// 	let filtered_data = the_data.filter(item => {
+	// 		item.category === new_type
+	// 	})
+	// 	console.log(the_data)
 
-					editor unici: ${element.unique_editors}
-				</span>
-			`
-		)
-	});
+	// 	load_markers(filtered_data)
+	// })
+
 
 	// map.addLayer(markerGroup);
 	// console.log(markerGroup)
 
-	map.addLayer(markers);
-
 	L.control.locate().addTo(map);
 
 	the_sort = 1;
-	the_data = data.filter(item => item.unique_editors != "No editori")
-	sidebar(1,the_data,the_sort)
+	the_data_sidebar = data.filter(item => item.unique_editors != "No editori")
+	sidebar(1,the_data_sidebar,the_sort)
 }
 
 function update_dv1_lang(lang){
@@ -206,8 +207,8 @@ function statistics(data){
 	no_website_box = document.getElementById("no_website")
 
 	all_glams = data.length
-	no_wikipedia = data.filter(item => item.article_wikipedia == "Voce non esistente")
-	no_website = data.filter(item => item.website == "Nessun sito web")
+	no_wikipedia = data.filter(item => item.article_wikipedia !== "Voce non esistente")
+	no_website = data.filter(item => item.website !== "Nessun sito web")
 	// no_wikipedia.forEach(item => console.log(item.article_wikidata))
 
 
@@ -217,6 +218,7 @@ function statistics(data){
 
 
 }
+
 
 
 window.addEventListener("load", function(){
