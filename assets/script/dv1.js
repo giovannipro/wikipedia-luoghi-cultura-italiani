@@ -179,8 +179,6 @@ function display_data(data){
 	map.addLayer(markers);
 	// console.log(bounds)
 	
-	
-
 	typology_selector.addEventListener('change', function() {
 		let new_type = this.value;
 		new_region = region_selector.value;
@@ -276,13 +274,13 @@ function statistics(data){
 
 	all_glams = data.length
 	no_wikipedia = data.filter(item => item.article_wikipedia !== "Voce non esistente")
-	no_website = data.filter(item => item.website !== "Nessun sito web")
+	no_website = data.filter(item => item.website != "Nessun sito web")
 	// no_wikipedia.forEach(item => console.log(item.article_wikidata))
 
 
-	all_glams_box.innerText = all_glams
-	no_wikipedia_box.innerText = no_wikipedia.length
-	no_website_box.innerText = no_website.length
+	all_glams_box.innerText = formatNumber(all_glams)
+	no_wikipedia_box.innerText = formatNumber(no_wikipedia.length)
+	no_website_box.innerText = formatNumber(no_website.length)
 
 }
 
