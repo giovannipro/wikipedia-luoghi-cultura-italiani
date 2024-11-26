@@ -193,13 +193,17 @@ function display_data(data){
 				.filter(item => item.category == new_type)
 		}
 
+		filtered = filtered_data.filter(item => {
+			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
+		})
+
 		// console.log(filtered_data)
-		load_markers(filtered_data)
+		load_markers(filtered)
 		map.fitBounds(bounds);
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
-		sidebar(1,filtered_data,the_sort)
+		sidebar(1,filtered,the_sort)
 	})
 
 	region_selector.addEventListener('change', function() {
@@ -214,12 +218,16 @@ function display_data(data){
 				.filter(item => item.category == new_type)
 		}
 
-		load_markers(filtered_data)
+		filtered = filtered_data.filter(item => {
+			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
+		})
+
+		load_markers(filtered)
 		map.fitBounds(bounds);
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
-		sidebar(1,filtered_data,the_sort)
+		sidebar(1,filtered,the_sort)
 	})
 
 
