@@ -203,13 +203,8 @@ function sidebar(dv,data,the_sort){
 			output += '<div class="item_list">'
 			output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
 
-			if (dv != 1){
-				output += '<div class="article_region">' + d.region + '</div>'
-			}
-			else {
-				output += '<div class="article_region">' + '&nbsp;'  + '</div>'
-			}
-
+			output += '<div class="article_region">' + d.region + '</div>'
+		
 			if (isNaN(max) == false || max < 0) {
 				output += '<div class="value">' + detail + '</div>'
 			}

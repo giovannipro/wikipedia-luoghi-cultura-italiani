@@ -1,7 +1,7 @@
 const map_contaier = "map1"
 const map_maxZoom = 17
-const map_startZoom =  6
-const map_minZoom =  6
+let map_startZoom =  6
+let map_minZoom =  6
 
 const wiki_link = "https://it.wikipedia.org/wiki/";
 
@@ -13,6 +13,19 @@ let the_data;
 let the_museums;
 let the_libraries;
 let the_archives;
+
+let size_reducer = 0.06;
+let min_size = 500;
+
+let width = window.innerWidth;
+
+if (width < 400){
+	map_startZoom =  5
+	map_minZoom =  5
+
+	size_reducer = 0.04
+	min_size = 800
+}
 
 // make the map
 function dv1(){
@@ -94,10 +107,9 @@ function display_data(data){
 				sizeClass = 'large-cluster';
 			} 
 
-			let min_size = 500
-			let the_size = count * 0.06	
+			let the_size = count * size_reducer
 			if (count <= min_size){
-				the_size = min_size * 0.06
+				the_size = min_size * size_reducer
 			}
 
 			// Create a custom icon
