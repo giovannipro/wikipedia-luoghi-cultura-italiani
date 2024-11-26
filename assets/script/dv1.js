@@ -5,14 +5,18 @@ const map_minZoom =  6
 
 const wiki_link = "https://it.wikipedia.org/wiki/";
 
-// const typology_selector = document.getElementById("typology")
+const typology_selector = document.getElementById("typology")
 
 let the_data;
+
+let the_museums;
+let the_libraries;
+let the_archives;
 
 // make the map
 function dv1(){
 
-	fetch("assets/data/data_map.tsv")
+	fetch("assets/data/data_map_small.tsv")
 	.then(response => response.text())
 	.then(raw_data => {
 
@@ -32,9 +36,20 @@ function dv1(){
 		let filtered_data = data.filter(item => {
 			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
 		})
+
 		the_data = data;
 
-		display_data(filtered_data)
+		the_museums = filtered_data.filter(item => 
+			item.category === "museo"
+		)
+		the_libraries = filtered_data.filter(item => 
+			item.category === "biblioteca"
+		)
+		the_archives = filtered_data.filter(item => 
+			item.category === "archivio"
+		)
+
+		display_data(the_museums)
 
 	}).catch(error => {
 		console.log("There is an error: ",error)
@@ -43,8 +58,6 @@ function dv1(){
 
 function display_data(data){
 	console.log(data)
-
-	// data = data.filter(item => item.category === "museo")
 
 	let map = L.map(map_contaier, {
 		center: [42.1, 12.5],
@@ -60,7 +73,8 @@ function display_data(data){
 		tileSize: 256
 	})
 	.addTo(map);
-	markerGroup = L.markerClusterGroup();
+
+	// markerGroup = L.markerClusterGroup();
 
 	const markers = L.markerClusterGroup({
 
@@ -78,9 +92,10 @@ function display_data(data){
 				sizeClass = 'large-cluster';
 			} 
 
-			let the_size = count * 0.04
-			if (the_size < 20){
-				the_size = 30
+			let min_size = 500
+			let the_size = count * 0.06	
+			if (count <= min_size){
+				the_size = min_size * 0.06
 			}
 
 			// Create a custom icon
@@ -122,8 +137,7 @@ function display_data(data){
 			const marker = L.marker([
 				lat, lon
 			])
-			markers.addLayer(marker);
-	
+			
 			marker.bindPopup(`
 					<span id='popup_header'>
 						<strong>${link}</strong><br/>
@@ -136,6 +150,8 @@ function display_data(data){
 					</span>
 				`
 			)
+
+			markers.addLayer(marker);
 		});
 
 	}
@@ -143,21 +159,28 @@ function display_data(data){
 
 	map.addLayer(markers);
 
-	// typology_selector.addEventListener('change', function() {
-	// 	let new_type = this.value;
-	// 	console.log(new_type)
+	typology_selector.addEventListener('change', function() {
+		let new_type = this.value;
+		console.log(new_type)
 
-	// 	let filtered_data = the_data.filter(item => {
-	// 		item.category === new_type
-	// 	})
-	// 	console.log(the_data)
+		if (new_type === "museo"){
+			filtered_data = the_museums
+		}
+		else if (new_type === "archivio"){
+			filtered_data = the_archives
+		}
+		else {
+			filtered_data = the_libraries
+		}
 
-	// 	load_markers(filtered_data)
-	// })
+		console.log(filtered_data)
+		load_markers(filtered_data)
 
+		the_sort = 1;
+		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
+		sidebar(1,filtered_data,the_sort)
+	})
 
-	// map.addLayer(markerGroup);
-	// console.log(markerGroup)
 
 	L.control.locate().addTo(map);
 
@@ -215,7 +238,6 @@ function statistics(data){
 	all_glams_box.innerText = all_glams
 	no_wikipedia_box.innerText = no_wikipedia.length
 	no_website_box.innerText = no_website.length
-
 
 }
 
