@@ -788,6 +788,8 @@ function filter_data(data){
 
 	filtered_data.map(item => item.latitude = parseFloat(item.latitude))
 	filtered_data.map(item => item.longitude = parseFloat(item.longitude))
+	
+	filtered_data.filter(item => item.latitude < 35).filter(item => item.longitude < 7)
 
 	// console.log(filtered_data)
 	return filtered_data

@@ -178,10 +178,12 @@ function display_data(data){
 				.filter(item => item.category === new_type)
 		}
 
-		// for (item of filtered_data){
-		// 	// console.log(isFloat(item.latitude))
-		// 	console.log(item.latitude)
-		// }
+		for (item of filtered_data){
+			if (item.latitude < 35){
+
+				console.log(item.article, item.latitude)
+			}
+		}
 
 		// console.log(filtered_data)
 		load_markers(filtered_data)
