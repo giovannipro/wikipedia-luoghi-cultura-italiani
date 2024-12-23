@@ -31,6 +31,26 @@ if (width < 400){
 // make the map
 function dv1(){
 
+	// d3.text('assets/data/data_map_small.gz', function(error, compressedData) {
+
+	// 	if (error) {
+	// 		console.log("There is an error: ",error)
+	// 		throw error;
+	// 	}
+	// 	let data = pako.ungzip(compressedData, { to: 'string' });
+	// 	let parsedData = d3.tsvParse(data);
+		
+	// 	console.log(parsedData)
+	// 	console.log(compressedData)
+
+	// 	the_data = filter_data(parsedData);
+		
+	// 	statistics(the_data)
+	// 	display_data(the_data)
+
+	// 	// Process and update visualization with parsedData
+	// });
+
 	fetch("assets/data/data_map_small.tsv")
 	.then(response => response.text())
 	.then(raw_data => {
