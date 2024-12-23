@@ -183,7 +183,7 @@ function display_data(data){
 		// 	console.log(item.latitude)
 		// }
 
-		console.log(filtered_data)
+		// console.log(filtered_data)
 		load_markers(filtered_data)
 		map.fitBounds(bounds);
 
@@ -206,7 +206,7 @@ function display_data(data){
 				.filter(item => item.category === new_type)
 		}
 
-		console.log(filtered_data)
+		// console.log(filtered_data)
 		load_markers(filtered_data)
 		map.fitBounds(bounds);
 
