@@ -220,8 +220,8 @@ function display_data(data){
 	L.control.locate().addTo(map);
 
 	the_sort = 1;
-	the_data_sidebar = data.filter(item => item.unique_editors != "No editori")
-	sidebar(1,the_data_sidebar,the_sort)
+	// the_data_sidebar = data.filter(item => item.unique_editors != "No editori")
+	sidebar(1,the_museums,the_sort)
 }
 
 function update_dv1_lang(lang){

@@ -31,12 +31,18 @@ function sidebar(dv,data,the_sort){
 
 		update_sidebar_text()
 
-
 		if (dv == 1){
-			
-			data.sort((a, b) => {
-				return a.article_wikidata - b.article_wikidata;
+			// console.log(data)
+
+			// data.sort((a, b) => {
+			// 	return a.article - b.article;
+			// })
+			data.forEach(item => {
+				item.article = item.article.replace(/['"]/g, ""); 
+				item.article = item.article.charAt(0).toUpperCase() + item.article.slice(1);
 			})
+			data.sort((a, b) => a.article.localeCompare(b.article));
+
 			max = -Infinity;
 		}
 
@@ -115,9 +121,10 @@ function sidebar(dv,data,the_sort){
 
 		// add item in the sidebar
 		data.forEach(function (d,i) {
+			// console.log(d.article)
 
 			if (dv == 1){
-				detail = 0 // formatNumber(d.unique_editors) // d.type
+				detail = "" // formatNumber(d.unique_editors) // d.type
 				num = 0 //d.unique_editors
 			}
 
@@ -195,13 +202,27 @@ function sidebar(dv,data,the_sort){
 			}
 
 			output += '<li>'
-			output += '<a class="item_box" href=" ' + wiki_link + d.article + '" target="_blank"">' 
 
+			if (d.article_wikipedia != "Voce non esistente"){
+				output += '<a class="item_box" href=" ' + wiki_link + d.article + '" target="_blank"">'
+			}
+			else {
+				output += '<a class="item_box" href="#">'
+			}
+			
 			output += '<div class="item_bubble" id="' + d.id_wikidata + '"></div>'
 
 			output += '<div class="item_value">'
 			output += '<div class="item_list">'
-			output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
+
+			console.log(d.article_wikipedia)
+			if (d.article_wikipedia != "Voce non esistente"){
+				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
+			}
+			else {
+				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + ' <span style="color: #f57e7e;">(voce non esistente)</span></div>'
+			}
+			
 
 			output += '<div class="article_region">' + d.region + '</div>'
 		

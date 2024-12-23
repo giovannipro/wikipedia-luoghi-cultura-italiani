@@ -786,6 +786,8 @@ function isFloat(n){
 function filter_data(data){
 	let filtered_data = data.filter(item => !(item.latitude === "Nessuna coordinata geografica")).filter(item => !(item.longitude === "Nessuna coordinata geografica")).filter(item => !(item.latitude === "Deprecated")).filter(item => !(item.longitude === "Deprecated")).filter(item => !(item.latitude === "")).filter(item => !(item.longitude === "")).filter(item => item.latitude % 1 !== 0).filter(item => item.longitude % 1 !== 0  )
 
+	// data.filter(item => !(item.article_wikipedia === "Voce non esistente"))
+
 	filtered_data.map(item => item.latitude = parseFloat(item.latitude))
 	filtered_data.map(item => item.longitude = parseFloat(item.longitude))
 	
