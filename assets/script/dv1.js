@@ -34,16 +34,7 @@ function dv1(){
 	fetch("assets/data/data_map_small.tsv")
 	.then(response => response.text())
 	.then(raw_data => {
-
-		const rows = raw_data.trim().split("\n");
-		const headers = rows[0].split("\t");
-		const data = rows.slice(1).map(row => {
-			const values = row.split("\t");
-			return headers.reduce((obj, header, index) => {
-			  obj[header] = values[index];
-			  return obj;
-			}, {});
-		});
+		const data = d3.tsvParse(raw_data)
 
 		the_data = filter_data(data);
 		console.log(the_data)

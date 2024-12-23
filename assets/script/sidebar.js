@@ -215,7 +215,7 @@ function sidebar(dv,data,the_sort){
 			output += '<div class="item_value">'
 			output += '<div class="item_list">'
 
-			console.log(d.article_wikipedia)
+			// console.log(d.article_wikipedia)
 			if (d.article_wikipedia != "Voce non esistente"){
 				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
 			}
