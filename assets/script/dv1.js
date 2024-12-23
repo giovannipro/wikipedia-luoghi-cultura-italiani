@@ -147,34 +147,57 @@ function display_data(data){
 			markers.addLayer(marker);
 		});
 	}
-	let the_museums = data.filter(item => item.category === 'museo')
+
+	const the_museums = the_data.filter(item => item.category === 'museo')
+	const the_libraries = the_data.filter(item => item.category === 'biblioteca')
+	const the_archives = the_data.filter(item => item.category === 'archivio')
+	const the_archeology = the_data.filter(item => item.category === 'area_archeologica')
+	const the_universities = the_data.filter(item => item.category === 'universita')
+
+
 	load_markers(the_museums)
 
 	map.fitBounds(bounds);
 	map.addLayer(markers);
 
 	// console.log(bounds.getSouthWest(), bounds.getNorthEast());
-	
+
+	function get_data(new_type,new_region){
+		console.log(new_type,new_region)
+
+		let selected_data;
+
+		if (new_type === 'museo'){
+			selected_data = the_museums
+		}
+		else if (new_type === 'biblioteca'){
+			selected_data = the_libraries
+		}
+		else if (new_type === 'archivio'){
+			selected_data = the_archives
+		}
+		else if (new_type === 'area_archeologica'){
+			selected_data = the_archeology
+		}
+		else {
+			selected_data = the_universities
+		}
+
+		if (new_region != 'all'){
+			selected_data_ = selected_data.filter(item => item.region === new_region)
+		}
+		else {
+			selected_data_ = selected_data
+		}
+
+		return selected_data_
+	}
+
 	typology_selector.addEventListener('change', function() {
 		let new_type = this.value;
 		new_region = region_selector.value;
-		console.log(new_type,new_region)
-		// console.log(filter_data(data))
 
-		if (new_region == 'all'){
-			filtered_data = filter_data(data).filter(item => item.category === new_type)
-		}
-		else {
-			filtered_data = filter_data(data).filter(item => item.region === new_region)
-				.filter(item => item.category === new_type)
-		}
-
-		for (item of filtered_data){
-			if (item.latitude < 35){
-
-				console.log(item.article, item.latitude)
-			}
-		}
+		filtered_data = get_data(new_type,new_region)
 
 		// console.log(filtered_data)
 		load_markers(filtered_data)
@@ -191,13 +214,7 @@ function display_data(data){
 		let new_region = this.value;
 		new_type = typology_selector.value;
 
-		if (new_region == 'all'){
-			filtered_data = filter_data(data).filter(item => item.category === new_type)
-		}
-		else {
-			filtered_data = filter_data(data).filter(item => item.region === new_region)
-				.filter(item => item.category === new_type)
-		}
+		filtered_data = get_data(new_type,new_region)
 
 		// console.log(filtered_data)
 		load_markers(filtered_data)
