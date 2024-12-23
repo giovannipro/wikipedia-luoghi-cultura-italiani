@@ -9,10 +9,11 @@ const typology_selector = document.getElementById("typology")
 const region_selector = document.getElementById("region")
 
 let the_data;
+// let filtered_data;
 
-let the_museums;
-let the_libraries;
-let the_archives;
+// let the_museums;
+// let the_libraries;
+// let the_archives;
 
 let size_reducer = 0.06;
 let min_size = 500;
@@ -43,27 +44,12 @@ function dv1(){
 			  return obj;
 			}, {});
 		});
-		console.log(data)
 
-		statistics(data)
-
-		let filtered_data = data.filter(item => {
-			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
-		})
-
-		the_data = data;
-
-		the_museums = filtered_data.filter(item => 
-			item.category === "museo"
-		)
-		the_libraries = filtered_data.filter(item => 
-			item.category === "biblioteca"
-		)
-		the_archives = filtered_data.filter(item => 
-			item.category === "archivio"
-		)
-
-		display_data(the_museums)
+		the_data = filter_data(data);
+		console.log(the_data)
+		
+		statistics(the_data)
+		display_data(the_data)
 
 	}).catch(error => {
 		console.log("There is an error: ",error)
@@ -71,7 +57,6 @@ function dv1(){
 }
 
 function display_data(data){
-	console.log(data)
 
 	let map = L.map(map_contaier, {
 		center: [42.1, 12.5],
@@ -88,8 +73,6 @@ function display_data(data){
 		tileSize: 256
 	})
 	.addTo(map);
-
-	// markerGroup = L.markerClusterGroup();
 
 	const markers = L.markerClusterGroup({
 
@@ -125,6 +108,7 @@ function display_data(data){
 	})
 
 	function load_markers(data){
+		// console.log(data)
 
 		// remove markers
 		markers.clearLayers();
@@ -132,10 +116,8 @@ function display_data(data){
 
 		// add markers
 		data.forEach(element => {
-			let lat = parseFloat(element.latitude)
-			let lon = parseFloat(element.longitude)
 			let title = element.article
-			// console.log(lat,lon)
+			// console.log(element.latitude)
 	
 			if (element.article_wikipedia !== "Voce non esistente"){
 				link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
@@ -150,7 +132,7 @@ function display_data(data){
 			}
 	
 			const marker = L.marker([
-				lat, lon
+				element.latitude, element.longitude
 			])
 
 			marker.bindPopup(`
@@ -166,44 +148,50 @@ function display_data(data){
 				`
 			)
 
-			bounds.extend([lat,lon]);
+			if (typeof element.latitude != 'number'){
+				console.log(element.latitude)
+			}
+
+			bounds.extend([element.latitude,element.longitude]);
 			markers.addLayer(marker);
-
-			// console.log(lat, lon)
 		});
-
 	}
-	load_markers(data)
+	let the_museums = data.filter(item => item.category === 'museo')
+	load_markers(the_museums)
 
 	map.fitBounds(bounds);
 	map.addLayer(markers);
-	// console.log(bounds)
+
+	// console.log(bounds.getSouthWest(), bounds.getNorthEast());
 	
 	typology_selector.addEventListener('change', function() {
 		let new_type = this.value;
 		new_region = region_selector.value;
-
-		console.log(new_type)
+		console.log(new_type,new_region)
+		// console.log(filter_data(data))
 
 		if (new_region == 'all'){
-			filtered_data = the_data.filter(item => item.category == new_type)
+			filtered_data = filter_data(data).filter(item => item.category === new_type)
 		}
 		else {
-			filtered_data = the_data.filter(item => item.region === new_region)
-				.filter(item => item.category == new_type)
+			filtered_data = filter_data(data).filter(item => item.region === new_region)
+				.filter(item => item.category === new_type)
 		}
 
-		filtered = filtered_data.filter(item => {
-			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
-		})
+		// for (item of filtered_data){
+		// 	// console.log(isFloat(item.latitude))
+		// 	console.log(item.latitude)
+		// }
 
-		// console.log(filtered_data)
-		load_markers(filtered)
+		console.log(filtered_data)
+		load_markers(filtered_data)
 		map.fitBounds(bounds);
+
+		console.log(bounds.getSouthWest(), bounds.getNorthEast());
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
-		sidebar(1,filtered,the_sort)
+		sidebar(1,filtered_data,the_sort)
 	})
 
 	region_selector.addEventListener('change', function() {
@@ -211,27 +199,21 @@ function display_data(data){
 		new_type = typology_selector.value;
 
 		if (new_region == 'all'){
-			filtered_data = the_data.filter(item => item.category == new_type)
+			filtered_data = filter_data(data).filter(item => item.category === new_type)
 		}
 		else {
-			filtered_data = the_data.filter(item => item.region === new_region)
-				.filter(item => item.category == new_type)
+			filtered_data = filter_data(data).filter(item => item.region === new_region)
+				.filter(item => item.category === new_type)
 		}
 
-		filtered = filtered_data.filter(item => {
-			return item.latitude !== "Nessuna coordinata geografica" && item.longitude !== "Nessuna coordinata geografica" && item.latitude !== "Deprecated" && item.latitude !== "" && item.longitude !== "" // && item.article_wikipedia !== "Voce non esistente"
-		})
-
-		load_markers(filtered)
+		console.log(filtered_data)
+		load_markers(filtered_data)
 		map.fitBounds(bounds);
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
-		sidebar(1,filtered,the_sort)
+		sidebar(1,filtered_data,the_sort)
 	})
-
-
-
 
 	L.control.locate().addTo(map);
 
