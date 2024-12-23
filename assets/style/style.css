@@ -394,15 +394,15 @@ header a {
 
 #sidebar_close_icon {
   background: url(../img/close-menu.svg) center center/55% no-repeat;
-  width: 2.5rem;
+  width: 2.7rem;
   height: 2.5rem;
   padding: 0.3rem;
   float: right;
   border-radius: 2.5rem;
   border: 1px solid #727272;
   position: relative;
-  top: -9px;
-  right: 12px;
+  top: 12px;
+  right: 24px;
 }
 
 #sidebar_open_icon {
