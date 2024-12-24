@@ -31,40 +31,26 @@ if (width < 400){
 // make the map
 function dv1(){
 
-	// d3.text('assets/data/data_map_small.gz', function(error, compressedData) {
+	fetch("assets/data/data_map_small.tsv.gz") // data_map_small.tsv
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`Network error: ${response.status} - ${response.statusText}`);
+			}
+			return response.arrayBuffer();
+		})
+		.then(compressedData => {
+			const data = pako.ungzip(compressedData, { to: 'string' });
+			const parsedData = d3.tsvParse(data)
 
-	// 	if (error) {
-	// 		console.log("There is an error: ",error)
-	// 		throw error;
-	// 	}
-	// 	let data = pako.ungzip(compressedData, { to: 'string' });
-	// 	let parsedData = d3.tsvParse(data);
-		
-	// 	console.log(parsedData)
-	// 	console.log(compressedData)
+			the_data = filter_data(parsedData);
+			console.log(the_data)
+			
+			statistics(the_data)
+			display_data(the_data)
 
-	// 	the_data = filter_data(parsedData);
-		
-	// 	statistics(the_data)
-	// 	display_data(the_data)
-
-	// 	// Process and update visualization with parsedData
-	// });
-
-	fetch("assets/data/data_map_small.tsv")
-	.then(response => response.text())
-	.then(raw_data => {
-		const data = d3.tsvParse(raw_data)
-
-		the_data = filter_data(data);
-		console.log(the_data)
-		
-		statistics(the_data)
-		display_data(the_data)
-
-	}).catch(error => {
-		console.log("There is an error: ",error)
-	})
+		}).catch(error => {
+			console.log("There is an error: ",error)
+		})
 }
 
 function display_data(data){
