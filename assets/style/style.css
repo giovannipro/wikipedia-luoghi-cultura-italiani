@@ -333,6 +333,16 @@ header a {
   z-index: 0;
 }
 
+.leaflet-tooltip-content {
+  margin: 0;
+  padding: 6px 0;
+  max-width: 180px;
+}
+
+#tooltip_dv1 p, #tooltip_dv1 table {
+  padding: 0 0.4rem;
+}
+
 /* ------- sidebar ------- */
 #sidebar_button_open, #scale_button_box {
   width: 2.5rem;

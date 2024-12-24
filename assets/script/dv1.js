@@ -133,18 +133,32 @@ function display_data(data){
 				element.latitude, element.longitude
 			])
 
-			marker.bindPopup(`
-					<span id='popup_header'>
-						<strong>${link}</strong><br/>
-						${element.type}<br/>
-						${element.public_private}<br/>
-						visitatori: ${element.visitors}<br/>
-						${web}<br/><br/>
-	
-						editor unici: ${element.unique_editors}
-					</span>
+			// bindTooltip bindPopup
+			marker.bindTooltip(` 
+					<div id="tooltip_dv1">
+						<p style='font-weight: bold;'>
+							<strong>${link}</strong><br/>
+						</p>
+						<hr/>
+						<table>
+							<tr>
+								<td>${element.type}</td>
+							</tr>
+							<tr>
+								<td>${element.public_private}</td>
+							</tr>
+							<tr>
+								<td>visitatori: ${element.visitors}</td>
+							</tr>
+							<tr>
+								<td>${web}</td>
+							</tr>
+							
+						</table>
+					</div>
 				`
 			)
+			// editor unici: ${element.unique_editors}
 
 			if (typeof element.latitude != 'number'){
 				console.log(element.latitude)
