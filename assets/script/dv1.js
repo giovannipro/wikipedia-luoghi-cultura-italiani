@@ -30,8 +30,9 @@ if (width < 400){
 
 // make the map
 function dv1(){
-
-	fetch("assets/data/data_map_small.tsv.gz") // data_map_small.tsv
+	
+	// gzip [OPTION]... [FILE]...
+	fetch("assets/data/data_map_small.tsv.gz")  // assets/data/data_map_small.tsv.gz assets/data/data_map_small.tsv
 		.then(response => {
 			if (!response.ok) {
 				throw new Error(`Network error: ${response.status} - ${response.statusText}`);
@@ -159,7 +160,7 @@ function display_data(data){
 	const the_archives = the_data.filter(item => item.category === 'archivio')
 	const the_archeology = the_data.filter(item => item.category === 'area_archeologica')
 	const the_universities = the_data.filter(item => item.category === 'universita')
-
+	const the_castel = the_data.filter(item => item.category === 'castello')
 
 	load_markers(the_museums)
 
@@ -185,6 +186,9 @@ function display_data(data){
 		else if (new_type === 'area_archeologica'){
 			selected_data = the_archeology
 		}
+		else if (new_type === 'castello'){
+			selected_data = the_castel
+		}
 		else {
 			selected_data = the_universities
 		}
@@ -205,7 +209,7 @@ function display_data(data){
 
 		filtered_data = get_data(new_type,new_region)
 
-		// console.log(filtered_data)
+		console.log(filtered_data)
 		load_markers(filtered_data)
 		map.fitBounds(bounds);
 
