@@ -220,7 +220,7 @@ function sidebar(dv,data,the_sort){
 				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
 			}
 			else {
-				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + ' <span style="color: #f57e7e;">(voce non esistente)</span></div>'
+				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + ' <br/><span style="color: #f57e7e;">(voce non esistente)</span></div>'
 			}
 			
 
