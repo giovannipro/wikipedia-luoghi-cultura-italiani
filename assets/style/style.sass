@@ -289,14 +289,33 @@ header a
 	height: 68vh
 	z-index: 0
 
+.class-tooltip
+	// margin: 0
+	// padding: 6px 0
+	// max-width: 180px
 
-.leaflet-tooltip-content
-	margin: 0
-	padding: 6px 0
-	max-width: 180px
+.leaflet-tooltip
+	width: 180px
 
-#tooltip_dv1 p, #tooltip_dv1 table
-	padding: 0 0.4rem
+.custom_tooltip
+	color: red
+
+#tooltip_dv1
+	color: red
+	box-sizing: border-box
+	opacity: 1
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4)
+		
+		div p, div table
+			max-width: 180px
+			padding: 0 0.4rem
+			margin: 0
+			padding: 0
+			word-wrap: break-word
+			overflow-wrap: break-word
+			white-space: wrap
+			overflow: hidden
+
 
 /* ------- sidebar ------- */
 

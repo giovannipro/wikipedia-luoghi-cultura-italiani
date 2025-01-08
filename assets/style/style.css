@@ -333,9 +333,9 @@ header a {
   z-index: 0;
 }
 
-.leaflet-tooltip-content {
+.leaflet-tooltip-pane > div {
   margin: 0;
-  padding: 6px 0;
+  padding: 0;
   max-width: 180px;
 }
 

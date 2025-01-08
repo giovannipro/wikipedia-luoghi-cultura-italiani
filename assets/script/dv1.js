@@ -133,14 +133,15 @@ function display_data(data){
 				element.latitude, element.longitude
 			])
 
-			// bindTooltip bindPopup
 			marker.bindTooltip(` 
-					<div id="tooltip_dv1">
-						<p style='font-weight: bold;'>
-							<strong>${link}</strong><br/>
-						</p>
-						<hr/>
+					<div id="tooltip_dv1" style="width: 180px; overflow-wrap: break-word; white-space: wrap; overflow: hidden;">
 						<table>
+							<tr>
+								<td><strong>${link}</strong></td>
+							</tr>
+						</table>
+						<hr style="border: 0.5px solid #e3e3e3;"/>
+						<table style="max-width: auto;">
 							<tr>
 								<td>${element.type}</td>
 							</tr>
@@ -156,8 +157,12 @@ function display_data(data){
 							
 						</table>
 					</div>
-				`
+				`, 
+				{
+					className: 'custom_tooltip'
+				}
 			)
+			// .openTooltip();
 			// editor unici: ${element.unique_editors}
 
 			if (typeof element.latitude != 'number'){
