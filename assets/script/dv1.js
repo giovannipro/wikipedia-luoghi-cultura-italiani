@@ -8,6 +8,8 @@ const wiki_link = "https://it.wikipedia.org/wiki/";
 const typology_selector = document.getElementById("typology")
 const region_selector = document.getElementById("region")
 
+const loading_overlay = document.getElementById('loading_overlay');
+
 let the_data;
 // let filtered_data;
 
@@ -55,6 +57,8 @@ function dv1(){
 }
 
 function display_data(data){
+
+	loading_overlay.style.display = 'none';
 
 	let map = L.map(map_contaier, {
 		center: [42.1, 12.5],
@@ -108,6 +112,8 @@ function display_data(data){
 	function load_markers(data){
 		// console.log(data)
 
+		setTimeout("remove_loader()",1000)
+
 		// remove markers
 		markers.clearLayers();
 		bounds = L.latLngBounds([]);
@@ -134,14 +140,14 @@ function display_data(data){
 			])
 
 			marker.bindTooltip(` 
-					<div id="tooltip_dv1" style="width: 180px; overflow-wrap: break-word; white-space: wrap; overflow: hidden;">
+					<div id="tooltip_dv1">
 						<table>
 							<tr>
 								<td><strong>${link}</strong></td>
 							</tr>
 						</table>
 						<hr style="border: 0.5px solid #e3e3e3;"/>
-						<table style="max-width: auto;">
+						<table>
 							<tr>
 								<td>${element.type}</td>
 							</tr>
@@ -223,6 +229,8 @@ function display_data(data){
 	}
 
 	typology_selector.addEventListener('change', function() {
+		loading_overlay.style.display = 'flex';
+
 		let new_type = this.value;
 		new_region = region_selector.value;
 
@@ -232,7 +240,7 @@ function display_data(data){
 		load_markers(filtered_data)
 		map.fitBounds(bounds);
 
-		console.log(bounds.getSouthWest(), bounds.getNorthEast());
+		// console.log(bounds.getSouthWest(), bounds.getNorthEast());
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
@@ -313,7 +321,10 @@ function statistics(data){
 
 }
 
-
+function remove_loader(){
+	loading_overlay.style.display = 'none'
+	console.log(1)
+}
 
 window.addEventListener("load", function(){
     dv1()
