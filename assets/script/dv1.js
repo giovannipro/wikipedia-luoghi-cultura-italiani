@@ -134,49 +134,56 @@ function display_data(data){
 			if (element.website !== "Nessun sito web"){
 				web = `<a href="${element.website}" target="_blank">sito web</a>`
 			}
-	
-			const marker = L.marker([
-				element.latitude, element.longitude
-			])
+			
+			try {
+				const marker = L.marker([
+					element.latitude, element.longitude
+				])
+				// console.log(title, element.latitude, element.longitude)
 
-			marker.bindTooltip(` 
-					<div id="tooltip_dv1">
-						<table>
-							<tr>
-								<td><strong>${link}</strong></td>
-							</tr>
-						</table>
-						<hr style="border: 0.5px solid #e3e3e3;"/>
-						<table>
-							<tr>
-								<td>${element.type}</td>
-							</tr>
-							<tr>
-								<td>${element.public_private}</td>
-							</tr>
-							<tr>
-								<td>visitatori: ${element.visitors}</td>
-							</tr>
-							<tr>
-								<td>${web}</td>
-							</tr>
-							
-						</table>
-					</div>
-				`, 
-				{
-					className: 'custom_tooltip'
+				marker.bindTooltip(`
+						<div id="tooltip_dv1">
+							<table>
+								<tr>
+									<td><strong>${link}</strong></td>
+								</tr>
+							</table>
+							<hr style="border: 0.5px solid #e3e3e3;"/>
+							<table>
+								<tr>
+									<td>${element.type}</td>
+								</tr>
+								<tr>
+									<td>${element.public_private}</td>
+								</tr>
+								<tr>
+									<td>visitatori: ${element.visitors}</td>
+								</tr>
+								<tr>
+									<td>${web}</td>
+								</tr>
+								
+							</table>
+						</div>
+					`, 
+				)
+				
+				// .openTooltip();
+				// editor unici: ${element.unique_editors}
+				// {
+				// 	className: 'custom_tooltip'
+				// }
+		
+				if (typeof element.latitude != 'number'){
+					console.log(element.latitude)
 				}
-			)
-			// .openTooltip();
-			// editor unici: ${element.unique_editors}
-
-			if (typeof element.latitude != 'number'){
-				console.log(element.latitude)
+				
+				bounds.extend([element.latitude,element.longitude]);
+				markers.addLayer(marker);
 			}
-
-			bounds.extend([element.latitude,element.longitude]);
-			markers.addLayer(marker);
+			  catch (error) {
+				console.error(error);
+			}
 		});
 	}
 
