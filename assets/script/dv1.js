@@ -7,7 +7,6 @@ const wiki_link = "https://it.wikipedia.org/wiki/";
 
 const typology_selector = document.getElementById("typology")
 const region_selector = document.getElementById("region")
-
 const loading_overlay = document.getElementById('loading_overlay');
 
 let the_data;
@@ -112,11 +111,20 @@ function display_data(data){
 	function load_markers(data){
 		// console.log(data)
 
-		setTimeout("remove_loader()",1000)
+		setTimeout("remove_loader()",500)
 
 		// remove markers
 		markers.clearLayers();
 		bounds = L.latLngBounds([]);
+
+		// L.geoJSON(data, {
+		// 	onEachFeature: function (feature, layer) {
+		// 		markers.addLayer(layer);
+		// 		console.log(feature)
+		// 	}
+		// });
+		// map.addLayer(markers);
+
 
 		// add markers
 		data.forEach(element => {
@@ -196,7 +204,7 @@ function display_data(data){
 
 	load_markers(the_museums)
 
-	map.fitBounds(bounds);
+	// map.fitBounds(bounds);
 	map.addLayer(markers);
 
 	// console.log(bounds.getSouthWest(), bounds.getNorthEast());

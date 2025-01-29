@@ -42,7 +42,7 @@
 			<div id="header">
 				<div class="container">
 					<h1>
-						<a href="" title="Wikipedia e luoghi della cultura italiani" class="noselect">
+						<a href="" title="Wikipedia e luoghi della cultura italiani" class="noselect lang_switch" data-it="Wikipedia e luoghi della cultura italiani" data-en="Wikipedia and cultural Italian places">
 							Wikipedia e luoghi della cultura italiani
 						</a>
 					</h1>
@@ -108,12 +108,12 @@
 						<div id="select_year" class="selector">
 							<p class="key noselect lang_switch" data-it="Tipologia" data-en="Typology">Tipologia</p>
 							<select name="subjects" id="typology" class="select value noselect">
-								<option value="museo">museo</option>
-								<option value="biblioteca">biblioteca</option>
-								<option value="archivio">archivio</option>
-								<option value="area_archeologica">area archeologica</option>
-								<option value="castello">castello</option>
-								<option value="universita">università</option>
+								<option value="museo" class="lang_switch" data-it="museo" data-en="museum">museo</option>
+								<option value="biblioteca" class="lang_switch" data-it="biblioteca" data-en="library">biblioteca</option>
+								<option value="archivio" class="lang_switch" data-it="archivio" data-en="archive">archivio</option>
+								<option value="area_archeologica" class="lang_switch" data-it="area archeologica" data-en="archeological area">area archeologica</option>
+								<option value="castello" class="lang_switch" data-it="castello" data-en="castel">castello</option>
+								<option value="universita" class="lang_switch" data-it="università" data-en="university">università</option>
 							</select>
 						</div>
 						<div id="select_region" class="selector">
@@ -171,8 +171,14 @@
 					
 					<div id="sidebar">
 						<div id="sidebar_button_close">
-							<div id="sidebar_text"></div>
-							<div id="sidebar_close_icon"></div>
+							<div id="sidebar_text">
+								<div class="a lang_switch" data-it="Luogo" data-en="Place">Luogo</div>
+								<div class="b lang_switch" data-it="Regione" data-en="Region">Regione</div>
+								<div class="c">
+									<div id="sidebar_close_icon"></div>
+								</div>
+							</div>
+							<!-- <div id="sidebar_close_icon"></div> -->
 						</div>
 						<div id="sidebar_content"></div>
 					</div>

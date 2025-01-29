@@ -29,7 +29,7 @@ function sidebar(dv,data,the_sort){
 		output = ''
 		output += '<ul>'
 
-		update_sidebar_text()
+		// update_sidebar_text()
 
 		if (dv == 1){
 			// console.log(data)
@@ -308,7 +308,6 @@ function sidebar(dv,data,the_sort){
 				.attr("fill","transparent")
 				.attr("stroke-width",0.5)
 		}
-
 	}
 	load_sidebar()
 
