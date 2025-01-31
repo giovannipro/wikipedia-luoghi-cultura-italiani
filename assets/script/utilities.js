@@ -808,3 +808,39 @@ window.addEventListener('load', function () {
 	// get_statistics();
 	
 })
+
+function tsvToGeoJSON(tsvText) {
+	// console.log(tsvText)
+    let lines = tsvText.split("\n"); // Split rows by newline
+    let headers = lines[0].split("\t"); // Extract column names (first row)
+
+    let geojson = {
+        "type": "FeatureCollection",
+        "features": []
+    };
+
+    for (let i = 1; i < lines.length; i++) { 
+        let values = lines[i].split("\t"); // Split columns by tab
+        if (values.length < 3) continue; // Skip invalid rows
+
+        let lon = parseFloat(values[6]);
+        let lat = parseFloat(values[7]);
+		// console.log(lat)
+
+        if (!isNaN(lat) && !isNaN(lon) && lat != undefined && lat < 50 && lon < 50 ) { 
+            geojson.features.push({
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [lon, lat] // GeoJSON uses [Longitude, Latitude]
+                },
+                "properties": {
+                    "name": values[1], 
+					"category": values[0],
+					"region" : values[15]
+                }
+            });
+        }
+    }
+    return geojson;
+}

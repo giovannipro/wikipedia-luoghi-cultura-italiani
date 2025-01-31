@@ -16,7 +16,7 @@ let the_data;
 // let the_libraries;
 // let the_archives;
 
-let size_reducer = 0.06;
+let size_reducer = 0.065;
 let min_size = 500;
 
 let width = window.innerWidth;
@@ -28,6 +28,8 @@ if (width < 400){
 	size_reducer = 0.04
 	min_size = 800
 }
+
+let geoJSONData;
 
 // make the map
 function dv1(){
@@ -47,11 +49,16 @@ function dv1(){
 			the_data = filter_data(parsedData);
 			console.log(the_data)
 			
+			geoJSONData = tsvToGeoJSON(data);
+			console.log(geoJSONData)
+
 			statistics(the_data)
 			display_data(the_data)
+			// console.log(data[0])
 
-		}).catch(error => {
-			console.log("There is an error: ",error)
+		})
+		.catch(error => {
+			console.log("There is an error: \n", error)
 		})
 }
 
@@ -75,20 +82,29 @@ function display_data(data){
 	})
 	.addTo(map);
 
+	let count = 0
 	const markers = L.markerClusterGroup({
 
 		iconCreateFunction: function (cluster) {
-			const count = cluster.getChildCount(); // Get the number of markers in the cluster
+			// console.log(cluster)
+
+			count = cluster.getChildCount(); // Get the number of markers in the cluster
 			// console.log(cluster)
 		
 			// Define the size of the cluster based on the count
-			let sizeClass = 'small-cluster';
+			let sizeClass = 'xs_cluster';
 			
-			if (count > 100 && count < 500) {
-				sizeClass = 'medium-cluster';
+			if (count > 100 && count < 200) {
+				sizeClass = 's_cluster';
 			}
+			else if (count >= 100 && count < 300) {
+				sizeClass = 'm_cluster';
+			} 
+			else if (count >= 200 && count < 500) {
+				sizeClass = 'l_cluster';
+			} 
 			else if (count >= 500) {
-				sizeClass = 'large-cluster';
+				sizeClass = 'xl_cluster';
 			} 
 
 			let the_size = count * size_reducer
@@ -108,10 +124,38 @@ function display_data(data){
 
 	})
 
+	function load_the_markers(data){
+		setTimeout("remove_loader()",50)
+
+		markers.clearLayers();
+
+		// const markers = L.markerClusterGroup()
+		let geoJsonLayer = L.geoJSON(data,{
+			// preferCanvas: true,
+			pointToLayer: function (feature, layer) {
+				return L.marker(feature.geometry.coordinates);
+			},
+			onEachFeature: function (feature, layer) {
+				layer.bindPopup(`<b>${feature.properties.name}</b>`);
+			}
+		});
+		markers.addLayer(geoJsonLayer);
+		map.addLayer(markers);
+
+		// bounds = L.latLngBounds([]);
+
+		bounds = markers.getBounds();
+		if (bounds.isValid()) {
+			map.fitBounds(bounds);
+		}
+		// console.log(bounds);
+
+	}
+
 	function load_markers(data){
 		// console.log(data)
 
-		setTimeout("remove_loader()",500)
+		setTimeout("remove_loader()",50)
 
 		// remove markers
 		markers.clearLayers();
@@ -176,12 +220,6 @@ function display_data(data){
 					`, 
 				)
 				
-				// .openTooltip();
-				// editor unici: ${element.unique_editors}
-				// {
-				// 	className: 'custom_tooltip'
-				// }
-		
 				if (typeof element.latitude != 'number'){
 					console.log(element.latitude)
 				}
@@ -202,17 +240,70 @@ function display_data(data){
 	const the_universities = the_data.filter(item => item.category === 'universita')
 	const the_castel = the_data.filter(item => item.category === 'castello')
 
-	load_markers(the_museums)
+	// console.log(geoJSONData)
+	const filteredMuseums = geoJSONData.features.filter(
+		feature => feature.properties.category === 'museo'
+	);
+	const filteredLibraries = geoJSONData.features.filter(
+		feature => feature.properties.category === 'biblioteca'
+	);
+	const filteredArchives = geoJSONData.features.filter(
+		feature => feature.properties.category === 'archivio'
+	);
+	const filteredArcheology = geoJSONData.features.filter(
+		feature => feature.properties.category === 'area_archeologica'
+	);
+	const filteredUniversities = geoJSONData.features.filter(
+		feature => feature.properties.category === 'universita'
+	);
+	const filteredCastel = geoJSONData.features.filter(
+		feature => feature.properties.category === 'castello'
+	);
 
-	// map.fitBounds(bounds);
-	map.addLayer(markers);
+	load_the_markers(filteredMuseums)
 
-	// console.log(bounds.getSouthWest(), bounds.getNorthEast());
+	function get_jsonData(new_type,new_region){
+		// console.log(new_type,new_region)
+
+		let selected_data = geoJSONData;
+
+		if (new_type === 'museo'){
+			selected_data = filteredMuseums
+		}
+		else if (new_type === 'biblioteca'){
+			selected_data = filteredLibraries
+		}
+		else if (new_type === 'archivio'){
+			selected_data = filteredArchives
+		}
+		else if (new_type === 'area_archeologica'){
+			selected_data = filteredArcheology
+		}
+		else if (new_type === 'castello'){
+			selected_data = filteredCastel
+		}
+		else {
+			selected_data = filteredUniversities
+		}
+
+		// console.log(selected_data)
+
+		if (new_region != 'all'){
+			selected_data_ = selected_data.filter(
+				feature => feature.properties.region === new_region
+			);
+		}
+		else {
+			selected_data_ = selected_data
+		}
+
+		return selected_data_
+	}
 
 	function get_data(new_type,new_region){
-		console.log(new_type,new_region)
+		// console.log(new_type,new_region)
 
-		let selected_data;
+		let selected_data = the_data;
 
 		if (new_type === 'museo'){
 			selected_data = the_museums
@@ -249,32 +340,31 @@ function display_data(data){
 		let new_type = this.value;
 		new_region = region_selector.value;
 
-		filtered_data = get_data(new_type,new_region)
+		filtered_data = get_jsonData(new_type,new_region)
+		// console.log(filtered_data)
 
-		console.log(filtered_data)
-		load_markers(filtered_data)
+		// console.log(filtered_data)
+		load_the_markers(filtered_data)
 		map.fitBounds(bounds);
-
-		// console.log(bounds.getSouthWest(), bounds.getNorthEast());
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
-		sidebar(1,filtered_data,the_sort)
+		sidebar(1,get_data(new_type,new_region),the_sort)
 	})
 
 	region_selector.addEventListener('change', function() {
 		let new_region = this.value;
 		new_type = typology_selector.value;
 
-		filtered_data = get_data(new_type,new_region)
+		filtered_data = get_jsonData(new_type,new_region)
 
-		// console.log(filtered_data)
-		load_markers(filtered_data)
+		console.log(filtered_data)
+		load_the_markers(filtered_data)
 		map.fitBounds(bounds);
 
 		the_sort = 1;
 		// the_data_sidebar = filtered_data.filter(item => item.unique_editors != "No editori")
-		sidebar(1,filtered_data,the_sort)
+		sidebar(1,get_data(new_type,new_region),the_sort)
 	})
 
 	L.control.locate().addTo(map);
@@ -329,7 +419,6 @@ function statistics(data){
 	no_website = data.filter(item => item.website != "Nessun sito web")
 	// no_wikipedia.forEach(item => console.log(item.article_wikidata))
 
-
 	all_glams_box.innerText = formatNumber(all_glams)
 	no_wikipedia_box.innerText = formatNumber(no_wikipedia.length)
 	no_website_box.innerText = formatNumber(no_website.length)
@@ -338,7 +427,6 @@ function statistics(data){
 
 function remove_loader(){
 	loading_overlay.style.display = 'none'
-	console.log(1)
 }
 
 window.addEventListener("load", function(){
