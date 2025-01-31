@@ -92,6 +92,8 @@ function sidebar(dv,data,the_sort){
 
         // })
 
+        data.sort((a, b) => a.article.localeCompare(b.article));
+
         const fragment = document.createDocumentFragment();
         let output = ''
 
