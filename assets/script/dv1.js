@@ -152,86 +152,86 @@ function display_data(data){
 
 	}
 
-	function load_markers(data){
-		// console.log(data)
+	// function load_markers(data){
+	// 	// console.log(data)
 
-		setTimeout("remove_loader()",50)
+	// 	setTimeout("remove_loader()",50)
 
-		// remove markers
-		markers.clearLayers();
-		bounds = L.latLngBounds([]);
+	// 	// remove markers
+	// 	markers.clearLayers();
+	// 	bounds = L.latLngBounds([]);
 
-		// L.geoJSON(data, {
-		// 	onEachFeature: function (feature, layer) {
-		// 		markers.addLayer(layer);
-		// 		console.log(feature)
-		// 	}
-		// });
-		// map.addLayer(markers);
+	// 	// L.geoJSON(data, {
+	// 	// 	onEachFeature: function (feature, layer) {
+	// 	// 		markers.addLayer(layer);
+	// 	// 		console.log(feature)
+	// 	// 	}
+	// 	// });
+	// 	// map.addLayer(markers);
 
 
-		// add markers
-		data.forEach(element => {
-			let title = element.article
-			// console.log(element.latitude)
+	// 	// add markers
+	// 	data.forEach(element => {
+	// 		let title = element.article
+	// 		// console.log(element.latitude)
 	
-			if (element.article_wikipedia !== "Voce non esistente"){
-				link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
-			}
-			else {
-				link = title
-			}
+	// 		if (element.article_wikipedia !== "Voce non esistente"){
+	// 			link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
+	// 		}
+	// 		else {
+	// 			link = title
+	// 		}
 	
-			let web = element.website
-			if (element.website !== "Nessun sito web"){
-				web = `<a href="${element.website}" target="_blank">sito web</a>`
-			}
+	// 		let web = element.website
+	// 		if (element.website !== "Nessun sito web"){
+	// 			web = `<a href="${element.website}" target="_blank">sito web</a>`
+	// 		}
 			
-			try {
-				const marker = L.marker([
-					element.latitude, element.longitude
-				])
-				// console.log(title, element.latitude, element.longitude)
+	// 		try {
+	// 			const marker = L.marker([
+	// 				element.latitude, element.longitude
+	// 			])
+	// 			// console.log(title, element.latitude, element.longitude)
 
-				marker.bindTooltip(`
-						<div id="tooltip_dv1">
-							<table>
-								<tr>
-									<td><strong>${link}</strong></td>
-								</tr>
-							</table>
-							<hr style="border: 0.5px solid #e3e3e3;"/>
-							<table>
-								<tr>
-									<td>${element.type}</td>
-								</tr>
-								<tr>
-									<td>${element.public_private}</td>
-								</tr>
-								<tr>
-									<td>visitatori: ${element.visitors}</td>
-								</tr>
-								<tr>
-									<td>${web}</td>
-								</tr>
+	// 			marker.bindTooltip(`
+	// 					<div id="tooltip_dv1">
+	// 						<table>
+	// 							<tr>
+	// 								<td><strong>${link}</strong></td>
+	// 							</tr>
+	// 						</table>
+	// 						<hr style="border: 0.5px solid #e3e3e3;"/>
+	// 						<table>
+	// 							<tr>
+	// 								<td>${element.type}</td>
+	// 							</tr>
+	// 							<tr>
+	// 								<td>${element.public_private}</td>
+	// 							</tr>
+	// 							<tr>
+	// 								<td>visitatori: ${element.visitors}</td>
+	// 							</tr>
+	// 							<tr>
+	// 								<td>${web}</td>
+	// 							</tr>
 								
-							</table>
-						</div>
-					`, 
-				)
+	// 						</table>
+	// 					</div>
+	// 				`, 
+	// 			)
 				
-				if (typeof element.latitude != 'number'){
-					console.log(element.latitude)
-				}
+	// 			if (typeof element.latitude != 'number'){
+	// 				console.log(element.latitude)
+	// 			}
 				
-				bounds.extend([element.latitude,element.longitude]);
-				markers.addLayer(marker);
-			}
-			  catch (error) {
-				console.error(error);
-			}
-		});
-	}
+	// 			bounds.extend([element.latitude,element.longitude]);
+	// 			markers.addLayer(marker);
+	// 		}
+	// 		  catch (error) {
+	// 			console.error(error);
+	// 		}
+	// 	});
+	// }
 
 	const the_museums = the_data.filter(item => item.category === 'museo')
 	const the_libraries = the_data.filter(item => item.category === 'biblioteca')
@@ -260,7 +260,7 @@ function display_data(data){
 		feature => feature.properties.category === 'castello'
 	);
 
-	load_the_markers(filteredMuseums)
+	load_the_markers(filteredArchives)
 
 	function get_jsonData(new_type,new_region){
 		// console.log(new_type,new_region)
@@ -371,7 +371,7 @@ function display_data(data){
 
 	the_sort = 1;
 	// the_data_sidebar = data.filter(item => item.unique_editors != "No editori")
-	sidebar(1,the_museums,the_sort)
+	sidebar(1,the_archives,the_sort)
 }
 
 function update_dv1_lang(lang){
