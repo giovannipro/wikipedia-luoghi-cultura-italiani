@@ -18,7 +18,7 @@ function sidebar(dv,data,the_sort){
 	const the_sidebar = document.getElementById('sidebar');
 	const container = document.getElementById('sidebar_content');
 	
-	let output = ''
+	// let output = ''
 	detail = ''
 	
 	container.innerHTML = ''
@@ -26,84 +26,135 @@ function sidebar(dv,data,the_sort){
 	function load_sidebar(){
 		max = -Infinity;
 
-		output = ''
-		output += '<ul>'
+		// output = ''
+		// output += '<ul>'
 
 		// update_sidebar_text()
 
-		if (dv == 1){
-			data.forEach(item => {
-				item.article = item.article.replace(/['"]/g, ""); 
-				item.article = item.article.charAt(0).toUpperCase() + item.article.slice(1);
-			})
-			data.sort((a, b) => a.article.localeCompare(b.article));
+        // add item in the sidebar
+        // data.forEach(function (d,i) {
+            
+        //     // console.log(d.article)
 
-			max = -Infinity;
-		}	
+        //     // if (dv == 1){
+        //     //     detail = "" // formatNumber(d.unique_editors) // d.type
+        //     //     num = 0 //d.unique_editors
+        //     // }
 
-		// add item in the sidebar
-		data.forEach(function (d,i) {
-			// console.log(d.article)
+        //     // if (max != 0) {
+        //     //     size = num * 100 / max
+        //     // }
+        //     // else {
+        //     //     size = 0
+        //     // }
 
-			if (dv == 1){
-				detail = "" // formatNumber(d.unique_editors) // d.type
-				num = 0 //d.unique_editors
-			}
+        //     // output += '<li>'
 
-			if (max != 0) {
-				size = num * 100 / max
-			}
-			else {
-				size = 0
-			}
+        //     // if (d.article_wikipedia != "Voce non esistente"){
+        //     //     output += '<a class="item_box" href=" ' + wiki_link + d.article + '" target="_blank"">'
+        //     // }
+        //     // else {
+        //     //     output += '<a class="item_box" href="#">'
+        //     // }
+            
+        //     // output += '<div class="item_bubble" id="' + d.id_wikidata + '"></div>'
 
-			output += '<li>'
+        //     // output += '<div class="item_value">'
+        //     // output += '<div class="item_list">'
 
-			if (d.article_wikipedia != "Voce non esistente"){
-				output += '<a class="item_box" href=" ' + wiki_link + d.article + '" target="_blank"">'
-			}
-			else {
-				output += '<a class="item_box" href="#">'
-			}
-			
-			output += '<div class="item_bubble" id="' + d.id_wikidata + '"></div>'
+        //     // // console.log(d.article_wikipedia)
+        //     // if (d.article_wikipedia != "Voce non esistente"){
+        //     //     output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
+        //     // }
+        //     // else {
+        //     //     output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + ' <br/><span style="color: #f57e7e;">(voce non esistente)</span></div>'
+        //     // }
+            
 
-			output += '<div class="item_value">'
-			output += '<div class="item_list">'
+        //     // output += '<div class="article_region">' + d.region + '</div>'
+        
+        //     // if (isNaN(max) == false || max < 0) {
+        //     //     output += '<div class="value">' + detail + '</div>'
+        //     // }
 
-			// console.log(d.article_wikipedia)
-			if (d.article_wikipedia != "Voce non esistente"){
-				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
-			}
-			else {
-				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + ' <br/><span style="color: #f57e7e;">(voce non esistente)</span></div>'
-			}
-			
+        //     // output += '</div>'
 
-			output += '<div class="article_region">' + d.region + '</div>'
-		
-			if (isNaN(max) == false || max < 0) {
-				output += '<div class="value">' + detail + '</div>'
-			}
+        //     // if (the_sort != 1 || isNaN(max) == false){
+        //     //     output += '<div class="bar" style="width: ' + size + '%;"></div>'
+        //     // }
+        //     // output += '</div>'
 
-			output += '</div>'
+        //     // output += '</a>'
+        //     // output += '</li>'
 
-			if (the_sort != 1 || isNaN(max) == false){
-				output += '<div class="bar" style="width: ' + size + '%;"></div>'
-			}
-			output += '</div>'
+        //     // let container = d.id_wikidata
+        //     // make_article_bubble(container,d)
 
-			output += '</a>'
-			output += '</li>'
+        // })
 
-			// let container = d.id_wikidata
-			// make_article_bubble(container,d)
+        const fragment = document.createDocumentFragment();
+        let output = ''
 
-		})
+        let i = 0;
+        function batchRender() {
+            const batchSize = 100; // Render in small chunks
+            for (let j = 0; j < batchSize && i < data.length; j++, i++) {
+                const item = data[i];
 
-		output += '</ul>'
+                const anchor = document.createElement('a');
+                const li = document.createElement("li");
+                
+                anchor.target = '_blank';
+                anchor.classList = 'item_box'
 
-		container.innerHTML = output
+                const items = document.createElement("div");
+                items.classList = 'item_list'
+                const article = document.createElement("div");
+                article.classList = 'article_list'
+                const region = document.createElement("div");
+                region.classList = 'article_region'
+
+                if (data[i].article_wikipedia != "Voce non esistente"){
+                    anchor.href = wiki_link + item.article;
+                    article.innerHTML = capitalizeFirstLetter(item.article);
+                }
+                else {
+                    anchor.href = '#'
+                    article.innerHTML = capitalizeFirstLetter(item.article) + '<br/><span style="color: #f57e7e;">(voce non esistente)</span>';
+                }
+                
+                region.textContent = item.region;
+
+                items.appendChild(article);
+                items.appendChild(region);
+
+                anchor.appendChild(items);
+                li.appendChild(anchor);
+
+                fragment.appendChild(li);
+            }
+            
+            container.appendChild(fragment); // Append batch to DOM
+            if (i < data.length) requestAnimationFrame(batchRender); // Schedule next batch
+        }
+        
+        requestAnimationFrame(batchRender);
+
+        
+		// if (dv == 1){
+		// 	data.forEach(item => {
+		// 		item.article = item.article.replace(/['"]/g, ""); 
+		// 		item.article = item.article.charAt(0).toUpperCase() + item.article.slice(1);
+		// 	})
+		// 	data.sort((a, b) => a.article.localeCompare(b.article));
+
+		// 	max = -Infinity;
+		// }	
+
+
+		// output += '</ul>'
+
+		// container.innerHTML = output
 
 		// add bubbles
 		// data.forEach(function (d,i) {
