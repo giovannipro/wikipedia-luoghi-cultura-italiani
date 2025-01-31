@@ -94,10 +94,10 @@ function display_data(data){
 			// Define the size of the cluster based on the count
 			let sizeClass = 'xs_cluster';
 			
-			if (count > 100 && count < 200) {
+			if (count > 50 && count < 100) {
 				sizeClass = 's_cluster';
 			}
-			else if (count >= 100 && count < 300) {
+			else if (count >= 100 && count < 200) {
 				sizeClass = 'm_cluster';
 			} 
 			else if (count >= 200 && count < 500) {
