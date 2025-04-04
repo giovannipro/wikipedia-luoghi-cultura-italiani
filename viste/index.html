@@ -120,10 +120,10 @@
 							</select>
 						</div>
 						<div id="select_category" class="selector">
-							<p class="key noselect lang_switch" data-it="Categoria" data-en="Categoriy">Categoria</p>
+							<p class="key noselect lang_switch" data-it="Tipologia" data-en="Typology">Tipologia</p>
 							<select name="categories" id="categories"  class="select value noselect">
-								<option value="all" class="lang_switch" data-it="tutte le categorie" data-en="All categories">
-									tutte le categorie
+								<option value="all" class="lang_switch" data-it="tutte le tipologie" data-en="All categories">
+									tutte le tipologie
 								</option>
 								<option value="archivio">archivio</option>
 								<option value="biblioteca">biblioteca</option>
@@ -209,7 +209,7 @@
 					</div>
 					<div class="value_name">
 						<div class="stat_value" id="avg_size_articles">0</div>
-						<div class="stat_name">Media dimensioni della voce <span>(byte)</span></div>
+						<div class="stat_name">Media dimensioni voce <span>(byte)</span></div>
 					</div>
 				</div>
 
@@ -220,55 +220,53 @@
 						<h2 id="how_to_read_label">
 							Come leggere la visualizzazione
 						</h2>
-						<p id="how_to_read_text"></p>
-							<!-- ... -->
-							<!-- La visualizzazione mostra le voci con più visite medie giornaliere per materia scolastica (i dati sono raccolti ogni anno a giugno).<br/>
+						<p class="it">
+							La visualizzazione mostra le voci con più visite medie giornaliere per tipologia.<br/>
+							<!-- (i dati sono raccolti ogni anno a giugno) -->
 							Le dimensioni della voce, della pagina di discussione e dell'incipit sono espresse in byte. Per ogni materia sono mostrati un massimo di 120 voci.<br/><br/>
 							Il cerchio di colore chiaro rappresenta la dimensione della voce, il cerchio scuro rappresenta la dimensione dell’incipit e il cerchio con il solo contorno rappresenta la dimensione della pagina di discussione.<br/>
 							I cerchi e le linee tratteggiate indicano rispettivamente la dimensione dell'articolo e le visite giornaliere nell'anno precedente.<br/> 
 							I triangolini sopra i cerchi indicano che la voce è stata migliorata se si verificano una o più di queste condizioni: è stato ampliato l'incipit, è stato rimosso almeno un avviso, è stata aggiunta almeno un'immagine. 
 							<br/><br/>
-							Scegli dal menu in alto una materia e l'ordine di visualizzazione per ottenere maggiori informazioni. -->
-						
-						<!-- <p class="en">
-							...
-							The visualisation shows the articles with the highest average daily visits per school subject (data are collected annually in June).<br/>
+							Scegli dal menu in alto una tipologia di luogo e l'ordine di visualizzazione per filtrare le informazioni.
+						</p>
+						<p class="en">
+							The visualisation shows the articles with the highest average daily visits per typology of place.<br/>
+							<!-- (data are collected annually in June) -->
 							The size of the article, discussion page and incipit are expressed in bytes. A maximum of 120 articles are shown for each subject.<br/><br/>
 							The light-coloured circle represents the size of the article, the darker circle represents the size of the incipit and the circle with only the outline represents the size of the discussion page.<br/>
 							The circles and dotted lines display the size of the article and the daily visits in the previous year, respectively.<br/> 
 							The triangles above the circles indicate that the article has been improved if one or more of these conditions are met: the incipit has been expanded, at least one issue has been removed, at least one image has been added. 
 							<br/><br/>
-							Choose a subject from the top menu and the order in which it is displayed to get more information. -->
-						<!-- </p> -->
+							Choose a typology from the top menu and the order in which it is displayed to get filter the information.
+						</p>
 					</div>
 					<div id="dv1_legend_a" class="column_3 legend">
-						...
-						<!-- <img class="it" src="assets/img/dv1_legend_a_it.svg" width="326" height="262" alt="Il cerchio di colore chiaro rappresenta la dimensione della voce, il cerchio scuro rappresenta la dimensione dell’incipit e il cerchio con il solo contorno rappresenta la dimensione della pagina di discussione.">
+						<img class="it" src="../assets/img/dv1_legend_a_it.svg" width="326" height="262" alt="Il cerchio di colore chiaro rappresenta la dimensione della voce, il cerchio scuro rappresenta la dimensione dell’incipit e il cerchio con il solo contorno rappresenta la dimensione della pagina di discussione.">
 
-						<img class="en" src="assets/img/dv1_legend_a_en.svg" width="326" height="262" alt="Il cerchio di colore chiaro rappresenta la dimensione della voce, il cerchio scuro rappresenta la dimensione dell’incipit e il cerchio con il solo contorno rappresenta la dimensione della pagina di discussione."> -->
+						<img class="en" src="../assets/img/dv1_legend_a_en.svg" width="326" height="262" alt="Il cerchio di colore chiaro rappresenta la dimensione della voce, il cerchio scuro rappresenta la dimensione dell’incipit e il cerchio con il solo contorno rappresenta la dimensione della pagina di discussione.">
 					</div>
 					<div id="dv1_legend_b" class="column_3 legend">
-						...
-						<!-- <img class="it" src="assets/img/dv1_legend_b_it.svg" width="326" height="155" alt="Il cerchio rosa rappresenta una disciplina umanistica, il cerchio verde rappresenta una scienza naturale, il cerchio celeste rappresenta una scienza sociale e il cerchio viola rappresenta una scienza applicata.">
+						<img class="it" src="../assets/img/dv1_legend_b_it.svg" width="326" height="155" alt="Il cerchio rosa rappresenta una disciplina umanistica, il cerchio verde rappresenta una scienza naturale, il cerchio celeste rappresenta una scienza sociale e il cerchio viola rappresenta una scienza applicata.">
 
-						<img class="en" src="assets/img/dv1_legend_b_en.svg" width="326" height="155" alt="Il cerchio rosa rappresenta una disciplina umanistica, il cerchio verde rappresenta una scienza naturale, il cerchio celeste rappresenta una scienza sociale e il cerchio viola rappresenta una scienza applicata."> -->
+						<img class="en" src="../assets/img/dv1_legend_b_en.svg" width="326" height="155" alt="Il cerchio rosa rappresenta una disciplina umanistica, il cerchio verde rappresenta una scienza naturale, il cerchio celeste rappresenta una scienza sociale e il cerchio viola rappresenta una scienza applicata.">
 					</div>
 				</div>
 			</section>
 			<section class="container">
 				<div id="dv1_dataset" class="dataset">
-					<!-- <a href="../assets/data/voci/voci.zip" title="" style="font-size: 0.9em; margin-bottom: 30px; display: block;">
+					<a href="../assets/data/voci.zip" title="" style="font-size: 0.9em; margin-bottom: 30px; display: block;">
 						<div style="display: flex; justify-content: flex-start; align-items:baseline;">
 							<span class="lang_switch" data-it="Scarica i dati" data-en="Download the dataset">
 								Scarica i dati 
 							</span>
 							
 							<span>
-								<img class="it" src="assets/img/download.svg" width="20" height="20" alt="Scarica i dati">
-								<img class="en" src="assets/img/download.svg" width="20" height="20" alt="Download the dataset">
+								<img class="it" src="../assets/img/download.svg" width="20" height="20" alt="Scarica i dati">
+								<img class="en" src="../assets/img/download.svg" width="20" height="20" alt="Download the dataset">
 							</span>
 						</div>
-					</a> -->
+					</a>
 				</div>
 			</section>
 			<footer id="footer"></footer>
