@@ -837,6 +837,7 @@ function tsvToGeoJSON(tsvText) {
                 "properties": {
                     "name": values[1], 
 					"category": values[0],
+					"link": values[4],
 					"region" : values[15]
                 }
             });

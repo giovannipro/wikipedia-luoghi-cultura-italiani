@@ -129,6 +129,8 @@ function display_data(data){
 
 		markers.clearLayers();
 
+		console.log(data)
+
 		// const markers = L.markerClusterGroup()
 		let geoJsonLayer = L.geoJSON(data,{
 			// preferCanvas: true,
@@ -136,9 +138,42 @@ function display_data(data){
 				return L.marker(feature.geometry.coordinates);
 			},
 			onEachFeature: function (feature, layer) {
-				layer.bindPopup(`<b>${feature.properties.name}</b>`);
+				// layer.bindPopup(`<b>${feature.properties.name}</b>`);
+
+				let title = feature.properties.name
+
+				if (feature.properties.link !== "Nessun sito web"){
+					link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
+				}
+				else {
+					link = title
+				}
+
+				// bindTooltip
+				layer.bindTooltip(`
+					<div id="tooltip_dv1">
+						<table>
+							<td><strong>${link}</strong></td>
+						</table>
+						<hr style="border: 0.5px solid #e3e3e3;"/>
+					</div>
+				`) 
+
+				// <tr>
+				// 				<td>${element.type}</td>
+				// 			</tr>
+				// 			<tr>
+				// 				<td>${element.public_private}</td>
+				// 			</tr>
+				// 			<tr>
+				// 				<td>visitatori: ${element.visitors}</td>
+				// 			</tr>
+				// 			<tr>
+				// 				<td>${web}</td>
+				// 			</tr>
 			}
 		});
+
 		markers.addLayer(geoJsonLayer);
 		map.addLayer(markers);
 
