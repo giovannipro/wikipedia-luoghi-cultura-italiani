@@ -141,6 +141,10 @@ function display_data(data){
 	function load_the_markers(data){
 		setTimeout("remove_loader()",50)
 
+		for (item of data){
+			console.log(item.properties.category, item.properties.article_wikipedia)
+		}
+
 		markers.clearLayers();
 		// console.log(data)
 
