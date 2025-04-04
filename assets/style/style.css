@@ -382,6 +382,15 @@ header a {
   padding: 0 0.3rem;
 }
 
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  pointer-events: auto !important;
+}
+
+.leaflet-popup-content a {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
 /* ------- sidebar ------- */
 #sidebar_button_open, #scale_button_box {
   width: 2.5rem;

@@ -144,18 +144,18 @@ function display_data(data){
 				let title = feature.properties.name
 
 				if (feature.properties.link !== "Nessun sito web"){
-					link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
+					// link = `<td><button onclick="window.open('${feature.properties.link}', '_blank');">Sito web</button></td>`
+					link = `<tr><td><a href="${feature.properties.link}" target="_blank">Sito web</a></td></tr>`
 				}
 				else {
-					link = title
+					link = '<tr><td>Nessun sito web</tr></td>'
 				}
-
-				// layer.bindTooltip()
+				
 				layer.bindPopup(`
 					<div id="popup_dv1">
 						<table style="padding-right: 20px;">
 							<tr>
-				 				<td><strong>${link}</strong></td>
+				 				<td><strong>${title}</strong></td>
 				 			</tr>
 							<tr>
 				 				<td>${element.region} | ${element.category}</td>
@@ -163,10 +163,12 @@ function display_data(data){
 				 		</table>
 						<hr style="border: 0.5px solid #e3e3e3;"/>
 						<table>
-				 			
+				 			${link} 
 				 		</table>
 					</div>
-				`);
+				  `, {
+					closeOnClick: false
+				});
 
 				// <tr>
 				//  				<td>${element.type}</td>
@@ -182,17 +184,16 @@ function display_data(data){
 				//  			</tr>
 			}
 		});
-
-		markers.addLayer(geoJsonLayer);
-		map.addLayer(markers);
-
+		
 		// bounds = L.latLngBounds([]);
-
 		bounds = markers.getBounds();
 		if (bounds.isValid()) {
 			map.fitBounds(bounds);
 		}
 		// console.log(bounds);
+
+		markers.addLayer(geoJsonLayer);
+		map.addLayer(markers);
 
 	}
 
