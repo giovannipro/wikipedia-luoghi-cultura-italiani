@@ -380,6 +380,7 @@ header a {
   max-width: 180px;
   margin: 0;
   padding: 0 0.3rem;
+  width: 100%;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -490,6 +491,7 @@ header a {
 }
 #sidebar_content li {
   border-top: 1px solid #d6d5d5;
+  min-height: 4rem;
 }
 #sidebar_content li a {
   text-decoration: none;

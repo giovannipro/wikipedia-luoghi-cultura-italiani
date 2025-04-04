@@ -106,9 +106,6 @@ function sidebar(dv,data,the_sort){
                 const anchor = document.createElement('a');
                 const li = document.createElement("li");
                 
-                anchor.target = '_blank';
-                anchor.classList = 'item_box'
-
                 const items = document.createElement("div");
                 items.classList = 'item_list'
                 const article = document.createElement("div");
@@ -117,12 +114,16 @@ function sidebar(dv,data,the_sort){
                 region.classList = 'article_region'
 
                 if (data[i].article_wikipedia != "Voce non esistente"){
+
+					anchor.target = '_blank';
+                	anchor.classList = 'item_box'
+
                     anchor.href = wiki_link + item.article;
                     article.innerHTML = capitalizeFirstLetter(item.article);
                 }
                 else {
-                    anchor.href = '#'
-                    article.innerHTML = capitalizeFirstLetter(item.article) + '<br/><span style="color: #f57e7e;">(voce Wikipedia non esistente)</span>';
+                    // anchor.href = '#'
+                    article.innerHTML = capitalizeFirstLetter(item.article) + '<br/><span style="color: #f57e7e;">(Voce Wikipedia non esistente)</span>';
                 }
                 
                 region.textContent = item.region;

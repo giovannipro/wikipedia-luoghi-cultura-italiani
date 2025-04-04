@@ -832,13 +832,16 @@ function tsvToGeoJSON(tsvText) {
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lon, lat] // GeoJSON uses [Longitude, Latitude]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "name": values[1], 
 					"category": values[0],
 					"link": values[4],
-					"region" : values[15]
+					"region" : values[15],
+					"visitors": values[8],
+					"public_private": values[9],
+					"article_wikipedia": values[3]
                 }
             });
         }

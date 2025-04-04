@@ -48,14 +48,17 @@ function dv1(){
 
 			the_data = filter_data(parsedData);
 			console.log(the_data)
-			
+
+			// for (item of the_data){
+			// 	console.log(item)
+			// }
+
 			geoJSONData = tsvToGeoJSON(data);
 			console.log(geoJSONData)
 
 			statistics(the_data)
 			display_data(the_data)
 			// console.log(data[0])
-
 		})
 		.catch(error => {
 			console.log("There is an error: \n", error)
@@ -139,16 +142,51 @@ function display_data(data){
 			},
 			onEachFeature: function (feature, layer) {
 				const element = feature.properties
-				// console.log(element)
+				// console.log(feature.properties.article_wikipedia)
 
 				let title = feature.properties.name
 
+				// website
 				if (feature.properties.link !== "Nessun sito web"){
-					// link = `<td><button onclick="window.open('${feature.properties.link}', '_blank');">Sito web</button></td>`
 					link = `<tr><td><a href="${feature.properties.link}" target="_blank">Sito web</a></td></tr>`
 				}
 				else {
 					link = '<tr><td>Nessun sito web</tr></td>'
+				}
+
+				// visitors
+				if (feature.properties.visitors !== ""){
+					visitors = `<tr><td>Visitatori</td><td>${feature.properties.visitors}</td></tr>`
+				}
+				else {
+					visitors = ''
+				}
+
+				// public/private
+				if (feature.properties.public_private !== ""){
+					tipology = `<tr><td>Tipologia</td><td>${feature.properties.public_private}</td></tr>`
+				}
+				else {
+					tipology = ''
+				}
+
+				// article_wikipedia
+				if (feature.properties.article_wikipedia !== "Voce non esistente"){
+					article_wikipedia = `<tr><td><a href="${wiki_link}${feature.properties.article_wikipedia}" target="blank_">Voce su Wikipedia</td></tr>`
+				}
+				else {
+					article_wikipedia = '<tr><td>Nessuna voce su Wikipedia</tr></td>'
+				}
+
+				// proprierties of the place
+				if (visitors != '' || tipology != ''){
+					subtable = `
+						<table>${tipology}${visitors}</table>
+						<hr style="border: 0.5px solid #e3e3e3;"/>
+					`
+				}
+				else {
+					subtable = ''
 				}
 				
 				layer.bindPopup(`
@@ -162,8 +200,12 @@ function display_data(data){
 				 			</tr>
 				 		</table>
 						<hr style="border: 0.5px solid #e3e3e3;"/>
+						
+						${subtable}
+
 						<table>
-				 			${link} 
+							${link} 
+							${article_wikipedia}
 				 		</table>
 					</div>
 				  `, {
@@ -187,97 +229,13 @@ function display_data(data){
 		
 		markers.addLayer(geoJsonLayer);
 		map.addLayer(markers);
-		
+
 		// bounds = L.latLngBounds([]);
 		bounds = markers.getBounds();
 		if (bounds.isValid()) {
 			map.fitBounds(bounds);
 		}
-		// console.log(bounds);
-
-
 	}
-
-	// function load_markers(data){
-	// 	// console.log(data)
-
-	// 	setTimeout("remove_loader()",50)
-
-	// 	// remove markers
-	// 	markers.clearLayers();
-	// 	bounds = L.latLngBounds([]);
-
-	// 	// L.geoJSON(data, {
-	// 	// 	onEachFeature: function (feature, layer) {
-	// 	// 		markers.addLayer(layer);
-	// 	// 		console.log(feature)
-	// 	// 	}
-	// 	// });
-	// 	// map.addLayer(markers);
-
-
-	// 	// add markers
-	// 	data.forEach(element => {
-	// 		let title = element.article
-	// 		// console.log(element.latitude)
-	
-	// 		if (element.article_wikipedia !== "Voce non esistente"){
-	// 			link = `<a href="${wiki_link}${title}" target="_blank"> ${title}</a>`
-	// 		}
-	// 		else {
-	// 			link = title
-	// 		}
-	
-	// 		let web = element.website
-	// 		if (element.website !== "Nessun sito web"){
-	// 			web = `<a href="${element.website}" target="_blank">sito web</a>`
-	// 		}
-			
-	// 		try {
-	// 			const marker = L.marker([
-	// 				element.latitude, element.longitude
-	// 			])
-	// 			// console.log(title, element.latitude, element.longitude)
-
-	// 			marker.bindTooltip(`
-	// 					<div id="tooltip_dv1">
-	// 						<table>
-	// 							<tr>
-	// 								<td><strong>${link}</strong></td>
-	// 							</tr>
-	// 						</table>
-	// 						<hr style="border: 0.5px solid #e3e3e3;"/>
-	// 						<table>
-	// 							<tr>
-	// 								<td>${element.type}</td>
-	// 							</tr>
-	// 							<tr>
-	// 								<td>${element.public_private}</td>
-	// 							</tr>
-	// 							<tr>
-	// 								<td>visitatori: ${element.visitors}</td>
-	// 							</tr>
-	// 							<tr>
-	// 								<td>${web}</td>
-	// 							</tr>
-								
-	// 						</table>
-	// 					</div>
-	// 				`, 
-	// 			)
-				
-	// 			if (typeof element.latitude != 'number'){
-	// 				console.log(element.latitude)
-	// 			}
-				
-	// 			bounds.extend([element.latitude,element.longitude]);
-	// 			markers.addLayer(marker);
-	// 		}
-	// 		  catch (error) {
-	// 			console.error(error);
-	// 		}
-	// 	});
-	// }
 
 	const the_museums = the_data.filter(item => item.category === 'museo')
 	const the_libraries = the_data.filter(item => item.category === 'biblioteca')
@@ -451,7 +409,6 @@ function update_dv1_lang(lang){
 		the_container.innerText = content
 	}
 }
-
 
 function statistics(data){
 	// console.log(data)
