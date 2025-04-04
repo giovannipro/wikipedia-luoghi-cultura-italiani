@@ -142,7 +142,7 @@ function display_data(data){
 			},
 			onEachFeature: function (feature, layer) {
 				const element = feature.properties
-				// console.log(feature.properties.article_wikipedia)
+				console.log(feature.properties.public_private)
 
 				let title = feature.properties.name
 
@@ -156,7 +156,7 @@ function display_data(data){
 
 				// visitors
 				if (feature.properties.visitors !== ""){
-					visitors = `<tr><td>Visitatori</td><td>${feature.properties.visitors}</td></tr>`
+					visitors = `<tr><td>Pubblico/privato</td><td>${feature.properties.visitors}</td></tr>`
 				}
 				else {
 					visitors = ''

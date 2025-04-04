@@ -78,7 +78,7 @@ header {
 }
 
 #header {
-  width: 35%;
+  width: 40%;
 }
 @media only screen and (max-width: 768px) {
   #header {
@@ -93,7 +93,7 @@ header a {
 /* ------- menu ------- */
 #menu_language {
   display: flex;
-  width: 65%;
+  width: 60%;
 }
 @media only screen and (max-width: 768px) {
   #menu_language {
@@ -619,7 +619,6 @@ footer ul li {
 }
 #cc div {
   font-size: 14px;
-  margin-right: 1rem;
 }
 @media only screen and (max-width: 768px) {
   #cc div {
@@ -628,6 +627,9 @@ footer ul li {
   }
 }
 
+.desktop_only {
+  padding: 0 0.75rem;
+}
 @media only screen and (max-width: 768px) {
   .desktop_only {
     display: none;
