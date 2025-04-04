@@ -781,7 +781,7 @@ footer ul li {
 }
 
 #dv2_legend_a, #dv2_legend_b {
-  margin-top: 35px;
+  margin-top: 20px;
 }
 @media only screen and (max-width: 768px) {
   #dv2_legend_a, #dv2_legend_b {
@@ -805,5 +805,5 @@ footer ul li {
 }
 
 #dv3_legend {
-  margin-top: 35px;
+  margin-top: 20px;
 }/*# sourceMappingURL=style.css.map */
