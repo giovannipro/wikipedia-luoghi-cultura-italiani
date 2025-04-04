@@ -310,24 +310,32 @@ header a
 	border-radius: 50%
 	animation: spin 1s linear infinite
 
-.leaflet-tooltip
-	margin: 0
-	padding: 0
-	opacity: 1
-
-#tooltip_dv1
-	box-sizing: border-box
-	width: 180px
-	word-wrap: break-word
-	overflow-wrap: break-word
-	white-space: wrap
-	overflow: hidden
-	padding: 6px 0
-		
-	table
-		max-width: 180px
+#map1 
+	.leaflet-tooltip
 		margin: 0
-		padding: 0 6px
+		padding: 0
+		opacity: 1
+
+	.leaflet-popup-content-wrapper
+		position: relative !important
+		padding: 0
+
+	.leaflet-popup-content
+		margin: 0
+
+	#popup_dv1
+		box-sizing: border-box
+		width: 180px
+		word-wrap: break-word
+		overflow-wrap: break-word
+		white-space: wrap
+		overflow: hidden
+		//padding: 6px 0
+			
+		table
+			max-width: 180px
+			margin: 0
+			padding: 0 0.3rem
 
 
 /* ------- sidebar ------- */

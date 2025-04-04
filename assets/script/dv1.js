@@ -138,7 +138,8 @@ function display_data(data){
 				return L.marker(feature.geometry.coordinates);
 			},
 			onEachFeature: function (feature, layer) {
-				// layer.bindPopup(`<b>${feature.properties.name}</b>`);
+				const element = feature.properties
+				// console.log(element)
 
 				let title = feature.properties.name
 
@@ -149,28 +150,36 @@ function display_data(data){
 					link = title
 				}
 
-				// bindTooltip
-				layer.bindTooltip(`
-					<div id="tooltip_dv1">
-						<table>
-							<td><strong>${link}</strong></td>
-						</table>
+				// layer.bindTooltip()
+				layer.bindPopup(`
+					<div id="popup_dv1">
+						<table style="padding-right: 20px;">
+							<tr>
+				 				<td><strong>${link}</strong></td>
+				 			</tr>
+							<tr>
+				 				<td>${element.region} | ${element.category}</td>
+				 			</tr>
+				 		</table>
 						<hr style="border: 0.5px solid #e3e3e3;"/>
+						<table>
+				 			
+				 		</table>
 					</div>
-				`) 
+				`);
 
 				// <tr>
-				// 				<td>${element.type}</td>
-				// 			</tr>
-				// 			<tr>
-				// 				<td>${element.public_private}</td>
-				// 			</tr>
-				// 			<tr>
-				// 				<td>visitatori: ${element.visitors}</td>
-				// 			</tr>
-				// 			<tr>
-				// 				<td>${web}</td>
-				// 			</tr>
+				//  				<td>${element.type}</td>
+				//  			</tr>
+				//  			<tr>
+				//  				<td>${element.public_private}</td>
+				//  			</tr>
+				//  			<tr>
+				//  				<td>visitatori: ${element.visitors}</td>
+				//  			</tr>
+				//  			<tr>
+				//  				<td>${link}</td>
+				//  			</tr>
 			}
 		});
 

@@ -356,25 +356,30 @@ header a {
   animation: spin 1s linear infinite;
 }
 
-.leaflet-tooltip {
+#map1 .leaflet-tooltip {
   margin: 0;
   padding: 0;
   opacity: 1;
 }
-
-#tooltip_dv1 {
+#map1 .leaflet-popup-content-wrapper {
+  position: relative !important;
+  padding: 0;
+}
+#map1 .leaflet-popup-content {
+  margin: 0;
+}
+#map1 #popup_dv1 {
   box-sizing: border-box;
   width: 180px;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: wrap;
   overflow: hidden;
-  padding: 6px 0;
 }
-#tooltip_dv1 table {
+#map1 #popup_dv1 table {
   max-width: 180px;
   margin: 0;
-  padding: 0 6px;
+  padding: 0 0.3rem;
 }
 
 /* ------- sidebar ------- */
