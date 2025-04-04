@@ -396,6 +396,21 @@ header a {
   cursor: pointer !important;
 }
 
+/* ------- heatmap ------- */
+#heatmap {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  width: 15rem;
+  height: 10rem;
+  border: 1px solid grey;
+}
+@media only screen and (max-width: 450px) {
+  #heatmap {
+    display: none;
+  }
+}
+
 /* ------- sidebar ------- */
 #sidebar_button_open, #scale_button_box {
   width: 2.5rem;

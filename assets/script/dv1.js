@@ -9,6 +9,8 @@ const typology_selector = document.getElementById("typology")
 const region_selector = document.getElementById("region")
 const loading_overlay = document.getElementById('loading_overlay');
 
+const map_center = [42.1, 12.5]
+
 let the_data;
 // let filtered_data;
 
@@ -49,10 +51,6 @@ function dv1(){
 			the_data = filter_data(parsedData);
 			console.log(the_data)
 
-			// for (item of the_data){
-			// 	console.log(item)
-			// }
-
 			geoJSONData = tsvToGeoJSON(data);
 			console.log(geoJSONData)
 
@@ -70,7 +68,7 @@ function display_data(data){
 	loading_overlay.style.display = 'none';
 
 	let map = L.map(map_contaier, {
-		center: [42.1, 12.5],
+		center: map_center,
 		zoom: map_startZoom
 	});
 
@@ -127,12 +125,24 @@ function display_data(data){
 
 	})
 
+	// initialize the heatmap
+	heatmap = L.map('heatmap', {
+		center: map_center,
+		zoom: 4,
+		maxZoom: 8,
+		minZoom: 4
+	})
+	heatmap.zoomControl.remove();
+
+	// Add the base map layer
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+	.addTo(heatmap);
+
 	function load_the_markers(data){
 		setTimeout("remove_loader()",50)
 
 		markers.clearLayers();
-
-		console.log(data)
+		// console.log(data)
 
 		// const markers = L.markerClusterGroup()
 		let geoJsonLayer = L.geoJSON(data,{
@@ -142,7 +152,7 @@ function display_data(data){
 			},
 			onEachFeature: function (feature, layer) {
 				const element = feature.properties
-				console.log(feature.properties.public_private)
+				// console.log(feature.properties.public_private)
 
 				let title = feature.properties.name
 
@@ -211,19 +221,6 @@ function display_data(data){
 				  `, {
 					closeOnClick: false
 				});
-
-				// <tr>
-				//  				<td>${element.type}</td>
-				//  			</tr>
-				//  			<tr>
-				//  				<td>${element.public_private}</td>
-				//  			</tr>
-				//  			<tr>
-				//  				<td>visitatori: ${element.visitors}</td>
-				//  			</tr>
-				//  			<tr>
-				//  				<td>${link}</td>
-				//  			</tr>
 			}
 		});
 		
@@ -265,6 +262,7 @@ function display_data(data){
 	);
 
 	load_the_markers(filteredArchives)
+	load_heatmap(filteredArchives)
 
 	function get_jsonData(new_type,new_region){
 		// console.log(new_type,new_region)
@@ -345,10 +343,12 @@ function display_data(data){
 		new_region = region_selector.value;
 
 		filtered_data = get_jsonData(new_type,new_region)
-		// console.log(filtered_data)
+		console.log(filtered_data)
 
 		// console.log(filtered_data)
 		load_the_markers(filtered_data)
+		load_heatmap(filtered_data)
+
 		map.fitBounds(bounds);
 
 		the_sort = 1;
@@ -361,9 +361,10 @@ function display_data(data){
 		new_type = typology_selector.value;
 
 		filtered_data = get_jsonData(new_type,new_region)
-
-		console.log(filtered_data)
+		// console.log(filtered_data)
+		
 		load_the_markers(filtered_data)
+		
 		map.fitBounds(bounds);
 
 		the_sort = 1;
@@ -430,6 +431,38 @@ function statistics(data){
 
 function remove_loader(){
 	loading_overlay.style.display = 'none'
+}
+
+function load_heatmap(data){
+
+	const heatData = data.map(item => {
+		return [
+			item.geometry.coordinates[0],
+			item.geometry.coordinates[1],
+			0.5
+		]
+	})
+	if (typeof heatLayer !== 'undefined') {
+        heatmap.removeLayer(heatLayer);
+    }
+	// Create and add the heatmap layer
+	heatLayer = L.heatLayer(heatData, {
+		radius: 20,
+		blur: 15,
+		maxZoom: 14,
+		max: 1.0, 
+		gradient: {
+			0.4: 'rgb(28, 40, 138)', 
+			0.6: 'rgb(44, 70, 219)', 
+			0.7: 'rgb(51, 118, 235)', 
+			0.8: 'rgb(51, 171, 235)', 
+			1.0: 'rgb(51, 229, 235)'
+		}
+	})
+	// heatLayer.redraw()
+
+	heatLayer.addTo(heatmap);
+
 }
 
 window.addEventListener("load", function(){
