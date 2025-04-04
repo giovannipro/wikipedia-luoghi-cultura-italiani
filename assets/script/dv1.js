@@ -185,6 +185,9 @@ function display_data(data){
 			}
 		});
 		
+		markers.addLayer(geoJsonLayer);
+		map.addLayer(markers);
+		
 		// bounds = L.latLngBounds([]);
 		bounds = markers.getBounds();
 		if (bounds.isValid()) {
@@ -192,8 +195,6 @@ function display_data(data){
 		}
 		// console.log(bounds);
 
-		markers.addLayer(geoJsonLayer);
-		map.addLayer(markers);
 
 	}
 
@@ -460,7 +461,7 @@ function statistics(data){
 	no_website_box = document.getElementById("no_website")
 
 	all_glams = data.length
-	no_wikipedia = data.filter(item => item.article_wikipedia !== "Voce non esistente")
+	no_wikipedia = data.filter(item => item.article_wikipedia !== "Voce Wikipedia non esistente")
 	no_website = data.filter(item => item.website != "Nessun sito web")
 	// no_wikipedia.forEach(item => console.log(item.article_wikidata))
 

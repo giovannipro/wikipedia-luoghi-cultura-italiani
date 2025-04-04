@@ -122,7 +122,7 @@ function sidebar(dv,data,the_sort){
                 }
                 else {
                     anchor.href = '#'
-                    article.innerHTML = capitalizeFirstLetter(item.article) + '<br/><span style="color: #f57e7e;">(voce non esistente)</span>';
+                    article.innerHTML = capitalizeFirstLetter(item.article) + '<br/><span style="color: #f57e7e;">(voce Wikipedia non esistente)</span>';
                 }
                 
                 region.textContent = item.region;
