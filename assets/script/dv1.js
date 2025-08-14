@@ -52,7 +52,7 @@ function dv1(){
 			console.log(the_data)
 
 			geoJSONData = tsvToGeoJSON(data);
-			console.log(geoJSONData)
+			// console.log(geoJSONData)
 
 			statistics(the_data)
 			display_data(the_data)
@@ -136,17 +136,27 @@ function display_data(data){
 
 	// Add the base map layer
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-	.addTo(heatmap);
+		.addTo(heatmap);
 
+	
 	function load_the_markers(data){
 		setTimeout("remove_loader()",50)
 
-		for (item of data){
-			console.log(item.properties.category, item.properties.article_wikipedia)
-		}
+		// for (item of data){
+		// 	console.log(item.properties.category, item.properties.article_wikipedia)
+		// }
 
 		markers.clearLayers();
-		// console.log(data)
+
+		// data = []
+		// console.log(map_contaier)
+
+		// if (data.length == 0){
+		// 	const mapContainer = document.getElementById(map_contaier);
+
+		// 	mapContainer.appendChild(document.createTextNode("Nessun dato disponibile per questa selezione."))
+		// 	return;
+		// }
 
 		// const markers = L.markerClusterGroup()
 		let geoJsonLayer = L.geoJSON(data,{

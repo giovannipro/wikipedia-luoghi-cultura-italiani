@@ -220,6 +220,8 @@ function sidebar(dv,data,the_sort){
 	}
 	load_sidebar()
 
+	const heatmap = document.getElementById('heatmap');
+
 	let open = false;
 	button_open.addEventListener('click', (event) => {
 
@@ -229,6 +231,8 @@ function sidebar(dv,data,the_sort){
 
 			button_close.style.display = 'block'
 			button_open.style.display = 'none'
+
+			heatmap.style.display = 'none';
 		}
 	})
 
@@ -240,6 +244,8 @@ function sidebar(dv,data,the_sort){
 
 			button_close.style.display = 'none'
 			button_open.style.display = 'block'
+
+			heatmap.style.display = 'block';
 		}
 	})
 }
