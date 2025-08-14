@@ -49,10 +49,8 @@ function sidebar(dv,data,the_sort){
 		// sort data and get max
 		if (dv == 2){
 			if (the_sort == 1){
-				data.sort((a, b) => {
-					return a.article - b.article;
-				})
-				max = Math.max(...data.map((a,b) => a.editors))
+				data.sort((a, b) => a.article.localeCompare(b.article));
+				max = data.length;// Math.max(...data.map((a,b) => a.editors))
 			}
 			else if (the_sort == 2){
 				data.sort((a, b) => {
@@ -121,7 +119,7 @@ function sidebar(dv,data,the_sort){
 
 		// add item in the sidebar
 		data.forEach(function (d,i) {
-			// console.log(d.article)
+			// console.log(d.wikidata_id)
 
 			if (dv == 1){
 				detail = "" // formatNumber(d.unique_editors) // d.type
@@ -210,17 +208,17 @@ function sidebar(dv,data,the_sort){
 				output += '<a class="item_box" href="#">'
 			}
 			
-			output += '<div class="item_bubble" id="' + d.id_wikidata + '"></div>'
+			output += '<div class="item_bubble" id="' + d.wikidata_id + '"></div>'
 
 			output += '<div class="item_value">'
 			output += '<div class="item_list">'
 
 			// console.log(d.article_wikipedia)
 			if (d.article_wikipedia != "Voce non esistente"){
-				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + '</div>'
+				output += '<div class="article_list" data-id="' + d.wikidata_id + '">' + d.article + '</div>'
 			}
 			else {
-				output += '<div class="article_list" data-id="' + d.id_wikidata + '">' + d.article + ' <br/><span style="color: #f57e7e;">(voce non esistente)</span></div>'
+				output += '<div class="article_list" data-id="' + d.wikidata_id + '">' + d.article + ' <br/><span style="color: #f57e7e;">(voce non esistente)</span></div>'
 			}
 			
 
@@ -241,8 +239,8 @@ function sidebar(dv,data,the_sort){
 			output += '</li>'
 
 
-			let container = d.id_wikidata
-			make_article_bubble(container,d)
+			let container = d.wikidata_id
+			// make_article_bubble(container,d.id_wikidata)
 
 		})
 
@@ -252,7 +250,7 @@ function sidebar(dv,data,the_sort){
 
 		// add bubbles
 		data.forEach(function (d,i) {
-			let container = d.id_wikidata
+			let container = d.wikidata_id
 			make_article_bubble(container,d)
 		})
 

@@ -6,7 +6,7 @@ const filter_item = 12; // also in Wikipedia and Italian school is 120
 const shiftx_article = 30;
 const wiki_link = "https://it.wikipedia.org/wiki/";
 const variation_line_opacity = 0.7;
-const min_avg_pv = 100;
+const min_avg_pv = 100; // 100
 
 const stroke_dash = "3,3";
 
@@ -40,7 +40,7 @@ function dv2(region, category, the_sort) {
 
 		data = format_data(data)
 		filtered_data = data
-		// console.log(data)
+		console.log(data)
 	
 		statistics(data)
 
@@ -194,7 +194,7 @@ function dv2(region, category, the_sort) {
 					item.region === region
 				)
 			}
-			console.log(region_data)
+			// console.log(region_data)
 
 			if (category != 'all'){
 				filtered_data = region_data.filter(item =>
@@ -209,12 +209,11 @@ function dv2(region, category, the_sort) {
 					item.avg_pv > filter_item
 				)
 			}
-			console.log(filtered_data)
+			// console.log(filtered_data)
 
 			if (filtered_data.length == 0){
 				show_no_data()
 			}
-
 
 			// review the elements attributes
 			// ---------------------------
@@ -375,9 +374,9 @@ function dv2(region, category, the_sort) {
 			// plot data
 			// ---------------------------
 
-			for (item of filtered_data){
-				console.log(item.category)
-			}
+			// for (item of filtered_data){
+			// 	console.log(item.category)
+			// }
 
 			article = articles.selectAll("g")
 				.data(filtered_data)
@@ -449,7 +448,7 @@ function dv2(region, category, the_sort) {
 				.attr("cx",0)
 				.attr("cy",0)	
 				.attr("fill", function(d,i){
-					return "#00b2ff"
+					return apply_color(d.category)
 				})
 				.attr("opacity",0.5)
 				.attr("r",0)
@@ -472,7 +471,7 @@ function dv2(region, category, the_sort) {
 				.attr("cx",0)
 				.attr("cy",0)
 				.attr("fill", function(d,i){
-					return "#00b2ff"
+					return apply_color(d.category)
 				})
 				.attr("opacity",0.5)
 				.attr("r", function(d,i){
@@ -491,7 +490,7 @@ function dv2(region, category, the_sort) {
 				.attr("cx",0)
 				.attr("cy",0)
 				.attr("stroke", function(d,i){
-					return "#00b2ff"
+					return apply_color(d.category)
 				})
 				.attr("fill","transparent")
 				.attr("stroke-width",0.5)

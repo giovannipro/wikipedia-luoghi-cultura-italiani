@@ -7,21 +7,31 @@ function formatNumber(num) {
 	return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 }
 
-function apply_color(subject){
+function apply_color(category){
 	let color;
 
-	if (subject == "Letteratura italiana"  || subject == "Letteratura latina" || subject == "Storia" || subject == "Storia dell'arte" || subject == "Filosofia" || subject == "Grammatica italiana" || subject == "Grammatica latina") {
-		color = "#ef95c4"; //"#eeb4ee";
+	if (category == "archivio"){
+		color = "#eea4caff";
 	}
-	else if (subject == "Informatica" || subject == "Tecnologia"){
-		color = "#3a34e0"; // "blue";
+	else if (category == "area_archeologica"){
+		color = "#5bcb8bff";
 	}
-	else if (subject == "Geografia"  || subject == "Diritto e Economia" || subject == "Cittadinanza e costituzione"){
+	else if (category == "biblioteca"){
 		color = "#00b2ff";
 	}
-	else { // Biologia Chimica Fisica Matematica Scienze della Terra Scienze
-		color = "green";
+	else if (category == "castello"){
+		color = "#8472d4ff";
 	}
+	else if (category == "università"){
+		color = "#e3ae53ff";
+	}
+	else if (category == "museo"){
+		color = "#3a34e0";
+	}
+	else {
+		color = "red"
+	}
+
 	return color;
 }
 
