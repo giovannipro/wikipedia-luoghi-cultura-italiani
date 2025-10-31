@@ -213,30 +213,56 @@ function dv3(region, category, the_sort) {
 
        		// filter data by region and category
 			// ---------------------------
-			if (region == 'all'){
-				filtered_data = data.filter(item =>
-					item.issues > filter_item
-				)
-			}
-			else {
-				filtered_data = data.filter(item => 
-					item.issues > filter_item
-				)
-				.filter(item =>
-					item.region == region
-				)
+
+			issue_data = data.filter(item =>
+				item.issues > filter_item
+			)
+
+			function filter(data, { region = "all", category = "all" }) {
+				return data.filter(item =>
+					(region === "all" || item.region === region) &&
+					(category === "all" || item.category === category)
+				);
 			}
 
-			if (category != 'all'){
+			filtered_data =  filter(issue_data, { region: region, category: category })
+			console.log(filtered_data.length)
+
+			if (filtered_data.length > 100) {
 				filtered_data = filtered_data.filter(item =>
-					item.category == category
+					item.avg_pv > filter_item
 				)
 			}
-			console.log(category, filtered_data)
+			// console.log(filtered_data.length)
 
 			if (filtered_data.length == 0){
 				show_no_data()
 			}
+
+			// if (region == 'all'){
+			// 	filtered_data = data.filter(item =>
+			// 		item.issues > filter_item
+			// 	)
+			// }
+			// else {
+			// 	filtered_data = data.filter(item => 
+			// 		item.issues > filter_item
+			// 	)
+			// 	.filter(item =>
+			// 		item.region == region
+			// 	)
+			// }
+
+			// if (category != 'all'){
+			// 	filtered_data = filtered_data.filter(item =>
+			// 		item.category == category
+			// 	)
+			// }
+			// console.log(category, filtered_data)
+
+			// if (filtered_data.length == 0){
+			// 	show_no_data()
+			// }
 
 			// review the elements attributes
 			// ---------------------------
@@ -473,8 +499,8 @@ function dv3(region, category, the_sort) {
 			// 		return direction 
 			// 	})
 
-			min_circle_size = 1
-			sidebar(3,filtered_data,the_sort)
+			// min_circle_size = 1
+			// sidebar(3,filtered_data,the_sort)
 		}
 		display_data(region, category, the_sort)
 
@@ -483,7 +509,7 @@ function dv3(region, category, the_sort) {
 		// ---------------------------
 		
 		const select_region = document.getElementById("regions")
-		const select_category = document.getElementById("categories")
+		const select_category = document.getElementById("category")
 		const select_sort = document.getElementById("sort_article")
 
 		select_region.addEventListener('change', function() {
@@ -584,7 +610,7 @@ function dv3(region, category, the_sort) {
 					return "translate(" + x(d.new_id) + "," + 0 + ")"
 				})
 
-			sidebar(3,filtered_data,the_sort)
+			// sidebar(3,filtered_data,the_sort)
 		}
 
 		// make the visualization responsive

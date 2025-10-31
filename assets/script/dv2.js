@@ -193,14 +193,14 @@ function dv2(region, category, the_sort) {
 			}
 
 			filtered_data =  filter(data, { region: region, category: category })
-			console.log(filtered_data.length)
+			// console.log(filtered_data.length)
 
 			if (filtered_data.length > 1000) {
 				filtered_data = filtered_data.filter(item =>
 					item.avg_pv > filter_item
 				)
 			}
-			console.log(filtered_data.length)
+			// console.log(filtered_data.length)
 
 			if (filtered_data.length == 0){
 				show_no_data()
