@@ -8,6 +8,8 @@ const wiki_link = "https://it.wikipedia.org/wiki/";
 const variation_line_opacity = 0.7;
 const min_avg_pv = 100; // 100
 
+const bubble_color = "#00b2ff"
+
 const stroke_dash = "3,3";
 
 const log_exponent = 0.5; 
@@ -182,38 +184,85 @@ function dv2(region, category, the_sort) {
 			// filter data by region and category
 			// ---------------------------
 
-			if (region == 'all'){
-				// region_data = data 
-				region_data = data
-				// data.filter(item =>
-				// 	item.avg_pv > filter_item
-				// )
-			}
-			else {
-				region_data = data.filter(item => 
-					item.region === region
-				)
-			}
-			// console.log(region_data)
 
-			if (category != 'all'){
-				filtered_data = region_data.filter(item =>
-					item.category === category
-				)
-				.filter(item =>
-					item.size > 0
-				)
+			function filter(data, { region = "all", category = "all" }) {
+				return data.filter(item =>
+					(region === "all" || item.region === region) &&
+					(category === "all" || item.category === category)
+				);
 			}
-			else {
-				filtered_data = region_data.filter(item =>
+
+			filtered_data =  filter(data, { region: region, category: category })
+			console.log(filtered_data.length)
+
+			if (filtered_data.length > 1000) {
+				filtered_data = filtered_data.filter(item =>
 					item.avg_pv > filter_item
 				)
 			}
-			// console.log(filtered_data)
+			console.log(filtered_data.length)
 
 			if (filtered_data.length == 0){
 				show_no_data()
 			}
+
+			// filtered_data = data.filter(item => {
+			// 	if (region != 'all') {
+			// 		item.region === region
+			// 	}
+			// 	else {
+			// 		item.
+			// 	}
+			// 	if (category != 'all'){
+			// 		item.category === category
+			// 	}
+			// })
+
+			// if (region == 'all'){
+			// 	// region_data = data 
+			// 	region_data = data
+			// 	// data.filter(item =>
+			// 	// 	item.avg_pv > filter_item
+			// 	// )
+				
+			// }
+			// else {
+			// 	region_data = data.filter(item => 
+			// 		item.region === region
+			// 	)
+
+			// 	// if (category === "museo") {
+			// 	// 	filtered_data = filtered_data.filter(item => item.avg_pv > 5);
+			// 	// }
+			// }
+			// console.log(region_data.length)
+
+			// if (category != 'all'){
+			// 	filtered_data = region_data.filter(item =>
+			// 		item.category === category
+			// 	)
+			// 	// .filter(item =>
+			// 	// 	item.size > 0
+			// 	// )
+			// }
+			// else {
+			// 	filtered_data = region_data.filter(item =>
+			// 		item.avg_pv > 10 // filter_item
+			// 	)
+			// 	console.log(1)
+				
+			// }
+			// console.log(filtered_data.length)
+
+			// if (category === "museo"){
+			// 	if (region === 'all'){
+			// 		filtered_data = filtered_data.filter(item => item.avg_pv > 10);
+			// 		console.log(2)
+			// 	}
+			// }
+			
+			
+
 
 			// review the elements attributes
 			// ---------------------------
@@ -448,6 +497,7 @@ function dv2(region, category, the_sort) {
 				.attr("cx",0)
 				.attr("cy",0)	
 				.attr("fill", function(d,i){
+					return bubble_color
 					return apply_color(d.category)
 				})
 				.attr("opacity",0.5)
@@ -471,7 +521,8 @@ function dv2(region, category, the_sort) {
 				.attr("cx",0)
 				.attr("cy",0)
 				.attr("fill", function(d,i){
-					return apply_color(d.category)
+					return bubble_color
+					// return apply_color(d.category)
 				})
 				.attr("opacity",0.5)
 				.attr("r", function(d,i){
@@ -490,7 +541,8 @@ function dv2(region, category, the_sort) {
 				.attr("cx",0)
 				.attr("cy",0)
 				.attr("stroke", function(d,i){
-					return apply_color(d.category)
+					return bubble_color
+					// return apply_color(d.category)
 				})
 				.attr("fill","transparent")
 				.attr("stroke-width",0.5)
@@ -778,7 +830,7 @@ function dv2(region, category, the_sort) {
 		// filter data by category
 		// ---------------------------
 
-		const category_selection = document.getElementById('categories')
+		const category_selection = document.getElementById('category')
 
 		category_selection.addEventListener('change', function() {
 			let new_region = $("#regions option:selected").val();
