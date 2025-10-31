@@ -184,13 +184,17 @@ function dv2(region, category, the_sort) {
 			// filter data by region and category
 			// ---------------------------
 
-
 			function filter(data, { region = "all", category = "all" }) {
 				return data.filter(item =>
 					(region === "all" || item.region === region) &&
 					(category === "all" || item.category === category)
 				);
 			}
+
+			filtered_data = filtered_data.filter(item => {
+				// console.log(item.article_wikipedia, item.size, item.avg_pv)
+				return item.size > 10
+			})
 
 			filtered_data =  filter(data, { region: region, category: category })
 			// console.log(filtered_data.length)
